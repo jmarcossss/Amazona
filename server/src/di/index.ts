@@ -1,9 +1,14 @@
 import BrandRepository from '../repositories/brand.repository';
+import NotificationRepository from '../repositories/notification.repository';
+import OrderRepository from '../repositories/order.repository';
 import ProductCategoriesRepository from '../repositories/product-categories.repository';
 import ProductRepository from '../repositories/product.repository';
 import SectorRepository from '../repositories/sector.repository';
 import UserRepository from '../repositories/user.repository';
+import AuthenticationService from '../services/authentication.service';
 import BrandService from '../services/brand.service';
+import NotificationService from '../services/notification.service';
+import OrderService from '../services/order.service';
 import ProductCategoriesService from '../services/product-categories.service';
 import ProductService from '../services/product.service';
 import SectorService from '../services/sector.service';
@@ -17,6 +22,26 @@ di.registerRepository(UserRepository, new UserRepository());
 di.registerService(
   UserService,
   new UserService(di.getRepository(UserRepository))
+);
+
+// Authentication
+di.registerService(
+  AuthenticationService,
+  new AuthenticationService(di.getRepository(UserRepository))
+);
+
+// Order
+di.registerRepository(OrderRepository, new OrderRepository());
+di.registerService(
+  OrderService,
+  new OrderService(di.getRepository(OrderRepository))
+);
+
+// Notification
+di.registerRepository(NotificationRepository, new NotificationRepository());
+di.registerService(
+  NotificationService,
+  new NotificationService(di.getRepository(NotificationRepository))
 );
 
 // Sector
