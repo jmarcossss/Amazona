@@ -7,7 +7,7 @@ class OrderStatusRepository extends BaseRepository<OrderStatusEntity> {
     super('order-status');
   }
 
-  public async getStatusOrder(): Promise<OrderStatusEntity[]> {
+  public async getOrderStatus(): Promise<OrderStatusEntity[]> {
     try {
       return await this.findAll();
     } catch (e) {
@@ -15,16 +15,16 @@ class OrderStatusRepository extends BaseRepository<OrderStatusEntity> {
     }
   }
 
-  public async getProductCategoryById(
+  public async getOrderStatusById(
     id: string
   ): Promise<OrderStatusEntity | undefined> {
     try {
-      let statusOrders = await this.findAll();
-      let statusOrder = statusOrders.find(
-        (statusOrder) => statusOrder.id === id
+      let ordersStatus = await this.findAll();
+      let orderStatus = ordersStatus.find(
+        (orderStatus) => orderStatus.id === id
       );
 
-      return statusOrder;
+      return orderStatus;
     } catch (e) {
       throw new InternalServerError();
     }

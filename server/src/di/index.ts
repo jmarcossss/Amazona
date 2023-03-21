@@ -1,5 +1,6 @@
 import BrandRepository from '../repositories/brand.repository';
 import NotificationRepository from '../repositories/notification.repository';
+import OrderStatusRepository from '../repositories/order-status.repository';
 import OrderRepository from '../repositories/order.repository';
 import ProductCategoriesRepository from '../repositories/product-categories.repository';
 import ProductRepository from '../repositories/product.repository';
@@ -8,6 +9,7 @@ import UserRepository from '../repositories/user.repository';
 import AuthenticationService from '../services/authentication.service';
 import BrandService from '../services/brand.service';
 import NotificationService from '../services/notification.service';
+import OrderStatusService from '../services/order-status.service';
 import OrderService from '../services/order.service';
 import ProductCategoriesService from '../services/product-categories.service';
 import ProductService from '../services/product.service';
@@ -35,6 +37,13 @@ di.registerRepository(OrderRepository, new OrderRepository());
 di.registerService(
   OrderService,
   new OrderService(di.getRepository(OrderRepository))
+);
+
+// Order Status
+di.registerRepository(OrderStatusRepository, new OrderStatusRepository());
+di.registerService(
+  OrderStatusService,
+  new OrderStatusService(di.getRepository(OrderStatusRepository))
 );
 
 // Notification
