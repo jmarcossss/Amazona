@@ -1,12 +1,12 @@
 import BaseModel from './base.model';
-import OrderStatusModel from './order-status.model';
+import OrderStatusItemModel from './order-status-item.model';
 import ProductModel from './product.model';
 
 class OrderModel extends BaseModel {
   userId: string;
   totalValue: string;
   purchaseDate: string;
-  statusHistory: {id: string, status: OrderStatusModel, date: string }[]
+  statusHistory: OrderStatusItemModel[]
   products: ProductModel[];
   address: string;
   payment: string;
@@ -25,7 +25,7 @@ class OrderModel extends BaseModel {
     userId: string;
     totalValue: string;
     purchaseDate: string;
-    statusHistory: {id: string, status: OrderStatusModel, date: string }[]
+    statusHistory: OrderStatusItemModel[]
     products: ProductModel[];
     address: string;
     payment: string;

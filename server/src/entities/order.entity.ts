@@ -1,10 +1,10 @@
 import BaseEntity from './base.entity';
-
+import OrderStatusItemEntity from './order-status-item.entity'
 export default class OrderEntity extends BaseEntity {
   userId: string;
   totalValue: string;
   purchaseDate: string;
-  statusHistory: {id: string, statusId: string, date: string }[]
+  statusHistory: OrderStatusItemEntity[];
   productsIds: string[];
   address: string;
   payment: string;
