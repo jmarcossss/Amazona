@@ -7,6 +7,8 @@ import { HomeModule } from './home/home.module';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { AdminModule } from './admin/admin.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +18,8 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     AppRoutingModule,
     HomeModule,
+    AuthenticationModule,
+    AdminModule,
     SharedModule,
   ],
   providers: [],
