@@ -8,13 +8,17 @@
   --color-texts: #414141;
   --color-inactive: #818181;
   --color-error: #dc3545;
+  --color-cards: #fcfcfc;
+  --color-error-label: #ffd0d5;
+  --color-success: #d5e5ca;
 
   /* Font */
   --font-family-base: "Quicksand", sans-serif;
-  --font-title: 40px;
-  --font-inputs: 20px;
-  --font-placeholder: 16px;
-  --font-inactive-texts: 8px;
+  --font-title: 24px;
+  --font-subtitle: 16px;
+  --font-texts: 14px;
+  --font-inputs: 14px;
+  --font-placeholder: 12px;
 
   /* Radius */
   --radius-default: 8px;
