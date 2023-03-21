@@ -1,0 +1,25 @@
+[
+  {
+    "id": "1",
+    "userId": "1",
+    "totalValue": "600",
+    "purchaseDate": "2023-01-29T06:00:00Z",
+    "statusHistory": [
+      {
+        "id": "1",
+        "statusId": "1",
+        "date": "2023-01-29T06:00:00Z"
+      },
+      {
+        "id": "2",
+        "statusId": "2",
+        "date": "2023-01-29T08:00:00Z"
+      }
+    ],
+    "productsIds": [
+      "1"
+    ],
+    "address": "Endereco tal",
+    "payment": "pix"
+  }
+]
