@@ -36,7 +36,6 @@ class OrderService {
           msgCode: OrderServiceMessageCode.order_not_found,
         });
       }
-      //console.log(order)
       /* get by id em cada order-status*/
       const statusHistory = await Promise.all(
         order.statusHistory.map(async (history) => {
@@ -64,9 +63,7 @@ class OrderService {
       const products = await Promise.all(
         order.productsIds.map(async (id) => {
           try {
-            console.log(`ID PRODUCT: ${id}`)
             const product = await this.productService.getProductById(id);
-            console.log("PRODUCT:\n" + product)
             return product;
           } catch (e) {
             logger.error(

@@ -18,7 +18,6 @@ class OrderRepository extends BaseRepository<OrderEntity> {
     try {
       let orders = await this.findAll();
       let order = orders.find((order) => order.id === id);
-      console.log(orders)
       return order;
     } catch (e) {
       throw new InternalServerError();

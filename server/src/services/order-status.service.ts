@@ -37,10 +37,9 @@ class OrderStatusService {
     try {
       const orderStatus =
         await this.orderStatusRepository.getOrderStatusById(id);
-
       if (!orderStatus) {
         throw new NotFoundError({
-          msg: 'Categoria do produto não encontrada!',
+          msg: 'Status do Pedido não encontrado!',
           msgCode:
           OrderStatusServiceMessageCode.order_status_not_found,
         });

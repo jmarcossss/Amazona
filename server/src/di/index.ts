@@ -32,24 +32,6 @@ di.registerService(
   new AuthenticationService(di.getRepository(UserRepository))
 );
 
-// Order
-di.registerRepository(OrderRepository, new OrderRepository());
-di.registerService(
-  OrderService,
-  new OrderService(
-    di.getRepository(OrderRepository),
-    di.getService(OrderStatusService),
-    di.getService(ProductService)
-  )
-);
-
-// Order Status
-di.registerRepository(OrderStatusRepository, new OrderStatusRepository());
-di.registerService(
-  OrderStatusService,
-  new OrderStatusService(di.getRepository(OrderStatusRepository))
-);
-
 // Notification
 di.registerRepository(NotificationRepository, new NotificationRepository());
 di.registerService(
@@ -92,5 +74,23 @@ di.registerService(
     di.getRepository(ProductRepository),
     di.getService(BrandService),
     di.getService(ProductCategoriesService)
+  )
+);
+
+// Order Status
+di.registerRepository(OrderStatusRepository, new OrderStatusRepository());
+di.registerService(
+  OrderStatusService,
+  new OrderStatusService(di.getRepository(OrderStatusRepository))
+);
+
+// Order
+di.registerRepository(OrderRepository, new OrderRepository());
+di.registerService(
+  OrderService,
+  new OrderService(
+    di.getRepository(OrderRepository),
+    di.getService(OrderStatusService),
+    di.getService(ProductService)
   )
 );
