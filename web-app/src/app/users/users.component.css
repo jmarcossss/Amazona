@@ -1,0 +1,9 @@
+h1 {
+  color: var(--color-details);
+  font-size: var(--font-title);
+}
+
+button {
+  border-radius: var(--radius-default);
+  padding: 10px 20px;
+}

@@ -1,1 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+:root {
+  /* Color */
+  --color-main: #221f1f;
+  --color-details: #ff9900;
+  --color-background: #ffffff;
+  --color-texts: #414141;
+  --color-inactive: #818181;
+  --color-error: #dc3545;
+  --color-cards: #fcfcfc;
+  --color-error-label: #ffd0d5;
+  --color-success: #d5e5ca;
+
+  /* Font */
+  --font-family-base: "Quicksand", sans-serif;
+  --font-title: 24px;
+  --font-subtitle: 16px;
+  --font-texts: 14px;
+  --font-inputs: 14px;
+  --font-placeholder: 12px;
+
+  /* Radius */
+  --radius-default: 8px;
+
+  /* Spacing */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+
+  font-family: var(--font-family-base);
+}
+
+button {
+  border: none;
+}
