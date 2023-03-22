@@ -18,11 +18,20 @@ class ProductController {
     this.router.get(this.prefix, (req: Request, res: Response) =>
       this.getProducts(req, res)
     );
+    this.router.get(`${this.prefix}/:id`, (req: Request, res: Response) =>
+      this.getProductById(req, res)
+    );
     this.router.post(this.prefix, (req: Request, res: Response) =>
       this.createProduct(req, res)
     );
   }
-
+  private async getProductById(req: Request, res: Response) {
+    let product = await this.productService.getProductById(req.params.id);
+    return new SuccessResult({
+      msg: Result.transformRequestOnMsg(req),
+      data: product,
+    }).handleSuccess(res);
+  }
   private async getProducts(req: Request, res: Response): Promise<Response> {
     let products = await this.productService.getProducts();
 

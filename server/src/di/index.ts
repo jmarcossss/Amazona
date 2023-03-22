@@ -36,7 +36,11 @@ di.registerService(
 di.registerRepository(OrderRepository, new OrderRepository());
 di.registerService(
   OrderService,
-  new OrderService(di.getRepository(OrderRepository))
+  new OrderService(
+    di.getRepository(OrderRepository),
+    di.getService(OrderStatusService),
+    di.getService(ProductService)
+  )
 );
 
 // Order Status

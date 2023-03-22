@@ -2,7 +2,7 @@ import ProductEntity from '../entities/product.entity';
 import logger from '../logger';
 import ProductModel from '../models/product.model';
 import ProductRepository from '../repositories/product.repository';
-import { BadRequestError } from '../utils/errors/http.error';
+import { BadRequestError, NotFoundError } from '../utils/errors/http.error';
 import BrandService from './brand.service';
 import ProductCategoriesService from './product-categories.service';
 
@@ -59,6 +59,34 @@ class ProductService {
       ) as ProductModel[];
 
       return filteredResults;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  public async getProductById(id: string): Promise<ProductModel> {
+    try {
+      const product = await this.productRepository.getProductById(id);
+
+      if (!product) {
+        throw new NotFoundError({
+          msg: 'Produto não encontrado!',
+          msgCode: ProductServiceMessageCode.product_not_found,
+        });
+      }
+
+      const brand = await this.brandService.getBrandById(product.brandId);
+      const productCategory =
+        await this.productCategoriesService.getProductCategoryById(
+          product.productCategoryId
+        );
+      const result = new ProductModel({
+        ...product,
+        brand: brand,
+        productCategory: productCategory,
+      });
+      return result;
+      
     } catch (e) {
       throw e;
     }

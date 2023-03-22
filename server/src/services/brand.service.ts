@@ -63,7 +63,7 @@ class BrandService {
         });
       }
 
-      const sector = await this.sectorService.getSectorById(brand!.sectorId);
+      const sector = await this.sectorService.getSectorById(brand.sectorId);
 
       return new BrandModel({
         ...brand,
