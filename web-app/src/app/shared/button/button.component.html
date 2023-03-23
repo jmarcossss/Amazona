@@ -1,1 +1,2 @@
-<button mat-raised-button class="button">Entrar</button>
+<!-- <button mat-raised-button class="button">Entrar</button> -->
+<button [ngClass]="type" (click)="onClick()" >{{ label }}</button>

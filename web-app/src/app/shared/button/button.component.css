@@ -1,9 +1,50 @@
-.button {
+.btn{
   background-color: var(--color-details);
-  color: white;
 
+  color: white;
   font-size: var(--font-subtitle);
+
   height: 45px;
-  width: 400px;
   border-radius: var(--radius-default);
 }
+
+.orange-outline {
+  background-color: var(---color-background);
+  border: 1px solid var(--color-details);
+
+  color: var(--color-details);
+}
+
+.danger-outline{
+  background-color: var(---color-background);
+  border: 1px solid var(--color-error);
+
+  color: var(--color-error);
+}
+
+.black-outline {
+  background-color: var(---color-background);
+  border: 1px solid var(--color-texts);
+
+  color: var(--color-texts);
+}
+
+.danger {
+  background-color: var(--color-error);
+}
+
+.black {
+  background-color: var(--color-texts);
+
+}
+
+.large {
+  width: 400px;
+}
+
+.medium {
+  width: 180px;
+}
+
+
+
