@@ -18,9 +18,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { DatePickerComponent } from './date-picker/date-picker.component';
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, FooterComponent],
+  declarations: [LayoutComponent, HeaderComponent, FooterComponent, DatePickerComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -55,6 +56,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    DatePickerComponent
   ],
 })
 export class SharedModule {}
