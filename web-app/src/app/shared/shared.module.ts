@@ -21,7 +21,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, FooterComponent, DatePickerComponent],
+  declarations: [
+    LayoutComponent,
+    HeaderComponent,
+    FooterComponent,
+    DatePickerComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -56,7 +61,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    DatePickerComponent
+    DatePickerComponent,
   ],
 })
 export class SharedModule {}
