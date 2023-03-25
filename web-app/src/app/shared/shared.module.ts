@@ -18,12 +18,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   declarations: [LayoutComponent, HeaderComponent, FooterComponent],
   imports: [
     CommonModule,
     RouterModule,
+    FlexLayoutModule,
     MatButtonModule,
     MatIconModule,
     MatInputModule,
@@ -41,6 +42,7 @@ import { MatSortModule } from '@angular/material/sort';
   ],
   exports: [
     CommonModule,
+    FlexLayoutModule,
     MatButtonModule,
     MatIconModule,
     MatInputModule,

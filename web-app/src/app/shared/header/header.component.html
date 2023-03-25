@@ -1,26 +1,67 @@
-<header>
-  <nav>
-    <a routerLink="/order/history" routerLinkActive="active">
-      Order - History</a
+<mat-toolbar id="header" fxLayout="column" fxLayoutAlign="center center">
+  <mat-toolbar-row
+    class="header-section header-main-section"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="32px"
+  >
+    <a routerLink="/" routerLinkActive="active">
+      <div class="header-main-section-logo" fxFlex="none">
+        <img src="assets/images/logo-bw.png" />
+      </div>
+    </a>
+
+    <mat-form-field appearance="outline" fxFlex>
+      <span matPrefix><mat-icon>search</mat-icon></span>
+      <input
+        type="email"
+        matInput
+        placeholder="O que você procura ?"
+        #searchInput
+        (input)="onSearchChangeHandler(searchInput.value)"
+      />
+    </mat-form-field>
+
+    <div
+      class="header-menu-options-icon"
+      fxFlex="none"
+      fxLayout="row"
+      fxLayoutGap="32px"
     >
-    <a routerLink="/order/details/2" routerLinkActive="active">
-      Order - Details</a
-    ><a routerLink="/order/follow/2" routerLinkActive="active">
-      Order - Follow</a
+      <button mat-icon-button (click)="onClickNotification()">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button mat-icon-button routerLink="/profile" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        routerLink="/shopping-cart/cart"
+        routerLinkActive="active"
+      >
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row
+    class="header-store-section"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <div
+      class="header-section header-store-section-options"
+      fxLayout="row"
+      fxLayoutGap="26px"
     >
-    <a routerLink="/order/cancellation/2" routerLinkActive="active">
-      Order - Cancellation</a
-    >
-    <br />
-    <br />
-    <a routerLink="/shopping-cart/cart" routerLinkActive="active">
-      Shopping - Cart</a
-    >
-    <a routerLink="/shopping-cart/create-order" routerLinkActive="active">
-      Shopping - Create Order</a
-    >
-    <br />
-    <br />
-    <a routerLink="/profile" routerLinkActive="active"> Profile</a>
-  </nav>
-</header>
+      <button mat-button>NOVIDADES</button>
+      <button mat-button>TENDÊNCIAS</button>
+      <button mat-button>ROUPA</button>
+      <button mat-button>VESTIDOS</button>
+      <button mat-button>LOUNGERIE</button>
+      <button mat-button>PRAIA</button>
+      <button mat-button>FESTAS</button>
+      <button mat-button>ACESSÓRIOS</button>
+      <button mat-button>INFANTIL</button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
