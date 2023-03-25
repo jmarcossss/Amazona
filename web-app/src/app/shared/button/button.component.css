@@ -1,6 +1,4 @@
-
-
-.btn{
+.btn {
   background-color: var(--color-details);
 
   color: white;
@@ -8,6 +6,7 @@
 
   height: 45px;
   border-radius: var(--radius-default);
+  cursor: pointer;
 }
 
 .orange-outline {
@@ -17,7 +16,7 @@
   color: var(--color-details);
 }
 
-.danger-outline{
+.danger-outline {
   background-color: var(---color-background);
   border: 1px solid var(--color-error);
 
@@ -37,7 +36,6 @@
 
 .black {
   background-color: var(--color-texts);
-
 }
 
 .large {
@@ -48,11 +46,11 @@
   width: 180px;
 }
 
-.btn:hover{
+.btn:hover {
   background-color: #e18904;
 }
 
-.danger:hover{
+.danger:hover {
   background-color: #ae2a37;
 }
 
@@ -60,7 +58,7 @@
   background-color: #2b2b2b;
 }
 
-.orange-outline:hover{
+.orange-outline:hover {
   background-color: var(--color-details);
   color: white;
 }
