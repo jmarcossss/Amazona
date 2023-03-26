@@ -19,24 +19,10 @@ import Injector from './injector';
 
 export const di = new Injector();
 
-// User
-di.registerRepository(UserRepository, new UserRepository());
-di.registerService(
-  UserService,
-  new UserService(di.getRepository(UserRepository))
-);
-
 // Authentication
 di.registerService(
   AuthenticationService,
   new AuthenticationService(di.getRepository(UserRepository))
-);
-
-// Notification
-di.registerRepository(NotificationRepository, new NotificationRepository());
-di.registerService(
-  NotificationService,
-  new NotificationService(di.getRepository(NotificationRepository))
 );
 
 // Sector
@@ -93,4 +79,21 @@ di.registerService(
     di.getService(OrderStatusService),
     di.getService(ProductService)
   )
+);
+
+// Notification
+di.registerRepository(NotificationRepository, new NotificationRepository());
+di.registerService(
+  NotificationService,
+  new NotificationService(
+    di.getRepository(NotificationRepository),
+    di.getService(OrderService)
+  )
+);
+
+// User
+di.registerRepository(UserRepository, new UserRepository());
+di.registerService(
+  UserService,
+  new UserService(di.getRepository(UserRepository))
 );

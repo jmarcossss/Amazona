@@ -71,7 +71,6 @@ export default class JsonHandler<T extends Identifiable> {
       if (fs.existsSync(this.filePath)) {
         const rawData = await fs.promises.readFile(this.filePath, 'utf-8');
         const jsonData: T[] = JSON.parse(rawData);
-
         return jsonData;
       } else {
         console.error(`[readJsonFile]: File not found: ${this.filePath}`);

@@ -37,6 +37,7 @@ class OrderController {
 
   private async updateOrderById(req: Request, res: Response) {
     await this.orderService.updateOrderById(req.params.id, new OrderStatusItemEntity(req.body));
+    
     return new SuccessResult({
       msg: Result.transformRequestOnMsg(req),
     }).handleSuccess(res);
