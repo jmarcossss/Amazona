@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import OrderService from '../services/order.service';
 import OrderEntity from '../entities/order.entity';
 import { Result, SuccessResult } from '../utils/result';
+import OrderStatusItemEntity from '../entities/order-status-item.entity';
 
 class OrderController {
   private prefix: string = '/orders';
@@ -21,6 +22,9 @@ class OrderController {
     this.router.post(this.prefix, (req: Request, res: Response) =>
       this.createOrder(req, res)
     );
+    this.router.put(`${this.prefix}/:id`, (req: Request, res: Response) =>
+      this.updateOrderById(req, res)
+    );
   }
   
   private async getOrderById(req: Request, res: Response) {
@@ -28,6 +32,13 @@ class OrderController {
     return new SuccessResult({
       msg: Result.transformRequestOnMsg(req),
       data: order,
+    }).handleSuccess(res);
+  }
+
+  private async updateOrderById(req: Request, res: Response) {
+    await this.orderService.updateOrderById(req.params.id, new OrderStatusItemEntity(req.body));
+    return new SuccessResult({
+      msg: Result.transformRequestOnMsg(req),
     }).handleSuccess(res);
   }
 
