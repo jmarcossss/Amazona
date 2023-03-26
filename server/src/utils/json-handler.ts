@@ -32,7 +32,40 @@ export default class JsonHandler<T extends Identifiable> {
       throw e;
     }
   }
-
+  async updateJsonFile(updatedObject: T): Promise<T | undefined> {
+    try {
+      let id:string = updatedObject.id;
+      const jsonData: T[] | void = await this.readJsonFile();
+  
+      if (jsonData) {
+        const index = jsonData.findIndex((obj) => obj.id === id);
+  
+        if (index === -1) {
+          console.error(`[updateJsonFile]: Object with id ${id} not found`);
+          return undefined;
+        }
+  
+        const existingObject = jsonData[index];
+  
+        const updatedData = {
+          ...existingObject,
+          ...updatedObject,
+          id,
+        };
+  
+        jsonData.splice(index, 1, updatedData);
+  
+        const updatedJsonString = JSON.stringify(jsonData);
+  
+        await fs.promises.writeFile(this.filePath, updatedJsonString, 'utf-8');
+  
+        return updatedData;
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+  
   async readJsonFile(): Promise<T[] | undefined> {
     try {
       if (fs.existsSync(this.filePath)) {

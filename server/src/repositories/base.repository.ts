@@ -13,7 +13,9 @@ export class BaseRepository<T extends BaseEntity> {
   public async add(data: T) {
     return await this.db.writeJsonFile(data);
   }
-
+  public async update(data: T) {
+    return await this.db.updateJsonFile(data);
+  }
   public async findAll() {
     return (await this.db.readJsonFile()) || [];
   }

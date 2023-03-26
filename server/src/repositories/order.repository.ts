@@ -23,13 +23,17 @@ class OrderRepository extends BaseRepository<OrderEntity> {
       throw new InternalServerError();
     }
   }
-
-  public async createOrder(
-    data: OrderEntity
-  ): Promise<OrderEntity | undefined> {
+  public async updateOrder(data: OrderEntity): Promise<OrderEntity | undefined> {
+    try {
+      let order = await this.update(data);
+      return order;
+    } catch (e) {
+      throw new InternalServerError();
+    }
+  }
+  public async createOrder(data: OrderEntity): Promise<OrderEntity | undefined> {
     try {
       let order = await this.add(data);
-
       return order;
     } catch (e) {
       throw new InternalServerError();
