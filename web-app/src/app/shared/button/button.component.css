@@ -1,3 +1,5 @@
+
+
 .btn{
   background-color: var(--color-details);
 
@@ -44,4 +46,31 @@
 
 .medium {
   width: 180px;
+}
+
+.btn:hover{
+  background-color: #e18904;
+}
+
+.danger:hover{
+  background-color: #ae2a37;
+}
+
+.black:hover {
+  background-color: #2b2b2b;
+}
+
+.orange-outline:hover{
+  background-color: var(--color-details);
+  color: white;
+}
+
+.danger-outline:hover {
+  background-color: var(--color-error);
+  color: white;
+}
+
+.black-outline:hover {
+  background-color: var(--color-texts);
+  color: white;
 }
