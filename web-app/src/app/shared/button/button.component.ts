@@ -6,11 +6,17 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./button.component.css']
 })
 export class ButtonComponent {
-  @Input() type: string = 'btn large'
+  @Input() type: string = 'btn large';
   @Input() label: string = 'Button';
+  @Input() funcButton: Function | undefined;
 
-   onClick() {
-    console.log('Button clicked!');
+
+  onClick() {
+    if (this.funcButton) {
+      this.funcButton();
+    }
   }
 
 }
+
+
