@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { ButtonComponent } from './button/button.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     LayoutComponent,
     HeaderComponent,
     FooterComponent,
+    ButtonComponent,
     DatePickerComponent,
   ],
   imports: [
@@ -61,6 +63,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    ButtonComponent,
     DatePickerComponent,
   ],
 })
