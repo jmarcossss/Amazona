@@ -1,0 +1,28 @@
+#form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#form label {
+  font-size: var(--font-texts);
+  color: var(--color-inactive);
+}
+
+#form-field ::ng-deep .mdc-text-field {
+  align-items: center;
+  height: 45px !important;
+  max-width: 400px;
+  padding: 0px 12px !important;
+
+  border-radius: var(--radius-default) !important;
+  border: none !important;
+  background-color: #f2f2f2;
+  outline: none !important;
+
+  font-size: var(--font-inputs) !important;
+}
+
+#form-field ::ng-deep .mdc-text-field .mdc-notched-outline > * {
+  border: none !important;
+}

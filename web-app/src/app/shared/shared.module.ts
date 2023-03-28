@@ -21,6 +21,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ButtonComponent } from './button/button.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import { TextInputComponent } from './text-input/text-input.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,11 +31,13 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     FooterComponent,
     ButtonComponent,
     DatePickerComponent,
+    TextInputComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
     MatInputModule,
@@ -68,6 +72,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     MatSortModule,
     ButtonComponent,
     DatePickerComponent,
+    TextInputComponent,
   ],
 })
 export class SharedModule {}
