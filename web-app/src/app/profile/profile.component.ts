@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class ProfileComponent {
 
+ funcTest() {
+
+    console.log("Button Clicked!");
+  }
+
+  funcTest2() {
+
+    console.log("Button Clicked 2!");
+  }
+
+
 }

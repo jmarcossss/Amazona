@@ -19,8 +19,17 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ButtonComponent } from './button/button.component';
+import { DatePickerComponent } from './date-picker/date-picker.component';
+
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, FooterComponent],
+  declarations: [
+    LayoutComponent,
+    HeaderComponent,
+    FooterComponent,
+    ButtonComponent,
+    DatePickerComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -57,6 +66,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    ButtonComponent,
+    DatePickerComponent,
   ],
 })
 export class SharedModule {}
