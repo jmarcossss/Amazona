@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ButtonComponent } from './button/button.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 
@@ -32,6 +33,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
   imports: [
     CommonModule,
     RouterModule,
+    FlexLayoutModule,
     MatButtonModule,
     MatIconModule,
     MatInputModule,
@@ -49,6 +51,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
   ],
   exports: [
     CommonModule,
+    FlexLayoutModule,
     MatButtonModule,
     MatIconModule,
     MatInputModule,
