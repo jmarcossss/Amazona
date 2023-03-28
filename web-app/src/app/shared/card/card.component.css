@@ -1,7 +1,37 @@
 .card {
     background-color: #FFC0CB;
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 20px;
     margin-bottom: 20px;
-  }
-  
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: center;
+    height: 183px;
+    width: 872px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* .card-details {
+    display: flex;
+    justify-content: space-between;
+} */
+
+.card-image {
+    width: 183px;
+    height: 118px;
+    /* background: #D9D9D9; */
+    border-radius: 8px;
+}
+
+.cardBlack {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: center;
+    background-color: #414141;
+    color: white;
+    height: 63px;
+    width: 884px;
+    border-radius: 6px 6px 0px 0px;
+}

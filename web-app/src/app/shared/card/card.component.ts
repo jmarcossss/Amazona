@@ -5,7 +5,10 @@ import { Component, Input } from '@angular/core';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css']
 })
+
 export class CardComponent {
   @Input() title: string = '';
   @Input() content: string = '';
+  @Input() author: string = '';
+  @Input() date: string = '';
 }
