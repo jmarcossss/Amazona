@@ -22,8 +22,8 @@ class OrderController {
     this.router.post(this.prefix, (req: Request, res: Response) =>
       this.createOrder(req, res)
     );
-    this.router.put(`${this.prefix}/:id`, (req: Request, res: Response) =>
-      this.updateOrderById(req, res)
+    this.router.put(`${this.prefix}/status/:id`, (req: Request, res: Response) =>
+      this.addOrderStatusById(req, res)
     );
   }
   
@@ -35,8 +35,8 @@ class OrderController {
     }).handleSuccess(res);
   }
 
-  private async updateOrderById(req: Request, res: Response) {
-    await this.orderService.updateOrderById(req.params.id, new OrderStatusItemEntity(req.body));
+  private async addOrderStatusById(req: Request, res: Response) {
+    await this.orderService.addOrderStatusById(req.params.id, new OrderStatusItemEntity(req.body));
     
     return new SuccessResult({
       msg: Result.transformRequestOnMsg(req),

@@ -89,7 +89,7 @@ class OrderService {
       throw e;
     }
   }
-  public async updateOrderById(id: string, item: OrderStatusItemEntity): Promise<void> {
+  public async addOrderStatusById(id: string, item: OrderStatusItemEntity): Promise<void> {
     try {
       const order = await this.orderRepository.getOrderById(id);
       if (!order) {

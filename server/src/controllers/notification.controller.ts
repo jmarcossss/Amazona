@@ -15,7 +15,7 @@ class NotificationController {
   }
 
   private initRoutes() {
-    this.router.get(this.prefix, (req: Request, res: Response) =>
+    this.router.get(`${this.prefix}/user/:userId`, (req: Request, res: Response) =>
       this.getNotifications(req, res)
     );
     this.router.post(this.prefix, (req: Request, res: Response) =>
@@ -24,7 +24,8 @@ class NotificationController {
   }
 
   private async getNotifications(req: Request, res: Response) {
-    let notifications = await this.notificationService.getNotifications();
+    let date = req.query.date, userId = req.params.userId
+    let notifications = await this.notificationService.getNotifications(userId, date);
     return new SuccessResult({
       msg: Result.transformRequestOnMsg(req),
       data: notifications

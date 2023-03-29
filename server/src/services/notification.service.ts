@@ -22,18 +22,23 @@ class NotificationService {
     this.notificationRepository = notificationRepository;
     this.orderService = orderService;
   }
-  public async getNotifications(): Promise<NotificationModel[]> {
+  public async getNotifications(userId: string, date: any): Promise<NotificationModel[]> {
     try {
-      const notifications = await this.notificationRepository.getNotifications();
-      
+      let notifications = await this.notificationRepository.getNotifications();
+      if(!!date){ /* check if it is undefined */
+        notifications = notifications.filter(
+          (notification) => notification.date === date
+        )  
+      }
+      notifications = notifications.filter(
+        (notification) => notification.userId === userId
+      )
       const results = await Promise.all(
         notifications.map(async (notification) => {
           try {
-            const order = await this.orderService.getOrderById(notification.orderId);
-            
             return new NotificationModel({
               ...notification,
-              order: order
+              date: new Date(notification.date)
             });
           } catch (e) {
             logger.error(
@@ -47,8 +52,7 @@ class NotificationService {
 
       const filteredResults = results.filter(
         (result) => result !== null
-      ) as NotificationModel[];
-
+      ) as NotificationModel[]; 
       return filteredResults;
     } catch (e) {
       throw e;
