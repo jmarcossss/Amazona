@@ -7,8 +7,4 @@ import { Component, Input } from '@angular/core';
 })
 
 export class CardBlackComponent {
-  @Input() title: string = '';
-  @Input() content: string = '';
-  @Input() author: string = '';
-  @Input() date: string = '';
 }

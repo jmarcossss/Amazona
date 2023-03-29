@@ -1,10 +1,9 @@
 .card {
-    background-color: #FFC0CB;
+    background-color: #FCFCFC;
     border-radius: 6px;
     padding: 20px;
     margin-bottom: 20px;
     display: flex;
-    /* flex-direction: column; */
     justify-content: space-between;
     align-items: center;
     height: 183px;
@@ -12,14 +11,8 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* .card-details {
-    display: flex;
-    justify-content: space-between;
-} */
-
 .card-image {
     width: 183px;
     height: 118px;
-    /* background: #D9D9D9; */
     border-radius: 8px;
 }
