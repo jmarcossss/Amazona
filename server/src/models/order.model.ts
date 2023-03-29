@@ -5,7 +5,7 @@ import ProductModel from './product.model';
 class OrderModel extends BaseModel {
   userId: string;
   totalValue: string;
-  purchaseDate: string;
+  purchaseDate: Date;
   statusHistory: OrderStatusItemModel[]
   products: ProductModel[];
   address: string;
@@ -24,7 +24,7 @@ class OrderModel extends BaseModel {
     id: string;
     userId: string;
     totalValue: string;
-    purchaseDate: string;
+    purchaseDate: Date;
     statusHistory: OrderStatusItemModel[]
     products: ProductModel[];
     address: string;

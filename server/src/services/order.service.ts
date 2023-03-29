@@ -29,7 +29,85 @@ class OrderService {
     this.orderStatusService = orderStatusService;
     this.productService = productService;
   }
+  private async getOrderStatusItemsByIds(statusHistories: OrderStatusItemEntity[]): Promise<OrderStatusItemModel[]> {
+    const statusHistory = await Promise.all(
+      statusHistories.map(async (history) => {
+        try {
+          const orderStatus = await this.orderStatusService.getOrderStatusById(history.statusId);
+          
+          return new OrderStatusItemModel({
+            ...history,
+            status: orderStatus,
+          });
+        } catch (e) {
+          logger.error(
+            `[OrderService][getOrderById] Error while processing order-status-item ${history.id}:`,
+            e
+          );
+          return null;
+        }
+      })
+    ); 
+    const filteredStatusHistory = statusHistory.filter(
+      (result) => result !== null
+    ) as OrderStatusItemModel[];
+    return filteredStatusHistory;
+  }
 
+  private async getProductsByIds(productsEntry: string[]): Promise<ProductModel[]> {
+    const products = await Promise.all(
+      productsEntry.map(async (id) => {
+        try {
+          const product = await this.productService.getProductById(id);
+          return product;
+        } catch (e) {
+          logger.error(
+            `[OrderService][getOrderById] Error while processing product ${id}:`,
+            e
+          );
+          return null;
+        }
+      })
+    ); 
+    const filteredProdutct = products.filter(
+      (result) => result !== null
+    ) as ProductModel[];
+    return filteredProdutct;
+  }
+/*   public async getHistoryByUserId(userId: string, history_Id: any, product_name: any, purchaseDate: any): Promise<OrderModel> {
+    try {
+      const orders = await this.orderRepository.getOrder();
+      const results = await Promise.all(
+        orders.map(async (product) => {
+          try {
+            const statusHistory = await this.getOrderStatusItemsByIds(order.statusHistory);  
+            const products = await this.getProductsByIds(order.productsIds);
+
+            const brand = await this.brandService.getBrandById(product.brandId);
+            const productCategory =
+              await this.productCategoriesService.getProductCategoryById(
+                product.productCategoryId
+              );
+            return new ProductModel({
+              ...product,
+              brand: brand,
+              productCategory: productCategory,
+            });
+          } catch (e) {
+            logger.error(
+              `[ProductService][getProducts] Error while processing product ${product.id}:`,
+              e
+            );
+            return null;
+          }
+        })
+      );
+    } catch (e) {
+      throw e;
+    }
+  }
+ */
+  
   public async getOrderById(id: string): Promise<OrderModel> {
     try {
       const order = await this.orderRepository.getOrderById(id);
@@ -40,50 +118,14 @@ class OrderService {
         });
       }
       /* get by id em cada order-status*/
-      const statusHistory = await Promise.all(
-        order.statusHistory.map(async (history) => {
-          try {
-            const orderStatus = await this.orderStatusService.getOrderStatusById(history.statusId);
-            
-            return new OrderStatusItemModel({
-              ...history,
-              status: orderStatus,
-            });
-          } catch (e) {
-            logger.error(
-              `[OrderService][getOrderById] Error while processing order-status-item ${history.id}:`,
-              e
-            );
-            return null;
-          }
-        })
-      ); 
-      const filteredStatusHistory = statusHistory.filter(
-        (result) => result !== null
-      ) as OrderStatusItemModel[];
-
+      const statusHistory = await this.getOrderStatusItemsByIds(order.statusHistory);  
       /* get by id em cada product*/
-      const products = await Promise.all(
-        order.productsIds.map(async (id) => {
-          try {
-            const product = await this.productService.getProductById(id);
-            return product;
-          } catch (e) {
-            logger.error(
-              `[OrderService][getOrderById] Error while processing product ${id}:`,
-              e
-            );
-            return null;
-          }
-        })
-      ); 
-      const filteredProdutct = products.filter(
-        (result) => result !== null
-      ) as ProductModel[];
+      const products = await this.getProductsByIds(order.productsIds);
       return new OrderModel({
         ...order,
-        statusHistory: filteredStatusHistory,
-        products: filteredProdutct
+        statusHistory: statusHistory,
+        products: products,
+        purchaseDate: new Date(order.purchaseDate)
       })
     } catch (e) {
       throw e;
