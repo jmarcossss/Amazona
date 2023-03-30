@@ -19,10 +19,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { CardComponent } from './card/card.component';
-import { CardBlackComponent } from './card-black/card-black.component';
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, FooterComponent, CardComponent, CardBlackComponent],
+  declarations: [LayoutComponent, HeaderComponent, FooterComponent, CardComponent],
   imports: [
     CommonModule,
     RouterModule,
