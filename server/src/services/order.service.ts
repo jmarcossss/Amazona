@@ -74,39 +74,58 @@ class OrderService {
     ) as ProductModel[];
     return filteredProdutct;
   }
-/*   public async getHistoryByUserId(userId: string, history_Id: any, product_name: any, purchaseDate: any): Promise<OrderModel> {
+  public async getHistoryByUserId(userId: string, historyId: any, productName: any, purchaseDate: any): Promise<OrderModel[]> {
     try {
       const orders = await this.orderRepository.getOrder();
       const results = await Promise.all(
-        orders.map(async (product) => {
+        orders.map(async (order) => {
           try {
-            const statusHistory = await this.getOrderStatusItemsByIds(order.statusHistory);  
-            const products = await this.getProductsByIds(order.productsIds);
-
-            const brand = await this.brandService.getBrandById(product.brandId);
-            const productCategory =
-              await this.productCategoriesService.getProductCategoryById(
-                product.productCategoryId
-              );
-            return new ProductModel({
-              ...product,
-              brand: brand,
-              productCategory: productCategory,
+            let statusHistory = await this.getOrderStatusItemsByIds(order.statusHistory);  
+            if(!!historyId){
+              statusHistory = statusHistory.filter(
+                (history) => history.id === historyId
+              ) as OrderStatusItemModel[]  
+            }
+            
+            let products = await this.getProductsByIds(order.productsIds);
+            if(!!productName){
+              products = products.filter(
+                (product) => product.name === productName
+              ) as ProductModel[]  
+            }
+            
+            return new OrderModel({
+              ...order,
+              statusHistory: statusHistory,
+              products: products,
+              purchaseDate: new Date(order.purchaseDate)
             });
           } catch (e) {
             logger.error(
-              `[ProductService][getProducts] Error while processing product ${product.id}:`,
+              `[OrderService][getOrders] Error while processing order ${order.id}:`,
               e
             );
             return null;
           }
         })
       );
+      const filteredResults = results.filter(
+        (result) => {
+          if(result !== null && userId===result.userId){
+            if(!!purchaseDate && purchaseDate !== result.purchaseDate.toISOString()){
+              return false;
+            }
+            return true;
+          }
+          return false;
+        }
+      ) as OrderModel[];
+      return filteredResults
     } catch (e) {
       throw e;
     }
   }
- */
+
   
   public async getOrderById(id: string): Promise<OrderModel> {
     try {
