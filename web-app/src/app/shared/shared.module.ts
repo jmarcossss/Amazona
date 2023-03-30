@@ -73,6 +73,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ButtonComponent,
     DatePickerComponent,
     TextInputComponent,
+    ReactiveFormsModule,
+    RouterModule,
   ],
 })
 export class SharedModule {}

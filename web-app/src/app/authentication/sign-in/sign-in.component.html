@@ -1,3 +1,27 @@
-<mat-card>
-  <mat-card-content>SignIn</mat-card-content>
-</mat-card>
+<div id="container">
+  <div class="img-container">
+    <img src="../../../assets/images/img-login.png" alt="imagem de uma roupa" />
+  </div>
+  <div class="form-container">
+    <mat-card class="form">
+      <mat-card-content>
+        <img
+          src="../../../assets/images/logo-colorful.png"
+          alt="imagem de uma roupa"
+        />
+        <h1>Seja bem-vindo!</h1>
+        <div class="input-container">
+          <app-text-input label="Usuário" placeholder="Informe o e-mail ou usuário"></app-text-input>
+          <app-text-input label="Senha" placeholder="Informe sua senha"></app-text-input>
+        </div>
+        <div class="text-container">
+          <a>Esqueci minha senha</a>
+        </div>
+        <div class="button-container">
+          <app-button type="btn large" [funcButton]="" label="ENTRAR"></app-button>
+          <a>Ainda não tem uma conta? <span>Cadastre-se</span> </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
