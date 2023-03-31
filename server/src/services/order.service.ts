@@ -74,26 +74,18 @@ class OrderService {
     ) as ProductModel[];
     return filteredProdutct;
   }
-  public async getHistoryByUserId(userId: string, historyId: any, productName: any, purchaseDate: any): Promise<OrderModel[]> {
+
+  public async getAllOrderByUserId(userId: string): Promise<OrderModel[]> {
     try {
       const orders = await this.orderRepository.getOrder();
+      const filteredOrdersByUser = orders.filter(
+        order => order.userId === userId
+      ) as OrderEntity[]
       const results = await Promise.all(
-        orders.map(async (order) => {
+        filteredOrdersByUser.map(async (order) => {
           try {
-            let statusHistory = await this.getOrderStatusItemsByIds(order.statusHistory);  
-            if(!!historyId){
-              statusHistory = statusHistory.filter(
-                (history) => history.id === historyId
-              ) as OrderStatusItemModel[]  
-            }
-            
-            let products = await this.getProductsByIds(order.productsIds);
-            if(!!productName){
-              products = products.filter(
-                (product) => product.name === productName
-              ) as ProductModel[]  
-            }
-            
+            const statusHistory = await this.getOrderStatusItemsByIds(order.statusHistory);  
+            const products = await this.getProductsByIds(order.productsIds);
             return new OrderModel({
               ...order,
               statusHistory: statusHistory,
@@ -110,23 +102,65 @@ class OrderService {
         })
       );
       const filteredResults = results.filter(
-        (result) => {
-          if(result !== null && userId===result.userId){
-            if(!!purchaseDate && purchaseDate !== result.purchaseDate.toISOString()){
-              return false;
-            }
-            return true;
-          }
-          return false;
-        }
+        (result) => result !== null
       ) as OrderModel[];
       return filteredResults
     } catch (e) {
       throw e;
     }
   }
-
+  public async getHistoryByUserId(userId: string, historyId: any, productName: any, purchaseDate: any): Promise<OrderModel[]> {
+    try {
+      const orders: OrderModel[] = await this.getAllOrderByUserId(userId);
+      const results = await Promise.all(
+        orders.map(async (order) => {
+          try {
+            let hasStatusHistory = false;
+            let hasSomeProductWithName = false;
+            let hasPurchaseDate = false;
   
+            if (!!purchaseDate) {
+              hasPurchaseDate = order.purchaseDate.toISOString() === purchaseDate;
+            } else {
+              hasPurchaseDate = true; // se não foi fornecido purchaseDate, assume-se que foi atendido
+            }
+  
+            if (!!historyId) {
+              hasStatusHistory = order.statusHistory.some((status) => status.id === historyId);
+            } else {
+              hasStatusHistory = true; // se não foi fornecido historyId, assume-se que foi atendido
+            }
+  
+            if (!!productName) { 
+              hasSomeProductWithName = order.products.some((product) => product.name.toLowerCase().includes(productName.toLowerCase()));
+            } else {
+              hasSomeProductWithName = true; // se não foi fornecido productName, assume-se que foi atendido
+            }
+  
+            if (hasStatusHistory && hasSomeProductWithName && hasPurchaseDate) {
+              return order;
+            }
+  
+          } catch (e) {
+            logger.error(
+              `[OrderService][getOrders] Error while processing order ${order.id}:`,
+              e
+            );
+            return null;
+          }
+        })
+      );
+  
+      const filteredResults = results.filter(
+        (result) => !!result
+      ) as OrderModel[];
+  
+      return filteredResults;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   public async getOrderById(id: string): Promise<OrderModel> {
     try {
       const order = await this.orderRepository.getOrderById(id);
