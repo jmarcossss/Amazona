@@ -18,13 +18,28 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ButtonComponent } from './button/button.component';
+import { DatePickerComponent } from './date-picker/date-picker.component';
+import { TextInputComponent } from './text-input/text-input.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from './card/card.component';
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, FooterComponent, CardComponent],
+  declarations: [
+    LayoutComponent,
+    HeaderComponent,
+    FooterComponent,
+    ButtonComponent,
+    DatePickerComponent,
+    TextInputComponent, 
+    CardComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,
+    FlexLayoutModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
     MatInputModule,
@@ -42,6 +57,7 @@ import { CardComponent } from './card/card.component';
   ],
   exports: [
     CommonModule,
+    FlexLayoutModule,
     MatButtonModule,
     MatIconModule,
     MatInputModule,
@@ -56,6 +72,9 @@ import { CardComponent } from './card/card.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    ButtonComponent,
+    DatePickerComponent,
+    TextInputComponent,
   ],
 })
 export class SharedModule {}

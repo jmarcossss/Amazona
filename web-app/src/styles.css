@@ -20,6 +20,13 @@
   --font-inputs: 14px;
   --font-placeholder: 12px;
 
+  /* Font Weight */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+  --font-weight-extra-bold: 700;
+
   /* Radius */
   --radius-default: 8px;
 
