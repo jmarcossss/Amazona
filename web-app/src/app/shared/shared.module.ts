@@ -23,6 +23,7 @@ import { ButtonComponent } from './button/button.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { TextInputComponent } from './text-input/text-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     ButtonComponent,
     DatePickerComponent,
-    TextInputComponent,
+    TextInputComponent, 
+    CardComponent
   ],
   imports: [
     CommonModule,
