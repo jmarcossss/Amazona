@@ -1,0 +1,35 @@
+[
+    {
+        "CPF": "12989087064",
+        "name": "Clara Acrucha",
+        "username": "acrucha",
+        "email": "acrucha@mail.com",
+        "password": "abcdef12",
+        "payment": "PIX",
+        "address": [
+            "Avenida Acrucha 5"
+        ],
+        "phone": "999789923"
+    },
+    {
+        "CPF": "00342153411",
+        "name": "Rafinha dos Reis",
+        "username": "rafinha",
+        "email": "rafinha@mail.com",
+        "password": "1234567a",
+        "payment": "PIX",
+        "address": [],
+        "phone": ""
+    },
+    {
+        "CPF": "12342153400",
+        "name": "Pâmela Cristian",
+        "username": "pampam",
+        "email": "pam@mail.com",
+        "password": "abcdef00",
+        "payment": "Crédito 0001",
+        "address": [],
+        "phone": ""
+
+    }
+]
