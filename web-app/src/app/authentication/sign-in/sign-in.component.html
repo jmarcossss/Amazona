@@ -11,14 +11,27 @@
         />
         <h1>Seja bem-vindo!</h1>
         <div class="input-container">
-          <app-text-input label="Usuário" placeholder="Informe o e-mail ou usuário"></app-text-input>
-          <app-text-input label="Senha" placeholder="Informe sua senha"></app-text-input>
+          <app-text-input
+          label="Usuário"
+          placeholder="Informe o e-mail ou usuário"
+          [control]="signInForm.get('user')"
+          ></app-text-input>
+          <app-text-input
+          label="Senha"
+          type="password"
+          placeholder="Informe sua senha"
+          [control]="signInForm.get('password')"
+          ></app-text-input>
         </div>
         <div class="text-container">
           <a>Esqueci minha senha</a>
         </div>
         <div class="button-container">
-          <app-button type="btn large" [funcButton]="" label="ENTRAR"></app-button>
+          <app-button
+          type="btn large"
+          label="ENTRAR"
+          (click)="onSubmit()"
+          ></app-button>
           <a>Ainda não tem uma conta? <span>Cadastre-se</span> </a>
         </div>
       </mat-card-content>
