@@ -4,6 +4,7 @@ import NotificationRepository from '../repositories/notification.repository';
 import OrderService from './order.service';
 import { BadRequestError, NotFoundError } from '../utils/errors/http.error';
 import logger from '../logger';
+import EmailService from './email.service';
 
 class NotificationServiceMessageCode {
   public static readonly notification_not_found = 'notification_not_found';
@@ -63,13 +64,15 @@ class NotificationService {
   public async createNotification(data: NotificationEntity): Promise<void> {
     try {
       const notification = await this.notificationRepository.createNotification(data);
-
       if (!notification) {
         throw new BadRequestError({
           msg: 'erro ao criar Notificação',
           msgCode: NotificationServiceMessageCode.notification_not_created,
         });
       }
+      // teste de enviar email
+      /* const email = new EmailService("amazona.ecommerce3@gmail.com", "resckdyyncugzjvq")
+      email.sendEmail("kennedycmelo@gmail.com", "email teste", "Este é um email teste do melhor site do mundo: Amazona") */
     } catch (e) {
       throw e;
     }
