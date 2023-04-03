@@ -1,0 +1,14 @@
+<mat-card class="container">
+  <h1 class="title">
+    {{
+      signUpFormStep == 1
+        ? "Seus dados pessoais"
+        : signUpFormStep == 2
+        ? "Seus endereços"
+        : "Seu método de pagamento"
+    }}
+  </h1>
+  <mat-card-content>
+    <ng-content></ng-content>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,53 @@
+<div>
+  <div class="grid-container">
+    <div>
+      <app-text-input
+        label="Nome*"
+        placeholder="Informe seu nome completo"
+        [control]="signUpForm.get('name')"
+      ></app-text-input>
+      <app-text-input
+        label="CPF*"
+        placeholder="129.585.989-40"
+        [control]="signUpForm.get('cpf')"
+        [mask]="cpfMask"
+      ></app-text-input>
+      <app-text-input
+        label="Celular"
+        placeholder="(81) 99999-9999"
+        [control]="signUpForm.get('cellphone')"
+        [mask]="cellphoneMask"
+      ></app-text-input>
+    </div>
+
+    <div>
+      <app-text-input
+        label="Nome de usuário"
+        placeholder="Informe seu nome de usuário"
+        [control]="signUpForm.get('userName')"
+      ></app-text-input>
+
+      <app-text-input
+        label="Email*"
+        placeholder="example@gmail.com"
+        type="email"
+        [control]="signUpForm.get('email')"
+      ></app-text-input>
+
+      <app-text-input
+        label="Senha*"
+        placeholder="Informe uma senha de 8 dígitos"
+        type="password"
+        hint="Use ao menos uma letra e um número."
+        [control]="signUpForm.get('password')"
+        [pattern]="passwordPattern"
+      ></app-text-input>
+    </div>
+  </div>
+
+  <app-button
+    label="PRÓXIMO"
+    type="btn medium"
+    (click)="onSubmit()"
+  ></app-button>
+</div>

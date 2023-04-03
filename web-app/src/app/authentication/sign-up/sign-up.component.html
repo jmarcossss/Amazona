@@ -1,3 +1,17 @@
-<mat-card>
-  <mat-card-content>SignUp</mat-card-content>
-</mat-card>
+<div class="container">
+  <div>
+    <img src="../../../assets/images/logo-colorful.png" />
+  </div>
+  <app-sign-up-header-step></app-sign-up-header-step>
+  <app-sign-up-form-container>
+    <app-sign-up-form-personal-data
+      *ngIf="signUpFormStep == 1"
+    ></app-sign-up-form-personal-data>
+    <app-sign-up-form-address
+      *ngIf="signUpFormStep == 2"
+    ></app-sign-up-form-address>
+    <app-sign-up-form-payment
+      *ngIf="signUpFormStep == 3"
+    ></app-sign-up-form-payment>
+  </app-sign-up-form-container>
+</div>
