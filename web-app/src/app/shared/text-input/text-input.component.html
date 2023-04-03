@@ -1,16 +1,26 @@
 <div id="form">
-  <label for="form-field">{{ label }}</label>
-  <mat-form-field id="form-field" appearance="outline" floatLabel="always">
+  <label
+    for="form-field"
+    [ngClass]="{ 'label-error': formControllHasError() }"
+    >{{ label }}</label
+  >
+  <mat-form-field
+    id="form-field"
+    [ngClass]="{ 'form-field-error': formControllHasError() }"
+    appearance="outline"
+    floatLabel="always"
+  >
     <input
       matInput
       [placeholder]="placeholder"
       [type]="type"
-      [formControl]="formControl"
+      [formControl]="formControll"
+      [pattern]="pattern"
+      [mask]="mask"
     />
-    <mat-error
-      *ngIf="formControl.invalid && (formControl.dirty || formControl.touched)"
-    >
-      {{ errorMessage }}
+    <mat-hint *ngIf="!!hint">{{ hint }}</mat-hint>
+    <mat-error *ngIf="formControllHasError()">
+      {{ getErrorMessages() }}
     </mat-error>
   </mat-form-field>
 </div>

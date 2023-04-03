@@ -23,6 +23,8 @@ import { ButtonComponent } from './button/button.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { TextInputComponent } from './text-input/text-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -31,13 +33,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     ButtonComponent,
     DatePickerComponent,
-    TextInputComponent,
+    TextInputComponent, 
+    CardComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
     MatButtonModule,
     MatIconModule,
     MatInputModule,
@@ -55,6 +60,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     CommonModule,
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
     FlexLayoutModule,
     MatButtonModule,
     MatIconModule,
@@ -76,5 +84,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     RouterModule,
   ],
+  providers: [provideNgxMask()],
 })
 export class SharedModule {}
