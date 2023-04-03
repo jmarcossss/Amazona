@@ -39,11 +39,11 @@ class OrderController {
   }
   private async getHistoryByUserId(req: Request, res: Response) {
     let userId = req.params.userId
-    let historyId = req.query.historyId
+    let historiesStatus = req.query.historiesStatus
     let productName = req.query.productName
-    let purchaseDate = req.query.purchaseDate
-    
-    let order = await this.orderService.getHistoryByUserId(userId, historyId, productName, purchaseDate);
+    let initialDate = req.query.initialDate
+    let endDate = req.query.endDate
+    let order = await this.orderService.getHistoryByUserId(userId, historiesStatus, productName, initialDate, endDate);
     return new SuccessResult({
       msg: Result.transformRequestOnMsg(req),
       data: order,

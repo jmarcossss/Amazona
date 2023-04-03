@@ -109,7 +109,7 @@ class OrderService {
       throw e;
     }
   }
-  public async getHistoryByUserId(userId: string, historyId: any, productName: any, purchaseDate: any): Promise<OrderModel[]> {
+  public async getHistoryByUserId(userId: string, historiesStatus: any, productName: any, initialDate: any, endDate: any): Promise<OrderModel[]> {
     try {
       const orders: OrderModel[] = await this.getAllOrderByUserId(userId);
       const results = await Promise.all(
@@ -119,14 +119,19 @@ class OrderService {
             let hasSomeProductWithName = false;
             let hasPurchaseDate = false;
   
-            if (!!purchaseDate) {
-              hasPurchaseDate = order.purchaseDate.toISOString() === purchaseDate;
+            if (!!initialDate && !!endDate) {
+              let timePurchaseDate = order.purchaseDate.getTime()
+              let timeInitialDate = new Date(initialDate).getTime()
+              let timeEndDate = new Date(endDate).getTime()
+              
+              hasPurchaseDate = (timePurchaseDate >= timeInitialDate && timePurchaseDate <= timeEndDate)
             } else {
               hasPurchaseDate = true; // se não foi fornecido purchaseDate, assume-se que foi atendido
             }
   
-            if (!!historyId) {
-              hasStatusHistory = order.statusHistory.some((status) => status.id === historyId);
+            if (!!historiesStatus) {
+              let length = order.statusHistory.length
+              hasStatusHistory = length > 0 &&  historiesStatus.includes(order.statusHistory[length -1].status.status); //checa se possui o nome dos status atual
             } else {
               hasStatusHistory = true; // se não foi fornecido historyId, assume-se que foi atendido
             }
