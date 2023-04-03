@@ -9,6 +9,10 @@
   color: var(--color-inactive);
 }
 
+.label-error {
+  color: var(--color-error) !important;
+}
+
 #form-field ::ng-deep .mdc-text-field {
   align-items: center;
   height: 45px !important;
@@ -23,6 +27,18 @@
   font-size: var(--font-inputs) !important;
 }
 
+.form-field-error ::ng-deep .mdc-text-field {
+  background-color: var(--color-error-label) !important;
+}
+
 #form-field ::ng-deep .mdc-text-field .mdc-notched-outline > * {
   border: none !important;
+}
+
+#form-field mat-hint {
+  color: var(--color-inactive);
+}
+
+#form-field mat-error {
+  color: var(--color-error);
 }
