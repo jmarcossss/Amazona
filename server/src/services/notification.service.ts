@@ -1,7 +1,6 @@
 import NotificationEntity from '../entities/notification.entity';
 import NotificationModel from '../models/notification.model'
 import NotificationRepository from '../repositories/notification.repository';
-import OrderService from './order.service';
 import { BadRequestError, NotFoundError } from '../utils/errors/http.error';
 import logger from '../logger';
 import EmailService from './email.service';
@@ -14,14 +13,11 @@ class NotificationServiceMessageCode {
 
 class NotificationService {
   private notificationRepository: NotificationRepository;
-  private orderService: OrderService;
   
   constructor(
     notificationRepository: NotificationRepository,
-    orderService: OrderService
   ) {
     this.notificationRepository = notificationRepository;
-    this.orderService = orderService;
   }
   public async getNotifications(userId: string, date: any): Promise<NotificationModel[]> {
     try {
@@ -70,9 +66,9 @@ class NotificationService {
           msgCode: NotificationServiceMessageCode.notification_not_created,
         });
       }
-      // teste de enviar email
-      /* const email = new EmailService("amazona.ecommerce3@gmail.com", "resckdyyncugzjvq")
-      email.sendEmail("kennedycmelo@gmail.com", "email teste", "Este é um email teste do melhor site do mundo: Amazona") */
+      // envia email após criação de notificação
+      const email = new EmailService()
+      await email.sendEmail("kennedycmelo@gmail.com", data.title, data.description)
     } catch (e) {
       throw e;
     }

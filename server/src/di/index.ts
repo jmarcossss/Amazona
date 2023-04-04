@@ -70,6 +70,15 @@ di.registerService(
   new OrderStatusService(di.getRepository(OrderStatusRepository))
 );
 
+// Notification
+di.registerRepository(NotificationRepository, new NotificationRepository());
+di.registerService(
+  NotificationService,
+  new NotificationService(
+    di.getRepository(NotificationRepository)
+  )
+);
+
 // Order
 di.registerRepository(OrderRepository, new OrderRepository());
 di.registerService(
@@ -77,17 +86,8 @@ di.registerService(
   new OrderService(
     di.getRepository(OrderRepository),
     di.getService(OrderStatusService),
-    di.getService(ProductService)
-  )
-);
-
-// Notification
-di.registerRepository(NotificationRepository, new NotificationRepository());
-di.registerService(
-  NotificationService,
-  new NotificationService(
-    di.getRepository(NotificationRepository),
-    di.getService(OrderService)
+    di.getService(ProductService),
+    di.getService(NotificationService)
   )
 );
 

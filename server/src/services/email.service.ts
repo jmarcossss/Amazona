@@ -6,9 +6,9 @@ import * as nodemailer from 'nodemailer';
 class EmailService {
   private emailFrom: string;
   private passwordFrom: string;
-  constructor(emailFrom: string, passwordFrom: string) {
-    this.emailFrom = emailFrom;
-    this.passwordFrom = passwordFrom;
+  constructor() {
+    this.emailFrom = "amazona.ecommerce3@gmail.com";
+    this.passwordFrom = "resckdyyncugzjvq";
   }
   public async sendEmail(emailTo: string, title: string, msg: string): Promise<void> {
     const infomations = {
