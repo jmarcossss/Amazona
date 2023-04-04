@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import UserService from '../services/user.service';
 import { Result, SuccessResult } from '../utils/result';
 import UserEntity from '../entities/user.entity';
+import UserModel from '../models/user.model';
 
 class UserController {
   private prefix: string = '/users';
@@ -39,7 +40,8 @@ class UserController {
   }
 
   private async getUserById(req: Request, res: Response) {
-    let user = await this.userService.getUserById(req.params.id);
+    let user = new UserModel(await this.userService.
+                                   getUserById(req.params.id));
 
     return new SuccessResult({
       msg: Result.transformRequestOnMsg(req),

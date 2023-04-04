@@ -84,7 +84,7 @@ class AuthenticationController {
   }
 
   private async resetPassword(req: Request, res: Response) : Promise<Response> {
-    await this.authenticationService.resetPassword(new UserEntity(req.body));
+    await this.authenticationService.resetPassword(req.body.email, req.body.password);
     
     return new SuccessResult({
       msg: Result.transformRequestOnMsg(req)

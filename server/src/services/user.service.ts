@@ -47,7 +47,7 @@ class UserService {
     }
   }
 
-  public async getUserById(id: string): Promise<UserModel> {
+  public async getUserById(id: string): Promise<UserEntity> {
     try {
       const user = await this.userRepository.getUserById(id);
 
@@ -58,17 +58,17 @@ class UserService {
         });
       }
 
-      return new UserModel(user);
+      return user;
     } catch (e) {
       throw e;
     }
   }
 
-  public async getUserByEmail(email: string): Promise<UserModel> {
+  public async getUserByEmail(email: string): Promise<UserEntity> {
     try {
       const users = await this.userRepository.getUsers();
-      const user = users.find((user) => (user.email === email))
-    
+      const user = users.find((user) => (user.email === email));
+
       if(!user) {
         throw new NotFoundError({
           msg: 'User not found!',
@@ -76,7 +76,7 @@ class UserService {
         });
       }
 
-      return new UserModel(user);
+      return user
     } catch (e) {
       throw e;
     }
@@ -103,8 +103,12 @@ class UserService {
     try {
       const user = await this.getUserById(id);
 
-      data.id = id;
-      const updatedUser = await this.userRepository.updateUserById(data);
+      user.name = data.name;
+      user.payment = data.payment;
+      user.address = data.address;
+      user.phone = data.phone;
+      
+      const updatedUser = await this.userRepository.updateUserById(user);
 
       if (!updatedUser) {
         throw new InternalServerError({

@@ -152,20 +152,19 @@ class AuthenticationService {
     }
   }
 
-  public async resetPassword(data: UserEntity): Promise<void> {
+  public async resetPassword(email: string, password: string): Promise<void> {
     try {
-      if (!(/\d/.test(data.password) && 
-          /[a-zA-Z]/.test(data.password)) &&  
-          data.password.length != 8) {
+      if (!(/\d/.test(password) &&
+          /[a-zA-Z]/.test(password)) &&
+          password.length != 8) {
         throw new BadRequestError({ msg: 'Invalid password format!',
                                     msgCode: AuthenticationServiceMessageCode.
                                              password_invalid_format})
       }
 
-      const user = await this.userService.getUserByEmail(data.email)
-      
-      data.id = user.id
-      await this.userService.updateUserById(data.id, data)
+      const user = await this.userService.getUserByEmail(email)
+      user.password = password
+      const updatedUser = await this.userRepository.updateUserById(user);
     } catch (e) {
       throw e;
     }

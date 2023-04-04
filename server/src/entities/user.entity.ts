@@ -1,6 +1,6 @@
 import BaseEntity from './base.entity';
 
-export default class UserEntity extends BaseEntity {
+class UserEntity extends BaseEntity {
     CPF: string;
     name: string;
     username: string;
@@ -24,3 +24,5 @@ export default class UserEntity extends BaseEntity {
         this.code = data.code || '';
     }
 }
+
+export default UserEntity;

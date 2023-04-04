@@ -6,7 +6,6 @@ class UserModel extends BaseModel {
   name: string;
   username: string;
   email: string;
-  password: string; 
   payment: string;
   address: string[];
   phone: string;
@@ -17,8 +16,7 @@ class UserModel extends BaseModel {
     CPF, 
     name, 
     username,
-    email, 
-    password, 
+    email,
     payment, 
     address, 
     phone,
@@ -28,8 +26,7 @@ class UserModel extends BaseModel {
     CPF: string; 
     name: string; 
     username: string; 
-    email: string;  
-    password: string;
+    email: string;
     payment: string;
     address: string[];
     phone: string;
@@ -39,8 +36,7 @@ class UserModel extends BaseModel {
     this.CPF = CPF;
     this.name = name;
     this.username = username;
-    this.email =email;  
-    this.password = password;
+    this.email =email;
     this.payment = payment;
     this.address = address;
     this.phone = phone;
