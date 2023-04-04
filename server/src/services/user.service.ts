@@ -1,6 +1,6 @@
 import UserModel from '../models/user.model';
 import UserRepository from '../repositories/user.repository';
-import { NotFoundError, InternalServerError } from '../utils/errors/http.error';
+import { NotFoundError, BadRequestError, InternalServerError } from '../utils/errors/http.error';
 import logger from '../logger';
 import UserEntity from '../entities/user.entity';
 
@@ -64,12 +64,30 @@ class UserService {
     }
   }
 
+  public async getUserByEmail(email: string): Promise<UserModel> {
+    try {
+      const users = await this.userRepository.getUsers();
+      const user = users.find((user) => (user.email === email))
+    
+      if(!user) {
+        throw new NotFoundError({
+          msg: 'User not found!',
+          msgCode: UserServiceMessageCode.user_not_found,
+        });
+      }
+
+      return new UserModel(user);
+    } catch (e) {
+      throw e;
+    }
+  }
+
   public async deleteUserById(id: string, password: string): Promise<void> {
     try {
       const user = await this.getUserById(id);
 
       if(user.password != password) {
-        throw new NotFoundError({
+        throw new BadRequestError({
           msg: 'Incorrect password!',
           msgCode: UserServiceMessageCode.incorrect_password,
         });

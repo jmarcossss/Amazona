@@ -27,7 +27,7 @@ di.registerService(
 // Authentication
 di.registerService(
   AuthenticationService,
-  new AuthenticationService(di.getRepository(UserRepository))
+  new AuthenticationService(di.getService(UserService), di.getRepository(UserRepository))
 );
 
 // Order

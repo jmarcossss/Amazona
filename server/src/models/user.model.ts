@@ -10,6 +10,7 @@ class UserModel extends BaseModel {
   payment: string;
   address: string[];
   phone: string;
+  code: string;
 
   constructor({ 
     id,
@@ -21,6 +22,7 @@ class UserModel extends BaseModel {
     payment, 
     address, 
     phone,
+    code
   } : { 
     id: string,
     CPF: string; 
@@ -31,6 +33,7 @@ class UserModel extends BaseModel {
     payment: string;
     address: string[];
     phone: string;
+    code: string;
   }) {
     super(id);
     this.CPF = CPF;
@@ -41,6 +44,7 @@ class UserModel extends BaseModel {
     this.payment = payment;
     this.address = address;
     this.phone = phone;
+    this.code = code;
   }
 }
 

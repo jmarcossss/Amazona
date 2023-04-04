@@ -9,6 +9,7 @@ export default class UserEntity extends BaseEntity {
     payment: string;
     address: string[];
     phone: string;
+    code: string;
 
     constructor(data: Partial<UserEntity>){
         super(data.id || '');
@@ -20,5 +21,6 @@ export default class UserEntity extends BaseEntity {
         this.payment = data.payment || '';
         this.address = data.address || [];
         this.phone = data.phone || '';
+        this.code = data.code || '';
     }
 }

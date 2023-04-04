@@ -1,5 +1,6 @@
 [
     {
+        "id": "ce6f5c66-1967-4b21-9929-51ca7d652151",
         "CPF": "12989087064",
         "name": "Clara Acrucha",
         "username": "acrucha",
@@ -9,9 +10,11 @@
         "address": [
             "Avenida Acrucha 5"
         ],
-        "phone": "999789923"
+        "phone": "999789923", 
+        "code": ""
     },
     {
+        "id": "0b718259-44a4-4a03-9491-c4374f5e3b33",
         "CPF": "00342153411",
         "name": "Rafinha dos Reis",
         "username": "rafinha",
@@ -19,9 +22,11 @@
         "password": "1234567a",
         "payment": "PIX",
         "address": [],
-        "phone": ""
+        "phone": "", 
+        "code": ""
     },
     {
+        "id": "6f4bead0-2504-4035-9cc4-335d5e42dd24",
         "CPF": "12342153400",
         "name": "Pâmela Cristian",
         "username": "pampam",
@@ -29,7 +34,7 @@
         "password": "abcdef00",
         "payment": "Crédito 0001",
         "address": [],
-        "phone": ""
-
+        "phone": "", 
+        "code": ""
     }
 ]
