@@ -8,7 +8,7 @@ import { SignUpService } from './sign-up.service';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
-  signUpFormStep: SignUpFormStep = SignUpFormStep.PersonalData;
+  signUpFormStep!: SignUpFormStep;
 
   constructor(private signUpService: SignUpService) {}
 

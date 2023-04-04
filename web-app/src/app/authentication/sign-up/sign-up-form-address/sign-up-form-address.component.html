@@ -1,1 +1,31 @@
-<p>sign-up-form-address works!</p>
+<div>
+  <div>
+    <app-text-input
+      label="Endereço principal"
+      placeholder="Informe o endereço"
+      [control]="signUpAddressForm.get('mainAddress')"
+    ></app-text-input>
+    <app-text-input
+      label="Endereço 2"
+      placeholder="Informe o endereço"
+      [control]="signUpAddressForm.get('address2')"
+    ></app-text-input>
+    <app-text-input
+      label="Endereço 3"
+      placeholder="Informe o endereço"
+      [control]="signUpAddressForm.get('address3')"
+    ></app-text-input>
+  </div>
+  <div class="button-container">
+    <app-button
+      label="VOLTAR"
+      type="btn medium orange-outline"
+      (click)="onBack()"
+    ></app-button>
+    <app-button
+      label="PRÓXIMO"
+      type="btn medium"
+      (click)="onSubmit()"
+    ></app-button>
+  </div>
+</div>

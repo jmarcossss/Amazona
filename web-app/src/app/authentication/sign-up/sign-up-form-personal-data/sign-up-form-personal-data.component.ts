@@ -10,7 +10,7 @@ import InputMask from '../../../shared/utils/input-mask';
   styleUrls: ['./sign-up-form-personal-data.component.css'],
 })
 export class SignUpFormPersonalDataComponent implements OnInit {
-  signUpForm!: FormGroup;
+  signUpPersonalDataForm!: FormGroup;
   cpfMask = InputMask.CPF;
   cellphoneMask = InputMask.CELLPHONE;
   passwordPattern = ValidatorsPattern.PASSWORD;
@@ -18,7 +18,7 @@ export class SignUpFormPersonalDataComponent implements OnInit {
   constructor(private signUpService: SignUpService) {}
 
   ngOnInit() {
-    this.signUpForm = this.signUpService.signUpPersonalDataForm;
+    this.signUpPersonalDataForm = this.signUpService.signUpPersonalDataForm;
   }
 
   onSubmit(): void {

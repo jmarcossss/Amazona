@@ -1,1 +1,34 @@
-<p>sign-up-form-payment works!</p>
+<div>
+  <mat-radio-group (change)="onRadioChange($event.value)">
+    <div class="radio-container">
+      <mat-radio-button value="pix">PIX</mat-radio-button>
+      <app-text-input
+        *ngIf="paymentOption === 'pix'"
+        placeholder="Informe o código PIX"
+        [control]="signUpPaymentForm.get('payment')"
+      ></app-text-input>
+    </div>
+    <div class="radio-container">
+      <mat-radio-button value="credit">Cartão de crédito</mat-radio-button>
+      <app-text-input
+        *ngIf="paymentOption === 'credit'"
+        placeholder="Informe o número do cartão"
+        [control]="signUpPaymentForm.get('payment')"
+        [mask]="creditMask"
+      ></app-text-input>
+    </div>
+  </mat-radio-group>
+
+  <div class="button-container">
+    <app-button
+      label="VOLTAR"
+      type="btn medium orange-outline"
+      (click)="onBack()"
+    ></app-button>
+    <app-button
+      label="PRÓXIMO"
+      type="btn medium"
+      (click)="onSubmit()"
+    ></app-button>
+  </div>
+</div>

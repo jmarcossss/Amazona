@@ -4,18 +4,18 @@
       <app-text-input
         label="Nome*"
         placeholder="Informe seu nome completo"
-        [control]="signUpForm.get('name')"
+        [control]="signUpPersonalDataForm.get('name')"
       ></app-text-input>
       <app-text-input
         label="CPF*"
         placeholder="129.585.989-40"
-        [control]="signUpForm.get('cpf')"
+        [control]="signUpPersonalDataForm.get('cpf')"
         [mask]="cpfMask"
       ></app-text-input>
       <app-text-input
         label="Celular"
         placeholder="(81) 99999-9999"
-        [control]="signUpForm.get('cellphone')"
+        [control]="signUpPersonalDataForm.get('cellphone')"
         [mask]="cellphoneMask"
       ></app-text-input>
     </div>
@@ -24,14 +24,14 @@
       <app-text-input
         label="Nome de usuário"
         placeholder="Informe seu nome de usuário"
-        [control]="signUpForm.get('userName')"
+        [control]="signUpPersonalDataForm.get('userName')"
       ></app-text-input>
 
       <app-text-input
         label="Email*"
         placeholder="example@gmail.com"
         type="email"
-        [control]="signUpForm.get('email')"
+        [control]="signUpPersonalDataForm.get('email')"
       ></app-text-input>
 
       <app-text-input
@@ -39,7 +39,7 @@
         placeholder="Informe uma senha de 8 dígitos"
         type="password"
         hint="Use ao menos uma letra e um número."
-        [control]="signUpForm.get('password')"
+        [control]="signUpPersonalDataForm.get('password')"
         [pattern]="passwordPattern"
       ></app-text-input>
     </div>

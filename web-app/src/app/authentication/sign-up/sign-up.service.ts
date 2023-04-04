@@ -1,17 +1,28 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SignUpFormStep } from './enums/sign-up-form-step.enum';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { BaseService } from '../../services/base.service';
+import { HttpService } from '../../services/http.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SignUpService {
+export class SignUpService extends BaseService {
+  private prefix: string = '/authentication/sign-up';
+
   public signUpPersonalDataForm: FormGroup;
-  signUpFormStep: Subject<SignUpFormStep> = new Subject<SignUpFormStep>();
+  public signUpAddressForm: FormGroup;
+  public signUpPaymentForm: FormGroup;
+  signUpFormStep: BehaviorSubject<SignUpFormStep> =
+    new BehaviorSubject<SignUpFormStep>(SignUpFormStep.PersonalData);
   public signUpFormStep$ = this.signUpFormStep.asObservable();
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private httpService: HttpService
+  ) {
+    super();
     this.signUpPersonalDataForm = this.formBuilder.group({
       name: ['', Validators.required],
       cpf: ['', Validators.required],
@@ -32,6 +43,17 @@ export class SignUpService {
         ],
       ],
     });
+
+    this.signUpAddressForm = this.formBuilder.group({
+      mainAddress: [''],
+      address2: [''],
+      address3: [''],
+    });
+
+    this.signUpPaymentForm = this.formBuilder.group({
+      paymentOption: [''],
+      payment: [''],
+    });
   }
 
   public submitPersonalData(): void {
@@ -41,4 +63,22 @@ export class SignUpService {
       this.signUpFormStep.next(SignUpFormStep.Address);
     }
   }
+
+  public backFromAddress(): void {
+    this.signUpFormStep.next(SignUpFormStep.PersonalData);
+  }
+
+  public submitAddress(): void {
+    this.signUpFormStep.next(SignUpFormStep.Payment);
+  }
+
+  public backFromPayment(): void {
+    this.signUpFormStep.next(SignUpFormStep.Address);
+  }
+
+  public submitPayment(): void {
+    this.signUpFormStep.next(SignUpFormStep.End);
+  }
+
+  public signUp(): void {}
 }
