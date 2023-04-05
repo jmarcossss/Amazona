@@ -1,7 +1,11 @@
 <div class="container">
   <h1>Acompanhamento do pedido {{ orderId }}</h1>
   <app-card>
-    <p>Estimativa para entrega em 20 dias.</p>
+    <p>Estimativa para entrega em
+      {{ timeRemaining.days }} dias,
+      {{ timeRemaining.hours }} horas,
+      {{ timeRemaining.minutes }} minutos e
+      {{ timeRemaining.seconds }} segundos</p>
     <h2>Confirmado</h2>
     <div class="image-container">
       <img src="../../../assets/images/confirmado.png">
