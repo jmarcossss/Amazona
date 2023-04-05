@@ -3,7 +3,7 @@ import logger from '../logger';
 import OrderModel from '../models/order.model';
 import OrderStatusItemModel from '../models/order-status-item.model';
 import OrderRepository from '../repositories/order.repository';
-import { BadRequestError, NotFoundError } from '../utils/errors/http.error';
+import { BadRequestError, NotFoundError, UnauthorizedError } from '../utils/errors/http.error';
 import OrderStatusService from './order-status.service';
 import ProductService from './product.service';
 import NotificationService from './notification.service';
@@ -115,43 +115,45 @@ class OrderService {
       throw e;
     }
   }
+  public async getHistoryByUserIdAuxiliary(order: OrderModel, historiesStatus: any, productName: any, initialDate: any, endDate: any): Promise<OrderModel | undefined> {
+    let hasStatusHistory = false;
+    let hasSomeProductWithName = false;
+    let hasPurchaseDate = false;
+
+    if (!!initialDate && !!endDate) {
+      let timePurchaseDate = order.purchaseDate.getTime()
+      let timeInitialDate = new Date(initialDate).getTime()
+      let timeEndDate = new Date(endDate).getTime()
+      
+      hasPurchaseDate = (timePurchaseDate >= timeInitialDate && timePurchaseDate <= timeEndDate)
+    } else {
+      hasPurchaseDate = true; // se não foi fornecido purchaseDate, assume-se que foi atendido
+    }
+
+    if (!!historiesStatus) {
+      let length = order.statusHistory.length
+      hasStatusHistory = length > 0 &&  historiesStatus.includes(order.statusHistory[length -1].status.status); //checa se possui o nome dos status atual
+    } else {
+      hasStatusHistory = true; // se não foi fornecido historyId, assume-se que foi atendido
+    }
+
+    if (!!productName) { 
+      hasSomeProductWithName = order.products.some((product) => product.name.toLowerCase().includes(productName.toLowerCase()));
+    } else {
+      hasSomeProductWithName = true; // se não foi fornecido productName, assume-se que foi atendido
+    }
+
+    if (hasStatusHistory && hasSomeProductWithName && hasPurchaseDate) {
+      return order;
+    }
+  }
   public async getHistoryByUserId(userId: string, historiesStatus: any, productName: any, initialDate: any, endDate: any): Promise<OrderModel[]> {
     try {
       const orders: OrderModel[] = await this.getAllOrderByUserId(userId);
       const results = await Promise.all(
         orders.map(async (order) => {
           try {
-            let hasStatusHistory = false;
-            let hasSomeProductWithName = false;
-            let hasPurchaseDate = false;
-  
-            if (!!initialDate && !!endDate) {
-              let timePurchaseDate = order.purchaseDate.getTime()
-              let timeInitialDate = new Date(initialDate).getTime()
-              let timeEndDate = new Date(endDate).getTime()
-              
-              hasPurchaseDate = (timePurchaseDate >= timeInitialDate && timePurchaseDate <= timeEndDate)
-            } else {
-              hasPurchaseDate = true; // se não foi fornecido purchaseDate, assume-se que foi atendido
-            }
-  
-            if (!!historiesStatus) {
-              let length = order.statusHistory.length
-              hasStatusHistory = length > 0 &&  historiesStatus.includes(order.statusHistory[length -1].status.status); //checa se possui o nome dos status atual
-            } else {
-              hasStatusHistory = true; // se não foi fornecido historyId, assume-se que foi atendido
-            }
-  
-            if (!!productName) { 
-              hasSomeProductWithName = order.products.some((product) => product.name.toLowerCase().includes(productName.toLowerCase()));
-            } else {
-              hasSomeProductWithName = true; // se não foi fornecido productName, assume-se que foi atendido
-            }
-  
-            if (hasStatusHistory && hasSomeProductWithName && hasPurchaseDate) {
-              return order;
-            }
-  
+            return await this.getHistoryByUserIdAuxiliary(order, historiesStatus, productName, initialDate, endDate)
           } catch (e) {
             logger.error(
               `[OrderService][getOrders] Error while processing order ${order.id}:`,
@@ -177,7 +179,7 @@ class OrderService {
       const order = await this.orderRepository.getOrderById(id);
       if (!order) {
         throw new NotFoundError({
-          msg: 'Pedido não encontrado!',
+          msg: 'order not found!',
           msgCode: OrderServiceMessageCode.order_not_found,
         });
       }
@@ -200,7 +202,7 @@ class OrderService {
       const order = await this.orderRepository.getOrderById(id);
       if (!order) {
         throw new NotFoundError({
-          msg: 'Pedido não encontrado!',
+          msg: 'order not found!',
           msgCode: OrderServiceMessageCode.order_not_found,
         });
       }
@@ -212,7 +214,7 @@ class OrderService {
       const result = await this.orderRepository.updateOrder(order);
       if (!result) {
         throw new BadRequestError({
-          msg: 'erro ao atualizar Pedido',
+          msg: 'order not updated!',
           msgCode: OrderServiceMessageCode.order_not_updated,
         });
       }
@@ -226,21 +228,20 @@ class OrderService {
 
       if (!order) {
         throw new BadRequestError({
-          msg: 'erro ao criar Pedido',
+          msg: 'order not updated!',
           msgCode: OrderServiceMessageCode.order_not_created,
         });
-      } else{
-        const products: ProductModel[] = await this.getProductsByIds(order.productsIds);
-        const productsName: string = products.map(product => product.name).join(', ')
-        const notificationData = new NotificationEntity({
-          title: `Criação do pedido de número X com sucesso`,
-          description: `O pedido com os produtos ${productsName} Foi criado com sucesso!`,
-          orderId: order.id,
-          userId: order.userId,
-          date: order.purchaseDate
-        })
-        await this.notificationService.createNotification(notificationData)
       }
+      const products: ProductModel[] = await this.getProductsByIds(order.productsIds);
+      const productsName: string = products.map(product => product.name).join(', ')
+      const notificationData = new NotificationEntity({
+        title: `Criação do pedido de número X com sucesso`,
+        description: `O pedido com os produtos ${productsName} Foi criado com sucesso!`,
+        orderId: order.id,
+        userId: order.userId,
+        date: order.purchaseDate
+      })
+      await this.notificationService.createNotification(notificationData)
     } catch (e) {
       throw e;
     }

@@ -62,7 +62,7 @@ class NotificationService {
       const notification = await this.notificationRepository.createNotification(data);
       if (!notification) {
         throw new BadRequestError({
-          msg: 'erro ao criar Notificação',
+          msg: 'error criating Notification',
           msgCode: NotificationServiceMessageCode.notification_not_created,
         });
       }

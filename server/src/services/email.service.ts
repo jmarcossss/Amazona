@@ -1,3 +1,4 @@
+import Env from '../env';
 import logger from '../logger';
 import { NotFoundError } from '../utils/errors/http.error';
 import SectorService from './sector.service';
@@ -7,8 +8,8 @@ class EmailService {
   private emailFrom: string;
   private passwordFrom: string;
   constructor() {
-    this.emailFrom = "amazona.ecommerce3@gmail.com";
-    this.passwordFrom = "resckdyyncugzjvq";
+    this.emailFrom = Env.EMAIL_FROM;
+    this.passwordFrom = Env.PASSWORD_FROM;
   }
   public async sendEmail(emailTo: string, title: string, msg: string): Promise<void> {
     const infomations = {
@@ -27,9 +28,13 @@ class EmailService {
     };
     transporter.sendMail(mailOptions, function(error: any, info: any){
       if (error) {
+        logger.error(
+          `[EmailService][sendMail] Error while sending the email`,
+          error
+        );
         console.log(error);
       } else {
-        console.log('Email enviado: ' + info.response);
+        console.log('Sent Email : ' + info.response);
       }
     });
   }
