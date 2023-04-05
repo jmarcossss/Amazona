@@ -29,16 +29,8 @@ p {
 }
 
 img {
-  height: 120px;
-  width: 120px;
-}
-
-.status {
-  position: absolute;
-  /* top: -35px; ajuste conforme necessário */
-  left: 19%;
-  transform: translateX(-50%);
-  z-index: 1;
+  height: 105px;
+  width: 105px;
 }
 
 
