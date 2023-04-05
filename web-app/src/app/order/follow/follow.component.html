@@ -6,16 +6,23 @@
       {{ timeRemaining.hours }} horas,
       {{ timeRemaining.minutes }} minutos e
       {{ timeRemaining.seconds }} segundos</p>
-    <h2>Confirmado</h2>
+    <h2>{{ status }}</h2>
     <div class="image-container">
-      <img src="../../../assets/images/confirmado.png">
+      <div class="step" [ngClass]="{'step-active': timeRemaining.minutes >= 0}">
+        <img src="../../../assets/images/Big Parcel.png" alt="icone1">
+      </div>
       <p>-------------------------></p>
-      <img src="../../../assets/images/emTransito.png">
+      <div class="step" [ngClass]="{'step-active': timeRemaining.minutes <= 2}">
+        <img src="../../../assets/images/Open Box.png" alt="icone2">
+      </div>
       <p>-------------------------></p>
-      <img src="../../../assets/images/entregue.png">
+      <div class="step stepHome" [ngClass]="{'step-active': timeRemaining.minutes <= 1}">
+        <img src="../../../assets/images/Smart Home Checked.png" alt="icone3">
+      </div>
     </div>
   </app-card>
 </div>
+
 
 
 

@@ -1,9 +1,10 @@
-  .image-container {
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
-    width: 90%;
-  }
+.image-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 90%;
+}
 
 .container {
   margin-top: 60px;
@@ -28,11 +29,29 @@ p {
   margin-bottom: 24px;
 }
 
-img {
-  height: 105px;
-  width: 105px;
+.step {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.step-active {
+  background-color: var(--color-success)
+}
+
+.step img {
+  height: 50px;
+  width: 50px;
+}
+
+.stepHome img {
+  height: 40px;
+  width: 72px;
+}
 
 /* .card-content {
     padding: 16px;

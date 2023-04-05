@@ -10,8 +10,9 @@ import { interval } from 'rxjs';
 })
 export class FollowComponent implements OnInit {
   orderId!: number;
-  deliveryDate: moment.Moment = moment().add(1, 'days');
+  deliveryDate: moment.Moment = moment().add(4, 'minutes');
   timeRemaining: any = {};
+  status = 'Confirmado';
 
   constructor(private route: ActivatedRoute) {}
 
@@ -23,11 +24,25 @@ export class FollowComponent implements OnInit {
   }
 
   getTimeRemaining() {
-    const duration = moment.duration(this.deliveryDate.diff(moment()));
-    const days = duration.days();
-    const hours = duration.hours();
-    const minutes = duration.minutes();
-    const seconds = duration.seconds();
-    return { days, hours, minutes, seconds };
+    const now = moment();
+    if (now.isBefore(this.deliveryDate)) {
+      const duration = moment.duration(this.deliveryDate.diff(now));
+      const minutes = duration.asMinutes();
+      if (minutes > 2) {
+        this.status = 'Confirmado';
+      } else if (minutes <= 2 && minutes > 1) {
+        this.status = 'Em trânsito';
+      } else {
+        this.status = 'Entregue';
+      }
+      const days = duration.days();
+      const hours = duration.hours();
+      const minutesRemaining = duration.minutes();
+      const seconds = duration.seconds();
+      return { days, hours, minutes: minutesRemaining, seconds };
+    } else {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
   }
 }
+
