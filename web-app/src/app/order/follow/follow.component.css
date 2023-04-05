@@ -1,0 +1,25 @@
+.card-content {
+    padding: 16px;
+    text-align: center;
+  }
+  
+  .image-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .image-container {
+    height: 100%;
+    width: 50%;
+  }
+
+h1 {
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--color-texts)
+}
+
+img {
+  height: 120px;
+  width: 120px;
+}
