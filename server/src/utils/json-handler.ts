@@ -13,7 +13,7 @@ export default class JsonHandler<T extends Identifiable> {
   async writeJsonFile(newObject: T): Promise<T | undefined> {
     try {
       const jsonData: T[] | void = await this.readJsonFile();
-
+      
       if (jsonData) {
         let updatedObject = {
           ...newObject,
@@ -32,6 +32,22 @@ export default class JsonHandler<T extends Identifiable> {
       throw e;
     }
   }
+
+  async readJsonFile(): Promise<T[] | undefined> {
+    try {
+      if (fs.existsSync(this.filePath)) {
+        const rawData = await fs.promises.readFile(this.filePath, 'utf-8');
+        const jsonData: T[] = JSON.parse(rawData);
+        return jsonData;
+      } else {
+        console.error(`[readJsonFile]: File not found: ${this.filePath}`);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+}
+
   async updateJsonFile(updatedObject: T): Promise<T | undefined> {
     try {
       let id:string = updatedObject.id;
@@ -66,17 +82,25 @@ export default class JsonHandler<T extends Identifiable> {
     }
   }
   
-  async readJsonFile(): Promise<T[] | undefined> {
+  async deleteJsonFile(deletedObject: T): Promise<T | undefined> {
     try {
-      if (fs.existsSync(this.filePath)) {
-        const rawData = await fs.promises.readFile(this.filePath, 'utf-8');
-        const jsonData: T[] = JSON.parse(rawData);
-        return jsonData;
-      } else {
-        console.error(`[readJsonFile]: File not found: ${this.filePath}`);
+      let id:string = deletedObject.id;
+      const jsonData: T[] | void = await this.readJsonFile();
+
+      if (jsonData) {
+        const index = jsonData.findIndex((obj) => obj.id === id);
+
+        if (index === -1) {
+          console.error(`[deleteJsonFile]: Object with id ${id} not found`);
+          return undefined;
+        }
+
+        jsonData.splice(index, 1);
+        const updatedData = JSON.stringify(jsonData);
+
+        await fs.promises.writeFile(this.filePath, updatedData, 'utf-8');
       }
     } catch (e) {
       throw e;
     }
   }
-}

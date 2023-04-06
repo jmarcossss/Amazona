@@ -19,4 +19,8 @@ export class BaseRepository<T extends BaseEntity> {
   public async findAll() {
     return (await this.db.readJsonFile()) || [];
   }
+
+  public async delete(data: T) {
+    return await this.db.deleteJsonFile(data);
+  }
 }
