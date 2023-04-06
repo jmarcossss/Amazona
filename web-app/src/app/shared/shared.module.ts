@@ -24,6 +24,8 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
 import { TextInputComponent } from './text-input/text-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackBarService } from '../services/snack-bar.service';
 import { CardComponent } from './card/card.component';
 
 @NgModule({
@@ -33,8 +35,8 @@ import { CardComponent } from './card/card.component';
     FooterComponent,
     ButtonComponent,
     DatePickerComponent,
-    TextInputComponent, 
-    CardComponent
+    TextInputComponent,
+    CardComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +59,7 @@ import { CardComponent } from './card/card.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSnackBarModule,
   ],
   exports: [
     CommonModule,
@@ -78,12 +81,14 @@ import { CardComponent } from './card/card.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSnackBarModule,
     ButtonComponent,
     DatePickerComponent,
     TextInputComponent,
     ReactiveFormsModule,
     RouterModule,
+    CardComponent,
   ],
-  providers: [provideNgxMask()],
+  providers: [provideNgxMask(), SnackBarService],
 })
 export class SharedModule {}
