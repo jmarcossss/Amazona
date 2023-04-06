@@ -66,9 +66,8 @@ class NotificationService {
           msgCode: NotificationServiceMessageCode.notification_not_created,
         });
       }
-      // envia email após criação de notificação
-      const email = new EmailService()
-      await email.sendEmail("kennedycmelo@gmail.com", data.title, data.description)
+
+      await EmailService.sendEmail("kennedycmelo@gmail.com", data.title, data.description)
     } catch (e) {
       throw e;
     }
