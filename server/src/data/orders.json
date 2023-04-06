@@ -1,0 +1,25 @@
+[
+  {
+    "id": "b9c4a338-e19e-4bfa-bc83-45171017407c",
+    "userId": "aa6c5fd5-2f03-45b9-8749-f94bd20704be",
+    "totalValue": "600",
+    "purchaseDate": "2023-01-29T06:00:00Z",
+    "statusHistory": [
+      {
+        "id": "c1894648-0e07-48b2-b988-b05ed49c9aa6",
+        "statusId": "f307102d-698b-4ad5-adf6-de7281243583",
+        "date": "2023-01-29T06:00:00Z"
+      },
+      {
+        "id": "042045ac-b6a5-4e0b-8f80-cb85d823af8d",
+        "statusId": "8bbb7b46-17d6-4df3-8171-0003814e3812",
+        "date": "2023-01-29T08:00:00Z"
+      }
+    ],
+    "productsIds": [
+      "a66807c2-d202-4b7e-853d-f2c5bfbb2f6f"
+    ],
+    "address": "Endereco tal",
+    "payment": "pix"
+  }
+]
