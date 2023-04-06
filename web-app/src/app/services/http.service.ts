@@ -1,19 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { catchError, map } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 import { BaseService } from './base.service';
-
-export class Response {
-  msg: string = '';
-  msgCode: string = '';
-  code: number = -1;
-  data: any;
-
-  constructor(data?: Partial<Response>) {
-    Object.assign(this, data);
-  }
-}
+import { Response, SuccessResponse } from '../shared/utils/response';
 
 @Injectable({
   providedIn: 'root',
@@ -39,37 +29,38 @@ export class HttpService extends BaseService {
     return { headers };
   }
 
-  get(url: string) {
+  get(url: string): Observable<Response> {
     return this.http.get<any>(`${this.baseUrl}${url}`, this.getHeaders()).pipe(
-      map((response) => new Response(response)),
-      catchError(this.handleError<Response>('get', new Response()))
+      map((response) => new SuccessResponse(response)),
+      catchError(this.handleError('get'))
     );
   }
 
-  post(url: string, data: any) {
+  post(url: string, data: any): Observable<Response> {
     return this.http
       .post<any>(`${this.baseUrl}${url}`, data, this.getHeaders())
       .pipe(
-        map((response) => new Response(response)),
-        catchError(this.handleError<Response>('post', new Response()))
+        map((response) => new SuccessResponse(response)),
+        catchError(this.handleError('post'))
       );
   }
 
-  put(url: string, data: any) {
+  put(url: string, data: any): Observable<Response> {
     return this.http
       .put<any>(`${this.baseUrl}${url}`, data, this.getHeaders())
       .pipe(
-        map((response) => new Response(response)),
-        catchError(this.handleError<Response>('put', new Response()))
+        map((response) => new SuccessResponse(response)),
+        catchError(this.handleError('put'))
       );
   }
 
-  delete(url: string) {
+  delete(url: string): Observable<Response> {
     return this.http
       .delete<any>(`${this.baseUrl}${url}`, this.getHeaders())
       .pipe(
-        map((response) => new Response(response)),
-        catchError(this.handleError<Response>('delete', new Response()))
+        map((response) => new SuccessResponse(response)),
+        catchError(this.handleError('delete'))
       );
   }
 }
+export { Response };
