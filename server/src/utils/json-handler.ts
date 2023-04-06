@@ -46,7 +46,6 @@ export default class JsonHandler<T extends Identifiable> {
       throw e;
     }
   }
-}
 
   async updateJsonFile(updatedObject: T): Promise<T | undefined> {
     try {
@@ -104,3 +103,4 @@ export default class JsonHandler<T extends Identifiable> {
       throw e;
     }
   }
+}

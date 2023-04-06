@@ -19,6 +19,13 @@ import Injector from './injector';
 
 export const di = new Injector();
 
+// User
+di.registerRepository(UserRepository, new UserRepository());
+di.registerService(
+  UserService,
+  new UserService(di.getRepository(UserRepository))
+);
+
 // Authentication
 di.registerService(
   AuthenticationService,
@@ -89,11 +96,4 @@ di.registerService(
     di.getService(ProductService),
     di.getService(NotificationService)
   )
-);
-
-// User
-di.registerRepository(UserRepository, new UserRepository());
-di.registerService(
-  UserService,
-  new UserService(di.getRepository(UserRepository))
 );
