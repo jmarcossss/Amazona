@@ -2,25 +2,38 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BaseService } from '../../services/base.service';
 import { HttpService, Response } from '../../services/http.service';
-import { map } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, map } from 'rxjs';
+import { RequestStatus } from '../../shared/utils/request-status';
+import { ErrorResponse } from '../../shared/utils/response';
 
 
 @Injectable({
   providedIn: 'root',
 })
-export class SignInService extends BaseService{
-  public signInForm: FormGroup;
-  private prefix: string = '/authentication/sign-in';
-  signInService: any;
 
-  constructor(private formBuilder: FormBuilder, private httpService: HttpService,  signInService: SignInService) {
+export class SignInService extends BaseService{
+  private prefix: string = '/authentication/sign-in';
+
+  public signInForm: FormGroup;
+
+  public signInStatus: BehaviorSubject<RequestStatus<any, ErrorResponse>> =
+    new BehaviorSubject<RequestStatus<any, ErrorResponse>>(
+      RequestStatus.idle()
+    );
+
+  public signInStatus$ = this.signInStatus.asObservable();
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private httpService: HttpService
+    ) {
     super()
     this.signInForm = this.formBuilder.group({
-      user: ['', Validators.required],
+      username: ['', Validators.required],
       password: [
         '',
         [
-          Validators.compose([
+            Validators.compose([
             Validators.required,
             Validators.minLength(8),
             Validators.maxLength(8),
@@ -29,20 +42,32 @@ export class SignInService extends BaseService{
       ],
     });
   }
-
-  signIn(data: any) {
-    let jsonData = JSON.stringify(data);
-
-    return this.httpService.post(this.prefix, jsonData).pipe(
-      map((response: Response) => response),
-    );
-  }
-  public submitForm(): void {
+  public async signIn(): Promise<void> {
     this.signInForm.markAllAsTouched();
 
-     if (this.signInForm.valid) {
-      this.signInService(this.signInForm.getRawValue()).subscribe((response: Response) => {
-        console.warn(response);
+    if (this.signInForm.valid) {
+
+      this.signInStatus.next(RequestStatus.loading());
+
+      const response = await firstValueFrom(
+        this.httpService.post(`${this.prefix}`,
+         {
+          username: this.signInForm.getRawValue().username,
+          email: this.signInForm.getRawValue().username,
+          password: this.signInForm.getRawValue().password
+        }
+        )
+      );
+
+      response.handle({
+        onSuccess: (data) => {
+
+
+          this.signInStatus.next(RequestStatus.success(data));
+        },
+        onFailure: (error) => {
+          this.signInStatus.next(RequestStatus.failure(error));
+        },
       });
     }
   }
