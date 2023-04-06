@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 export abstract class Result {
   msg: string;
-  msgCode: string;
+  msgCode: any;
   code: number;
 
   constructor({
@@ -11,7 +11,7 @@ export abstract class Result {
     code,
   }: {
     msg: string;
-    msgCode: string;
+    msgCode: any;
     code: number;
   }) {
     this.msg = msg;
@@ -34,7 +34,7 @@ export class SuccessResult extends Result {
     data,
   }: {
     msg: string;
-    msgCode?: string;
+    msgCode?: any;
     code?: number;
     data?: any;
   }) {
@@ -54,7 +54,7 @@ export class FailureResult extends Result {
     code,
   }: {
     msg: string;
-    msgCode?: string;
+    msgCode?: any;
     code?: number;
   }) {
     super({ msg, msgCode: msgCode || 'failure', code: code || 500 });

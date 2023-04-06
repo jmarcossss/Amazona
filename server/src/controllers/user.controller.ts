@@ -1,7 +1,8 @@
 import { Router, Request, Response } from 'express';
-import UserModel from '../models/user.model';
 import UserService from '../services/user.service';
 import { Result, SuccessResult } from '../utils/result';
+import UserEntity from '../entities/user.entity';
+import UserModel from '../models/user.model';
 
 class UserController {
   private prefix: string = '/users';
@@ -21,13 +22,16 @@ class UserController {
     this.router.get(`${this.prefix}/:id`, (req: Request, res: Response) =>
       this.getUserById(req, res)
     );
-    this.router.post(this.prefix, (req: Request, res: Response) =>
-      this.createUsers(req, res)
+    this.router.put(`${this.prefix}/:id`, (req: Request, res: Response) =>
+      this.updateUserById(req, res)
+    );
+    this.router.delete(`${this.prefix}/:id`, (req: Request, res: Response) =>
+      this.deleteUserById(req, res)
     );
   }
 
-  private getUsers(req: Request, res: Response) {
-    let users = this.userService.getUsers();
+  private async getUsers(req: Request, res: Response) {
+    let users = await this.userService.getUsers();
 
     return new SuccessResult({
       msg: Result.transformRequestOnMsg(req),
@@ -35,8 +39,9 @@ class UserController {
     }).handleSuccess(res);
   }
 
-  private getUserById(req: Request, res: Response) {
-    let user = this.userService.getUserById(req.params.id);
+  private async getUserById(req: Request, res: Response) {
+    let user = new UserModel(await this.userService.
+                                   getUserById(req.params.id));
 
     return new SuccessResult({
       msg: Result.transformRequestOnMsg(req),
@@ -44,18 +49,21 @@ class UserController {
     }).handleSuccess(res);
   }
 
-  private createUsers(req: Request, res: Response) {
-    let user = this.userService.createUser(
-      new UserModel({
-        id: req.body.id,
-        name: req.body.name,
-      })
-    );
+  private async deleteUserById(req: Request, res: Response) {
+    await this.userService.deleteUserById(req.params.id, 
+                                          req.body.password);
+
+    return new SuccessResult({
+      msg: Result.transformRequestOnMsg(req)
+    }).handleSuccess(res);
+  }
+  
+  private async updateUserById(req: Request, res: Response) {
+    await this.userService.updateUserById(req.params.id, 
+                                          new UserEntity(req.body));
 
     return new SuccessResult({
       msg: Result.transformRequestOnMsg(req),
-      code: 201,
-      data: user,
     }).handleSuccess(res);
   }
 }

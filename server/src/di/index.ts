@@ -22,7 +22,7 @@ export const di = new Injector();
 // Authentication
 di.registerService(
   AuthenticationService,
-  new AuthenticationService(di.getRepository(UserRepository))
+  new AuthenticationService(di.getService(UserService), di.getRepository(UserRepository))
 );
 
 // Sector
