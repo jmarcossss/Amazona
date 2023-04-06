@@ -1,9 +1,10 @@
 .image-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   height: 100%;
   width: 90%;
+  margin-left: 5px;
 }
 
 .container {
@@ -22,6 +23,7 @@ h2 {
   font-weight: 600;
   font-size: 20px;
   color: var(--color-texts);
+  margin-bottom: 20px;
 }
 
 p {
@@ -43,15 +45,37 @@ p {
   background-color: var(--color-success)
 }
 
-.step img {
+.step-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.step-content img {
   height: 50px;
   width: 50px;
+  margin-bottom: 10px;
 }
 
 .stepHome img {
   height: 40px;
   width: 72px;
 }
+
+.ajustaHora p {
+  margin: 0;
+}
+
+.espaco {
+  margin: 0;
+}
+
+/* .status {
+  margin-top: 50px;
+  margin-bottom: 24px;
+} */
 
 /* .card-content {
     padding: 16px;

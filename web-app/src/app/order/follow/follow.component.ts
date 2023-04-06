@@ -25,24 +25,30 @@ export class FollowComponent implements OnInit {
 
   getTimeRemaining() {
     const now = moment();
-    if (now.isBefore(this.deliveryDate)) {
-      const duration = moment.duration(this.deliveryDate.diff(now));
-      const minutes = duration.asMinutes();
-      if (minutes > 2) {
-        this.status = 'Confirmado';
-      } else if (minutes <= 2 && minutes > 1) {
-        this.status = 'Em trânsito';
-      } else {
-        this.status = 'Entregue';
-      }
-      const days = duration.days();
-      const hours = duration.hours();
-      const minutesRemaining = duration.minutes();
-      const seconds = duration.seconds();
-      return { days, hours, minutes: minutesRemaining, seconds };
+    const duration = moment.duration(this.deliveryDate.diff(now));
+    const minutes = duration.asMinutes();
+
+    if (minutes > 2) {
+      this.status = 'Confirmado';
+    } else if (minutes <= 2 && minutes > 1) {
+      this.status = 'Em trânsito';
     } else {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      this.status = 'Entregue';
+    }
+
+    const days = duration.days();
+    const hours = duration.hours();
+    let minutesRemaining = duration.minutes();
+    const seconds = duration.seconds();
+
+    if (duration.asSeconds() > 0) {
+      minutesRemaining = minutesRemaining < 0 ? 0 : minutesRemaining;
+      const timeRemaining = { days, hours, minutes: minutesRemaining, seconds };
+      return timeRemaining;
+    } else {
+      const timeRemaining = { days, hours, minutes: 0, seconds: 0 };
+      this.status = 'Entregue';
+      return timeRemaining;
     }
   }
 }
-

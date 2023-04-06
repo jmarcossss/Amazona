@@ -5,23 +5,41 @@
       {{ timeRemaining.days }} dias,
       {{ timeRemaining.hours }} horas,
       {{ timeRemaining.minutes }} minutos e
-      {{ timeRemaining.seconds }} segundos</p>
+      {{ timeRemaining.seconds }} segundos
+    </p>
     <h2>{{ status }}</h2>
     <div class="image-container">
-      <div class="step" [ngClass]="{'step-active': timeRemaining.minutes >= 0}">
-        <img src="../../../assets/images/Big Parcel.png" alt="icone1">
+      <div class="espaco">
+        <div class="step" [ngClass]="{'step-active': timeRemaining.minutes >= 0}" (ngClassChange)="status = 'Confirmado'">
+          <div class="step-content">
+            <img src="../../../assets/images/Big Parcel.png" alt="icone1">
+          </div>
+        </div>
+        <div class="status" *ngIf="timeRemaining.minutes >= 0">Confirmado<br>{{deliveryDate.format('DD/MM/YYYY')}}</div>
       </div>
-      <p>-------------------------></p>
-      <div class="step" [ngClass]="{'step-active': timeRemaining.minutes <= 2}">
-        <img src="../../../assets/images/Open Box.png" alt="icone2">
+      <p>----------------------------></p>
+      <div class="espaco">
+        <div class="step" [ngClass]="{'step-active': timeRemaining.minutes <= 2}" (ngClassChange)="status = 'Em trânsito'">
+          <div class="step-content">
+            <img src="../../../assets/images/Open Box.png" alt="icone2">
+          </div>
+        </div>
+        <div class="status" *ngIf="timeRemaining.minutes <= 2">Em trânsito<br>{{deliveryDate.format('DD/MM/YYYY')}}</div>
       </div>
-      <p>-------------------------></p>
-      <div class="step stepHome" [ngClass]="{'step-active': timeRemaining.minutes <= 1}">
-        <img src="../../../assets/images/Smart Home Checked.png" alt="icone3">
+      <p>----------------------------></p>
+      <div class="espaco">
+        <div class="step stepHome" [ngClass]="{'step-active': timeRemaining.minutes <= 1}" (ngClassChange)="status = 'Entregue'">
+          <div class="step-content">
+            <img src="../../../assets/images/Smart Home Checked.png" alt="icone3">
+          </div>
+        </div>
+        <div *ngIf="timeRemaining.minutes <= 1">Entregue<br>{{deliveryDate.format('DD/MM/YYYY')}}</div>
       </div>
     </div>
   </app-card>
 </div>
+
+
 
 
 
