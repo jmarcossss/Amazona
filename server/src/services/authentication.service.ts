@@ -58,7 +58,7 @@ class AuthenticationService {
     }
   }
 
-  public async signUpValidation(data: UserEntity): Promise<string[]> {
+  public async signUpValidation(data: UserEntity): Promise<void> {
     let code:string[] = [];
 
     try {
@@ -95,28 +95,30 @@ class AuthenticationService {
                   username_unavailable);
       }
 
-      return code;
+      if(code.length) {
+        throw new BadRequestError({
+          msg: 'Invalid sign up requirements!',
+          msgCode: code,
+        });
+      }
     } catch(e) {
       throw e;
     }
   }
 
-  public async signUp(data: UserEntity): Promise<string | string[]> {
+  public async signUp(data: UserEntity): Promise<void> {
     try {
-      let error =  await this.signUpValidation(data);
+      await this.signUpValidation(data);
 
-      if(!error.length) {
-        const user = await this.userRepository.signUp(data);
+      const user = await this.userRepository.signUp(data);
 
-        if(!user) {
-          throw new BadRequestError({
-            msg: 'Error in signing up!',
-            msgCode: AuthenticationServiceMessageCode.sign_up_error,
-          });
-        }
+      if(!user) {
+        throw new BadRequestError({
+          msg: 'Error in signing up!',
+          msgCode: AuthenticationServiceMessageCode.sign_up_error,
+        });
       }
-     
-      return error;
+
     } catch(e) {
       throw e;
     }

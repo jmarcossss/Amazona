@@ -50,20 +50,18 @@ class AuthenticationController {
   }
 
   private async signUp(req: Request, res: Response) : Promise<Response> {
-    let error = await this.authenticationService.signUp(new UserEntity(req.body));
+    await this.authenticationService.signUp(new UserEntity(req.body));
     
     return new SuccessResult({
-      msg: Result.transformRequestOnMsg(req),
-      msgCode: error
+      msg: Result.transformRequestOnMsg(req)
     }).handleSuccess(res);
   }
 
   private async signUpValidation(req: Request, res: Response) : Promise<Response> {
-    let error = await this.authenticationService.signUpValidation(new UserEntity(req.body));
+    await this.authenticationService.signUpValidation(new UserEntity(req.body));
     
     return new SuccessResult({
-      msg: Result.transformRequestOnMsg(req),
-      msgCode: error
+      msg: Result.transformRequestOnMsg(req)
     }).handleSuccess(res);
   }
 
