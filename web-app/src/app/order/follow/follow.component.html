@@ -1,6 +1,6 @@
 <div class="container">
   <h1>Acompanhamento do pedido {{ orderId }}</h1>
-  <app-card>
+  <app-card [style]="{ width: '999px', padding: '10px' }">
     <p>Estimativa para entrega em
       {{ timeRemaining.days }} dias,
       {{ timeRemaining.hours }} horas,
@@ -17,7 +17,12 @@
         </div>
         <div class="status" *ngIf="timeRemaining.minutes >= 0">Confirmado<br>{{deliveryDate.format('DD/MM/YYYY')}}</div>
       </div>
-      <p>----------------------------></p>
+
+      <div class="ajustaHora">
+      <h3>HORA AQUI</h3>
+      <h4>----------------------------></h4>
+      </div>
+
       <div class="espaco">
         <div class="step" [ngClass]="{'step-active': timeRemaining.minutes <= 2}" (ngClassChange)="status = 'Em trânsito'">
           <div class="step-content">
@@ -26,7 +31,12 @@
         </div>
         <div class="status" *ngIf="timeRemaining.minutes <= 2">Em trânsito<br>{{deliveryDate.format('DD/MM/YYYY')}}</div>
       </div>
-      <p>----------------------------></p>
+
+      <div class="ajustaHora">
+      <h3>HORA AQUI</h3>
+      <h4>----------------------------></h4>
+      </div>
+
       <div class="espaco">
         <div class="step stepHome" [ngClass]="{'step-active': timeRemaining.minutes <= 1}" (ngClassChange)="status = 'Entregue'">
           <div class="step-content">
@@ -36,30 +46,6 @@
         <div *ngIf="timeRemaining.minutes <= 1">Entregue<br>{{deliveryDate.format('DD/MM/YYYY')}}</div>
       </div>
     </div>
+
   </app-card>
 </div>
-
-
-
-
-
-
-<!-- <mat-card>
-  <mat-card-content>Followghghgj</mat-card-content>
-</mat-card> -->
-
-<!-- <h1>Acompanhamento do pedidoooo</h1>
-<p>Estimativa para entrega xx/yy tal tal tal tal</p>
-<p>Em trânsito</p>
-
-  <mat-card>
-    <mat-card-content>
-      <div class="image-container">
-        <img src="../../../assets/images/logo-colorful.png">
-        <img src="../../../assets/images/logo-colorful.png">
-        <img src="../../../assets/images/logo-colorful.png">
-      </div>
-      
-    </mat-card-content>    
-  </mat-card> -->
-

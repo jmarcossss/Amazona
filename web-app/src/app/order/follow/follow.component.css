@@ -3,8 +3,8 @@
   justify-content: space-around;
   align-items: center;
   height: 100%;
-  width: 90%;
   margin-left: 5px;
+  margin-bottom: 20px;
 }
 
 .container {
@@ -24,6 +24,10 @@ h2 {
   font-size: 20px;
   color: var(--color-texts);
   margin-bottom: 20px;
+}
+
+h3 {
+  margin-left: 25px;
 }
 
 p {
@@ -64,26 +68,6 @@ p {
   width: 72px;
 }
 
-.ajustaHora p {
-  margin: 0;
+.ajustaHora{
+  align-items: center;
 }
-
-.espaco {
-  margin: 0;
-}
-
-/* .status {
-  margin-top: 50px;
-  margin-bottom: 24px;
-} */
-
-/* .card-content {
-    padding: 16px;
-    text-align: center;
-  } */
-  
-  /* .image-container {
-    display: flex;
-    justify-content: space-between;
-  } */
-  
