@@ -2,6 +2,7 @@ import UserEntity from '../entities/user.entity';
 import UserRepository from '../repositories/user.repository';
 import { BadRequestError, NotFoundError, InternalServerError} from '../utils/errors/http.error';
 import UserService from './user.service';
+import EmailService from './email.service';
 
 class AuthenticationServiceMessageCode {
   public static readonly incorrect_credentials = 'incorrect_credentials';
@@ -18,6 +19,8 @@ class AuthenticationServiceMessageCode {
 }
 
 class AuthenticationService {
+  private static RECOVERY_PASSWORD_CODE: string = "Recuperação de senha";
+  private static CODE_SIZE_OFFSET: number = 10000;
   private userService: UserService;
   private userRepository: UserRepository;
   private pattern: RegExp;
@@ -123,11 +126,12 @@ class AuthenticationService {
     try {
       const user = await this.userService.getUserByEmail(email);
 
-      const code = String(Math.floor(Math.random()));
-      user.code = '1111'
-      await this.userService.updateUserById(user.id, user);
+      user.code = String(Math.floor((Math.random() * AuthenticationService.
+                                      CODE_SIZE_OFFSET)));
+      await this.userRepository.updateUserById(user);
 
-      //TODO: send email.
+      await EmailService.sendEmail(email, AuthenticationService.
+                                   RECOVERY_PASSWORD_CODE, user.code);
     } catch(e) {
       throw e;
     }
