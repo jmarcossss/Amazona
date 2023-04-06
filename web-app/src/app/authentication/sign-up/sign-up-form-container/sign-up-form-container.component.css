@@ -2,8 +2,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-
-  padding: 52px 62px;
 }
 
 .container mat-card-content {

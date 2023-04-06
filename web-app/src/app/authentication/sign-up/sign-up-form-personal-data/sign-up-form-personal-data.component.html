@@ -9,13 +9,13 @@
       <app-text-input
         label="CPF*"
         placeholder="129.585.989-40"
-        [control]="signUpPersonalDataForm.get('cpf')"
+        [control]="signUpPersonalDataForm.get('CPF')"
         [mask]="cpfMask"
       ></app-text-input>
       <app-text-input
         label="Celular"
         placeholder="(81) 99999-9999"
-        [control]="signUpPersonalDataForm.get('cellphone')"
+        [control]="signUpPersonalDataForm.get('phone')"
         [mask]="cellphoneMask"
       ></app-text-input>
     </div>
@@ -24,7 +24,7 @@
       <app-text-input
         label="Nome de usuário"
         placeholder="Informe seu nome de usuário"
-        [control]="signUpPersonalDataForm.get('userName')"
+        [control]="signUpPersonalDataForm.get('username')"
       ></app-text-input>
 
       <app-text-input
