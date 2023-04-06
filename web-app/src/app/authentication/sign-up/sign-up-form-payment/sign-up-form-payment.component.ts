@@ -3,7 +3,8 @@ import { FormGroup } from '@angular/forms';
 import InputMask from '../../../shared/utils/input-mask';
 import { SignUpService } from '../sign-up.service';
 import { Router } from '@angular/router';
-import { SignUpFormStep } from '../enums/sign-up-form-step.enum';
+import { SnackBarService } from '../../../services/snack-bar.service';
+import { ApiMessageCodes } from '../../../shared/utils/api-message-codes';
 
 @Component({
   selector: 'app-sign-up-form-payment',
@@ -14,15 +15,32 @@ export class SignUpFormPaymentComponent implements OnInit {
   signUpPaymentForm!: FormGroup;
   creditMask = InputMask.CREDIT;
 
-  constructor(private signUpService: SignUpService, private router: Router) {}
+  constructor(
+    private signUpService: SignUpService,
+    private router: Router,
+    private snackBarService: SnackBarService
+  ) {}
 
   ngOnInit() {
     this.signUpPaymentForm = this.signUpService.signUpPaymentForm;
 
-    this.signUpService.signUpFormStep$.subscribe((signUpFormStep) => {
-      if (signUpFormStep === SignUpFormStep.End) {
-        this.router.navigate(['/']);
-      }
+    this.signUpService.signUpStatus$.subscribe((status) => {
+      status.maybeMap({
+        failed: (error) => {
+          this.snackBarService.showError({
+            message: ApiMessageCodes.codeToMessage(
+              Array.isArray(error.msgCode) ? error.msgCode[0] : error.msgCode
+            ),
+          });
+        },
+        succeeded: (_) => {
+          this.snackBarService.showSuccess({
+            message: 'Cadastro realizado com sucesso!',
+          });
+
+          this.router.navigate(['/']);
+        },
+      });
     });
   }
 

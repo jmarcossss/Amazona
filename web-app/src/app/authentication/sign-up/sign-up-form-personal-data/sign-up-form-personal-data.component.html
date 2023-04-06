@@ -48,6 +48,7 @@
   <app-button
     label="PRÓXIMO"
     type="btn medium"
+    [disabled]="signUpPersonalDataForm.invalid"
     (click)="onSubmit()"
   ></app-button>
 </div>

@@ -4,7 +4,6 @@ import { SignUpFormStep } from './enums/sign-up-form-step.enum';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { BaseService } from '../../services/base.service';
 import { HttpService } from '../../services/http.service';
-import { SnackBarService } from '../../services/snack-bar.service';
 import { RequestStatus } from '../../shared/utils/request-status';
 import { ErrorResponse } from '../../shared/utils/response';
 
@@ -30,10 +29,15 @@ export class SignUpService extends BaseService {
   public signUpPersonalDataValidateStatus$ =
     this.signUpPersonalDataValidateStatus.asObservable();
 
+  public signUpStatus: BehaviorSubject<RequestStatus<string, ErrorResponse>> =
+    new BehaviorSubject<RequestStatus<string, ErrorResponse>>(
+      RequestStatus.idle()
+    );
+  public signUpStatus$ = this.signUpStatus.asObservable();
+
   constructor(
     private formBuilder: FormBuilder,
-    private httpService: HttpService,
-    private snackBarService: SnackBarService
+    private httpService: HttpService
   ) {
     super();
     this.signUpPersonalDataForm = this.formBuilder.group({
@@ -70,6 +74,8 @@ export class SignUpService extends BaseService {
   }
 
   public async submitPersonalData(): Promise<void> {
+    this.signUpPersonalDataValidateStatus.next(RequestStatus.loading());
+
     this.signUpPersonalDataForm.markAllAsTouched();
 
     if (this.signUpPersonalDataForm.valid) {
@@ -87,10 +93,6 @@ export class SignUpService extends BaseService {
           this.signUpPersonalDataValidateStatus.next(RequestStatus.success(''));
         },
         onFailure: (error) => {
-          this.snackBarService.showError({
-            message: 'Erro ao validar os dados',
-          });
-
           this.signUpPersonalDataValidateStatus.next(
             RequestStatus.failure(error)
           );
@@ -111,9 +113,34 @@ export class SignUpService extends BaseService {
     this.signUpFormStep.next(SignUpFormStep.Address);
   }
 
-  public submitPayment(): void {
-    this.signUpFormStep.next(SignUpFormStep.End);
+  public async submitPayment(): Promise<void> {
+    await this.signUp();
   }
 
-  public signUp(): void {}
+  public async signUp(): Promise<void> {
+    this.signUpStatus.next(RequestStatus.loading());
+
+    const response = await firstValueFrom(
+      this.httpService.post(`${this.prefix}`, {
+        ...this.signUpPersonalDataForm.getRawValue(),
+        address: [
+          this.signUpAddressForm.getRawValue().mainAddress,
+          this.signUpAddressForm.getRawValue().address2,
+          this.signUpAddressForm.getRawValue().address3,
+        ],
+        payment: this.signUpPaymentForm.getRawValue().payment,
+      })
+    );
+
+    response.handle({
+      onSuccess: (_) => {
+        this.signUpFormStep.next(SignUpFormStep.End);
+
+        this.signUpStatus.next(RequestStatus.success(''));
+      },
+      onFailure: (error) => {
+        this.signUpStatus.next(RequestStatus.failure(error));
+      },
+    });
+  }
 }

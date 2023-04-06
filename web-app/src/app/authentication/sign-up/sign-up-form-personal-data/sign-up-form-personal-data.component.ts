@@ -4,6 +4,7 @@ import { SignUpService } from '../sign-up.service';
 import ValidatorsPattern from '../../../shared/utils/validators-pattern';
 import InputMask from '../../../shared/utils/input-mask';
 import { ApiMessageCodes } from '../../../shared/utils/api-message-codes';
+import { SnackBarService } from '../../../services/snack-bar.service';
 
 @Component({
   selector: 'app-sign-up-form-personal-data',
@@ -16,17 +17,25 @@ export class SignUpFormPersonalDataComponent implements OnInit {
   cellphoneMask = InputMask.CELLPHONE;
   passwordPattern = ValidatorsPattern.PASSWORD;
 
-  constructor(private signUpService: SignUpService) {}
+  constructor(
+    public signUpService: SignUpService,
+    private snackBarService: SnackBarService
+  ) {}
 
   ngOnInit() {
     this.signUpPersonalDataForm = this.signUpService.signUpPersonalDataForm;
 
     this.signUpService.signUpPersonalDataValidateStatus$.subscribe((status) => {
       status.maybeMap({
+        loading: () => {},
         failed: (error) => {
           if (Array.isArray(error.msgCode)) {
             this.handleValidateError(error.msgCode);
           }
+
+          this.snackBarService.showError({
+            message: 'Erro ao validar os dados',
+          });
         },
       });
     });
