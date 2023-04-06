@@ -43,7 +43,11 @@ export class TextInputComponent {
         let errorMsg = '';
         switch (errorName) {
           case 'required':
-            errorMsg = 'Campo obrigatório!';
+            if (typeof this.control.errors[errorName] === 'string') {
+              errorMsg = this.control.errors[errorName];
+            } else {
+              errorMsg = 'Campo obrigatório!';
+            }
             break;
           case 'minlength':
             errorMsg = `Mínimo de ${this.control.errors['minlength'].requiredLength} caracteres`;
