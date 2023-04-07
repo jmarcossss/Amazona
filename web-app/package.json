@@ -7,7 +7,7 @@
     "build": "NODE_ENV=${env} ng build --configuration=${env}",
     "deploy": "NODE_ENV=${env} npm run build && vercel --prod",
     "watch": "NODE_ENV=${env} ng build --watch --configuration=${env}",
-    "test": "NODE_ENV=${env} ng test --watch --configuration=${env}"
+    "test": "NODE_ENV=${env} ng test --configuration=${env}"
   },
   "private": true,
   "dependencies": {

@@ -5,6 +5,7 @@ import { SignUpService } from '../sign-up.service';
 import { Router } from '@angular/router';
 import { SnackBarService } from '../../../services/snack-bar.service';
 import { ApiMessageCodes } from '../../../shared/utils/api-message-codes';
+import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up-form-payment',
@@ -24,24 +25,26 @@ export class SignUpFormPaymentComponent implements OnInit {
   ngOnInit() {
     this.signUpPaymentForm = this.signUpService.signUpPaymentForm;
 
-    this.signUpService.signUpStatus$.subscribe((status) => {
-      status.maybeMap({
-        failed: (error) => {
-          this.snackBarService.showError({
-            message: ApiMessageCodes.codeToMessage(
-              Array.isArray(error.msgCode) ? error.msgCode[0] : error.msgCode
-            ),
-          });
-        },
-        succeeded: (_) => {
-          this.snackBarService.showSuccess({
-            message: 'Cadastro realizado com sucesso!',
-          });
+    this.signUpService.signUpStatus$
+      .pipe(distinctUntilChanged((a, b) => a.status === b.status))
+      .subscribe((status) => {
+        status.maybeMap({
+          failed: (error) => {
+            this.snackBarService.showError({
+              message: ApiMessageCodes.codeToMessage(
+                Array.isArray(error.msgCode) ? error.msgCode[0] : error.msgCode
+              ),
+            });
+          },
+          succeeded: (_) => {
+            this.snackBarService.showSuccess({
+              message: 'Cadastro realizado com sucesso!',
+            });
 
-          this.router.navigate(['/']);
-        },
+            this.router.navigate(['/']);
+          },
+        });
       });
-    });
   }
 
   get paymentOption() {

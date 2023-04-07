@@ -1,7 +1,10 @@
 <div>
-  <mat-radio-group (change)="onRadioChange($event.value)">
+  <mat-radio-group
+    (change)="onRadioChange($event.value)"
+    [value]="paymentOption"
+  >
     <div class="radio-container">
-      <mat-radio-button value="pix">PIX</mat-radio-button>
+      <mat-radio-button class="pix" value="pix">PIX</mat-radio-button>
       <app-text-input
         *ngIf="paymentOption === 'pix'"
         placeholder="Informe o código PIX"
@@ -9,7 +12,9 @@
       ></app-text-input>
     </div>
     <div class="radio-container">
-      <mat-radio-button value="credit">Cartão de crédito</mat-radio-button>
+      <mat-radio-button class="credit" value="credit"
+        >Cartão de crédito</mat-radio-button
+      >
       <app-text-input
         *ngIf="paymentOption === 'credit'"
         placeholder="Informe o número do cartão"

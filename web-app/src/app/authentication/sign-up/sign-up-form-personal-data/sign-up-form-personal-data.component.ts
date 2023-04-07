@@ -5,6 +5,7 @@ import ValidatorsPattern from '../../../shared/utils/validators-pattern';
 import InputMask from '../../../shared/utils/input-mask';
 import { ApiMessageCodes } from '../../../shared/utils/api-message-codes';
 import { SnackBarService } from '../../../services/snack-bar.service';
+import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up-form-personal-data',
@@ -25,20 +26,22 @@ export class SignUpFormPersonalDataComponent implements OnInit {
   ngOnInit() {
     this.signUpPersonalDataForm = this.signUpService.signUpPersonalDataForm;
 
-    this.signUpService.signUpPersonalDataValidateStatus$.subscribe((status) => {
-      status.maybeMap({
-        loading: () => {},
-        failed: (error) => {
-          if (Array.isArray(error.msgCode)) {
-            this.handleValidateError(error.msgCode);
-          }
+    this.signUpService.signUpPersonalDataValidateStatus$
+      .pipe(distinctUntilChanged((a, b) => a.status === b.status))
+      .subscribe((status) => {
+        status.maybeMap({
+          loading: () => {},
+          failed: (error) => {
+            if (Array.isArray(error.msgCode)) {
+              this.handleValidateError(error.msgCode);
+            }
 
-          this.snackBarService.showError({
-            message: 'Erro ao validar os dados',
-          });
-        },
+            this.snackBarService.showError({
+              message: 'Erro ao validar os dados',
+            });
+          },
+        });
       });
-    });
   }
 
   private handleValidateError(errorCodes: string[]) {
