@@ -1,0 +1,37 @@
+.container {
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+.flex {
+    display: flex;
+}
+
+.body {
+    display: flex;
+}
+
+.flexCard {
+    display: flex;
+}
+
+.card {
+    align-items: center;
+}
+
+.canto {
+    margin-left: 500px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.payment {
+    display: flex;
+}
+
+.prices {
+    margin-left: 150px;
+}

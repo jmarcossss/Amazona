@@ -1,4 +1,84 @@
-<mat-card>
-  <mat-card-content>Details</mat-card-content>
-  <app-date-picker [onDateSelected]="onDateSelected"></app-date-picker>
-</mat-card>
+<div class="container">
+  <div class="flex">
+    <p>Voltar para histórico de pedidos</p>
+    <p>/Pedido número XXX</p>
+  </div>
+
+  <div class="body">
+    <div class="left">
+      <h3>ENDEREÇO DE ENTREGA</h3>
+      <app-card [style]="{ padding: '20px', width: '800px' }">
+        <div class="flexCard">
+          <div class="card">
+            <p>texto aqui</p>
+            <p>texto aqui</p>
+            <p>texto aqui</p>
+            <p>texto aqui</p>
+          </div>
+          <div class="canto">Alterar endereço</div>
+        </div>
+      </app-card>
+  
+      <h3>MÉTODO DE PAGAMENTO</h3>
+      <app-card [style]="{ padding: '20px', width: '800px' }">
+        <div class="flexCard">
+          <div class="card">
+            <p>texto aqui</p>
+            <p>texto aqui</p>
+            <p>texto aqui</p>
+            <p>texto aqui</p>
+          </div>
+          <div class="canto">Alterar pagamento</div>
+        </div>
+      </app-card>
+  
+      <h3>REVISAR ITENS</h3>
+      <app-card [style]="{ padding: '20px', width: '800px' }">
+        <div class="flexCard">
+          <div class="card">
+            <p>texto aqui</p>
+            <p>texto aqui</p>
+            <p>texto aqui</p>
+            <p>texto aqui</p>
+          </div>
+          <div class="canto">Alterar itens</div>
+        </div>
+      </app-card>
+    </div>
+  
+    <div class="right">
+      <h3>RESUMO</h3>
+      <app-card [style]="{ padding: '20px', height: '200px', width: '400px' }">
+        <div class="flexCard">
+          <div class="payment">
+            <div class="card">
+              <p>Subtotal:</p>
+              <p>Frete:</p>
+              <p>Desconto:</p>
+              <p>Total:</p>
+            </div>
+            <div class="prices">
+              <p>preço subtotal</p>
+              <p>preço frete</p>
+              <p>preço desconto</p>
+              <p>preço total</p>
+            </div>
+          </div>
+
+        </div>
+      </app-card>
+
+      <div class="buttons">
+        <app-button
+          type="btn large"
+          label="COMPRAR NOVAMENTE"
+          ></app-button>
+        <app-button
+            type="btn large"
+            label="NOTA FISCAL"
+            ></app-button>
+      </div>
+    </div>
+  </div>
+
+</div>
