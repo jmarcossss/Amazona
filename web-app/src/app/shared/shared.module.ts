@@ -81,6 +81,7 @@ import { CardComponent } from './card/card.component';
     ButtonComponent,
     DatePickerComponent,
     TextInputComponent,
+    CardComponent,
   ],
   providers: [provideNgxMask()],
 })

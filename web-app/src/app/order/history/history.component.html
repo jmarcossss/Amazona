@@ -1,3 +1,209 @@
-<mat-card>
-  <mat-card-content>History</mat-card-content>
-</mat-card>
+<div id="container" class="flexbox direction-column"> 
+  <app-card class="box">
+    <div class="flexbox">
+      <div class="item20">
+        <!-- forms -->
+        <div id="form" class="gray">
+          <label for="form-field" class="big-text">Pesquisa</label>
+          <mat-form-field id="form-field" appearance="outline" floatLabel="always" fxFlex>
+            <input
+              class="border-forms"
+              type="email"
+              matInput
+              placeholder="Número do pedido ou nome do produto"
+            />
+          </mat-form-field>
+          
+        </div>
+        <!-- Data e status -->
+        <div class="flexbox gray">
+          <div class="item1 medium-text">
+            <span>Selecione um intervalo de datas</span> <br>
+            <mat-form-field class="box-datepicker" appearance="outline" >
+              <input 
+                class="border-forms small-text"
+                matInput
+                [matDatepicker]="picker"
+                placeholder="começo">
+                <mat-hint class="small-text">MM/DD/YYYY</mat-hint>
+              <mat-datepicker #picker panelClass="my-custom-class"></mat-datepicker>
+            </mat-form-field>
+            <span class="medium-text margem-lado">
+              Até
+            </span>
+            <mat-form-field class="box-datepicker" appearance="outline" >
+              <input 
+                class="border-forms small-text"
+                matInput
+                [matDatepicker]="picker"
+                placeholder="fim">
+                <mat-hint class="small-text">MM/DD/YYYY</mat-hint>
+              <mat-datepicker #picker panelClass="my-custom-class"></mat-datepicker>
+            </mat-form-field>
+            <div class="margem result-text">Total de resultados: 3 itens</div>
+          </div>
+          <div class="item2">
+            <span>Selecione Status</span> <br>
+            <button mat-button [matMenuTriggerFor]="menu">Status</button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Ativo</button>
+              <button mat-menu-item>Concluído</button>
+              <button mat-menu-item>Cancelado</button>
+            </mat-menu>
+          </div>
+          
+        </div>
+      </div>
+  
+      <div class="item1 flexbox direction-column">
+        <app-button class="margin-button-black" type="btn medium black" label="BUSCAR"></app-button>
+        <app-button class="margin-button-white" type="btn medium black-outline" label="LIMPAR"></app-button>
+      </div>  
+    </div>
+    
+  </app-card>
+  <app-card class="box">
+    <div class="box-top">
+      <div class="mini-box">
+        <span class="white medium-text">Pedido Realizado</span> <br>
+        <span class="white small-text">29 de Janeiro de 2023</span>
+      </div>
+      <div class="mini-box">
+        <span class="white medium-text">Total</span> <br>
+        <span class="white small-text">R$ 100.00</span>
+      </div>
+      <div class="mini-box">
+        <span class="white medium-text">Enviar para</span> <br>
+        <span class="white small-text">Fulano da Silva</span>
+      </div>
+      <div class="mini-box">
+        <span class="white medium-text">Status</span> <br>
+        <span class="white small-text">Ativo</span>
+      </div>
+      <div class="mini-box right">
+        <span class="white medium-text">Pedido Nº #123314</span> <br>
+        <a class="white small-text">Ver detalhes do pedido</a>
+      </div>
+    </div>
+    <div class="flexbox box-bottom">
+      <div class="item1">
+        <div class=" margem-img">
+          <img src="https://alternativafotoproduto.com.br/media/catalog/product/cache/1/image/800x/9df78eab33525d08d6e5fb8d27136e95/c/a/camiseta-neon-pink-para-sublima_o-alternativa-fotoproduto.jpg" alt="">
+        </div>
+        
+      </div>
+      <div class="item2 flexbox direction-column">
+        <div class="item2 black dark">
+          <div class="margin-text  title">Camisa estilosa rosa</div>
+        </div>
+        <div class="item1 black light subtitle">
+          <span>Cor: Branco</span> <br>
+          <span>Tamanhos: P,M,G e GG</span> 
+        </div>
+      </div>
+      <div class="item1 flexbox direction-column">
+        <app-button class="margem" type="btn medium" label="ACOMPANHAR PEDIDO"></app-button>
+        <app-button class="margem" type="btn medium black-outline" label="NOTA FISCAL"></app-button>
+        <app-button class="margem" type="btn medium danger-outline" label="CANCELAR"></app-button>
+      </div>
+    </div>
+    
+  </app-card>
+
+  <app-card class="box">
+    <div class="box-top">
+      <div class="mini-box">
+        <span class="white medium-text">Pedido Realizado</span> <br>
+        <span class="white small-text">29 de Janeiro de 2023</span>
+      </div>
+      <div class="mini-box">
+        <span class="white medium-text">Total</span> <br>
+        <span class="white small-text">R$ 100.00</span>
+      </div>
+      <div class="mini-box">
+        <span class="white medium-text">Enviar para</span> <br>
+        <span class="white small-text">Fulano da Silva</span>
+      </div>
+      <div class="mini-box">
+        <span class="white medium-text">Status</span> <br>
+        <span class="white small-text">Ativo</span>
+      </div>
+      <div class="mini-box right">
+        <span class="white medium-text">Pedido Nº #123314</span> <br>
+        <a class="white small-text">Ver detalhes do pedido</a>
+      </div>
+    </div>
+    <div class="flexbox box-bottom">
+      <div class="item1">
+        <div class=" margem-img">
+          <img src="https://alternativafotoproduto.com.br/media/catalog/product/cache/1/image/800x/9df78eab33525d08d6e5fb8d27136e95/c/a/camiseta-neon-pink-para-sublima_o-alternativa-fotoproduto.jpg" alt="">
+        </div>
+        
+      </div>
+      <div class="item2 flexbox direction-column">
+        <div class="item2 black dark">
+          <div class="margin-text  title">Camisa estilosa rosa</div>
+        </div>
+        <div class="item1 black light subtitle">
+          <span>Cor: Branco</span> <br>
+          <span>Tamanhos: P,M,G e GG</span> 
+        </div>
+      </div>
+      <div class="item1 flexbox direction-column">
+        <app-button class="margem" type="btn medium" label="ACOMPANHAR PEDIDO"></app-button>
+        <app-button class="margem" type="btn medium black-outline" label="NOTA FISCAL"></app-button>
+        <app-button class="margem" type="btn medium danger-outline" label="CANCELAR"></app-button>
+      </div>
+    </div>
+    
+  </app-card>
+
+  <app-card class="box">
+    <div class="box-top">
+      <div class="mini-box">
+        <span class="white medium-text">Pedido Realizado</span> <br>
+        <span class="white small-text">29 de Janeiro de 2023</span>
+      </div>
+      <div class="mini-box">
+        <span class="white medium-text">Total</span> <br>
+        <span class="white small-text">R$ 100.00</span>
+      </div>
+      <div class="mini-box">
+        <span class="white medium-text">Enviar para</span> <br>
+        <span class="white small-text">Fulano da Silva</span>
+      </div>
+      <div class="mini-box">
+        <span class="white medium-text">Status</span> <br>
+        <span class="white small-text">Ativo</span>
+      </div>
+      <div class="mini-box right">
+        <span class="white medium-text">Pedido Nº #123314</span> <br>
+        <a class="white small-text">Ver detalhes do pedido</a>
+      </div>
+    </div>
+    <div class="flexbox box-bottom">
+      <div class="item1">
+        <div class=" margem-img">
+          <img src="https://alternativafotoproduto.com.br/media/catalog/product/cache/1/image/800x/9df78eab33525d08d6e5fb8d27136e95/c/a/camiseta-neon-pink-para-sublima_o-alternativa-fotoproduto.jpg" alt="">
+        </div>
+        
+      </div>
+      <div class="item2 flexbox direction-column">
+        <div class="item2 black dark">
+          <div class="margin-text title">Camisa estilosa rosa</div>
+        </div>
+        <div class="item1 black light subtitle">
+          <span>Cor: Branco</span> <br>
+          <span>Tamanhos: P,M,G e GG</span> 
+        </div>
+      </div>
+      <div class="item1 flexbox direction-column">
+        <app-button class="margem" type="btn medium" label="ACOMPANHAR PEDIDO"></app-button>
+        <app-button class="margem" type="btn medium black-outline" label="NOTA FISCAL"></app-button>
+        <app-button class="margem" type="btn medium danger-outline" label="CANCELAR"></app-button>
+      </div>
+    </div>
+    
+  </app-card>
+
+</div>
