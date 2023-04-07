@@ -42,10 +42,6 @@ h1 {
   color: var(--color-texts)
 }
 
-.form {
-  padding: 80px;
-}
-
 .form img {
   width: 180px;
 }
