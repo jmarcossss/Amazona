@@ -3,8 +3,7 @@
     <img src="../../../assets/images/img-login.png" alt="imagem de uma roupa" />
   </div>
   <div class="form-container">
-    <mat-card class="form">
-      <mat-card-content>
+    <app-card  [style]="{ padding: '80px'}">
         <img
           src="../../../assets/images/logo-colorful.png"
           alt="imagem de uma roupa"
@@ -32,9 +31,8 @@
           label="ENTRAR"
           (click)="onSubmit()"
           ></app-button>
-          <a>Ainda não tem uma conta? <span>Cadastre-se</span> </a>
+          <a>Ainda não tem uma conta? <span routerLink="/authentication/sign-up">Cadastre-se</span> </a>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </app-card>
   </div>
 </div>
