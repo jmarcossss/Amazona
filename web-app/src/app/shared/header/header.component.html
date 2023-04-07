@@ -28,9 +28,16 @@
       fxLayout="row"
       fxLayoutGap="32px"
     >
-      <button mat-icon-button (click)="onClickNotification()">
-        <mat-icon>notifications</mat-icon>
+    
+      <button mat-icon-button (click)="onClickNotification()" [matMenuTriggerFor]="menu">
+        <mat-icon>{{showNotification ? 'notifications_active' : 'notifications_none'}}</mat-icon>
       </button>
+      <mat-menu class="fullMenu" #menu="matMenu" yPosition="below" xPosition="after" (menuClosed)="showNotification = false">
+        <div class="menuDiv">
+            <app-notifications></app-notifications>
+        </div>
+        </mat-menu>
+
       <button mat-icon-button routerLink="/profile" routerLinkActive="active">
         <mat-icon>person</mat-icon>
       </button>

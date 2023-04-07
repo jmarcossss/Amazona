@@ -83,3 +83,11 @@
 .header-store-section-visible {
   display: flex !important;
 }
+
+.fullMenu{
+  width: flex;
+}
+
+.menuDiv {
+  padding: 20px;
+}

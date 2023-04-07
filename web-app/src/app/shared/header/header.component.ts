@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatMenuTrigger } from '@angular/material/menu';
+
 
 @Component({
   selector: 'app-header',
@@ -8,11 +10,19 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   @Input() onSearchChange: (value: String) => void = () => {};
+  showNotification = false;
 
   constructor(private router: Router) {}
 
   ngOnInit() {
     this.router.events.subscribe((_) => this.onListenerHome());
+      // adiciona um event listener ao elemento document para fechar o menu quando o usuário clicar fora dele
+
+    document.addEventListener('click', (event) => {
+      if (!this.menuTrigger.menuOpen && this.showNotification) {
+        this.showNotification = false;
+      }
+    });
   }
 
   onListenerHome() {
@@ -31,6 +41,9 @@ export class HeaderComponent {
   }
 
   onClickNotification() {
-    alert('Open notification');
+
+    this.showNotification = !this.showNotification;
   }
+
+  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 }

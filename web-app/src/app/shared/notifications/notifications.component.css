@@ -1,0 +1,65 @@
+.item1{
+    flex-grow: 1;
+    align-self: stretch;
+  }
+
+  .medium-text{
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .box-datepicker {
+    width: flex;
+    height: flex;
+  }
+  
+  .border-forms{
+    border: 1px solid #818181;
+    border-radius: 8px;
+  }
+
+  .small-text{
+    font-size: 10px;
+    line-height: 12px;
+  }
+
+  .box-datepicker {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+  }
+  
+  .box-datepicker input {
+    cursor: pointer;
+  }
+  
+  .box-datepicker .mat-form-field-flex {
+    align-items: center;
+  }
+  
+  .box-datepicker .mat-form-field-infix {
+    pointer-events: none;
+  }
+  
+  .box-datepicker .mat-form-field-wrapper {
+    pointer-events: all;
+  }
+  
+  .box-datepicker .mat-form-field-outline-start,
+  .box-datepicker .mat-form-field-outline-end {
+    display: none;
+  }
+  
+  .box-datepicker .mat-form-field-prefix {
+    display: none;
+  }
+  
+  .full-width .mat-calendar {
+    width: 100%;
+  }
+  
+  .result-text{
+    margin-top: 10px;
+    margin-bottom: 8px;
+    color: var(--color-texts);
+  }
