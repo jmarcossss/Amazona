@@ -91,6 +91,9 @@
           "defaultConfiguration": "dev"
         },
         "serve": {
+          "options": {
+            "port": 4200
+          },
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "prod": {
@@ -101,6 +104,12 @@
             }
           },
           "defaultConfiguration": "dev"
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

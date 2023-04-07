@@ -36,9 +36,21 @@ export class SignUpFormPersonalDataComponent implements OnInit {
               this.handleValidateError(error.msgCode);
             }
 
-            this.snackBarService.showError({
-              message: 'Erro ao validar os dados',
-            });
+            if (
+              [
+                ApiMessageCodes.email_unavailable,
+                ApiMessageCodes.username_unavailable,
+              ]
+            ) {
+              this.snackBarService.showError({
+                message: 'Usuário já cadastrado',
+              });
+              return;
+            } else {
+              this.snackBarService.showError({
+                message: 'Erro ao validar os dados',
+              });
+            }
           },
         });
       });
