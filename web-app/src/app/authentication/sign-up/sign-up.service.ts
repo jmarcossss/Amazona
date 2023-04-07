@@ -74,11 +74,11 @@ export class SignUpService extends BaseService {
   }
 
   public async submitPersonalData(): Promise<void> {
-    this.signUpPersonalDataValidateStatus.next(RequestStatus.loading());
-
     this.signUpPersonalDataForm.markAllAsTouched();
 
     if (this.signUpPersonalDataForm.valid) {
+      this.signUpPersonalDataValidateStatus.next(RequestStatus.loading());
+
       const response = await firstValueFrom(
         this.httpService.post(
           `${this.prefix}/validation`,
@@ -102,6 +102,7 @@ export class SignUpService extends BaseService {
   }
 
   public backFromAddress(): void {
+    this.signUpPersonalDataValidateStatus.next(RequestStatus.idle());
     this.signUpFormStep.next(SignUpFormStep.PersonalData);
   }
 
@@ -110,6 +111,7 @@ export class SignUpService extends BaseService {
   }
 
   public backFromPayment(): void {
+    this.signUpStatus.next(RequestStatus.idle());
     this.signUpFormStep.next(SignUpFormStep.Address);
   }
 
@@ -128,7 +130,7 @@ export class SignUpService extends BaseService {
           this.signUpAddressForm.getRawValue().address2,
           this.signUpAddressForm.getRawValue().address3,
         ],
-        payment: this.signUpPaymentForm.getRawValue().payment,
+        payment: this.signUpPaymentForm.getRawValue().paymentOption,
       })
     );
 
