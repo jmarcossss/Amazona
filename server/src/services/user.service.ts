@@ -66,8 +66,7 @@ class UserService {
 
   public async getUserByEmail(email: string): Promise<UserEntity> {
     try {
-      const users = await this.userRepository.getUsers();
-      const user = users.find((user) => (user.email === email));
+      const user = await this.userRepository.getUserByEmail(email);
 
       if(!user) {
         throw new NotFoundError({
@@ -101,16 +100,12 @@ class UserService {
 
   public async updateUserById(id: string, data: UserEntity): Promise<void> {
     try {
-      const user = await this.getUserById(id);
-
-      user.name = data.name;
-      user.payment = data.payment;
-      user.address = data.address;
-      user.phone = data.phone;
+      const user = new UserEntity(await this.getUserById(id));
+      user.updateUserPartially(data);
       
       const updatedUser = await this.userRepository.updateUserById(user);
 
-      if (!updatedUser) {
+      if(!updatedUser || JSON.stringify(user) !== JSON.stringify(updatedUser)) {
         throw new InternalServerError({
           msg: 'Error in updating user!',
           msgCode: UserServiceMessageCode.user_update_error,

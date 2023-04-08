@@ -19,7 +19,18 @@ class UserRepository extends BaseRepository<UserEntity> {
     try {
       let users = await this.findAll();
       let user = users.find((user) => user.id === id);
-      
+
+      return user;
+    } catch (e) {
+      throw new InternalServerError();
+    }
+  }
+
+  public async getUserByEmail(email: string): Promise<UserEntity | undefined> {
+    try {
+      let users = await this.findAll();
+      let user = users.find((user) => user.email === email);
+
       return user;
     } catch (e) {
       throw new InternalServerError();

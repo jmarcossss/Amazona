@@ -23,6 +23,12 @@ class UserEntity extends BaseEntity {
         this.phone = data.phone || '';
         this.code = data.code || '';
     }
+
+    public updateUserPartially(data: UserEntity): void {
+        this.name = data.name;
+        this.address = data.address;
+        this.phone = data.phone;
+    }
 }
 
 export default UserEntity;
