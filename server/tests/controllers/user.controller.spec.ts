@@ -18,16 +18,6 @@ describe('UserController', () => {
     address: ["Avenida Acrucha 5"],
     phone: "999789923"
   });
-  const updatedMockedUser: UserModel = new UserModel({
-    id: mockedUserId,
-    CPF: "12989087064",
-    name: "Clarao",
-    username: "clarao",
-    email: "clarao@mail.com",
-    payment: "PIX",
-    address: ["Avenida Acrucha 42"],
-    phone: "999789923"
-  });
 
   it('[GET] /api/users/:id should return an user by id', async () => {
     const response = await request.get('/api/users/' + mockedUserId).send();
@@ -37,23 +27,34 @@ describe('UserController', () => {
   });
 
   it('[PUT] /api/users/:id should update an user by id', async () => {
+    const updatedMockedUser = {
+      id: mockedUserId,
+      CPF: "12989087064",
+      name: "Clarao",
+      username: "clarao",
+      email: "clarao@mail.com",
+      payment: "PIX",
+      address: ["Avenida Acrucha 42"],
+      phone: "999789923"
+    };
+  
     const response = await request.put('/api/users/' + mockedUserId).send(updatedMockedUser);
-    const result: UserModel = response.body.msgCode;
+    const result = response.body.msgCode;
 
     expect(result).toEqual('success');
   });
 
-  it('[DELETE] /api/users/:id send a incorrect_password error message', async () => {
+  it('[DELETE] /api/users/:id should receive incorrect_password error message', async () => {
     const password = {password: "error321"}
     const response = await request.delete('/api/users/' + mockedUserId).send(password);
-    const result: UserModel = response.body.msgCode;
+    const result = response.body.msgCode;
 
     expect(result).toEqual('incorrect_password');
   });
 
   it('[DELETE] /api/users/:id should delete an user by id', async () => {
     const response = await request.delete('/api/users/' + mockedUserId).send(mockedUserPassword);
-    const result: UserModel = response.body.msgCode;
+    const result = response.body.msgCode;
 
     expect(result).toEqual('success');
   });
