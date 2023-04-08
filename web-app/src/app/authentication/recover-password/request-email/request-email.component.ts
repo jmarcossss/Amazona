@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { RecoverPasswordService } from '../recover-password.service';
 
 @Component({
   selector: 'app-request-email',
@@ -6,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./request-email.component.css']
 })
 export class RequestEmailComponent {
+
+  recoverPasswordRequestEmailForm!: FormGroup;
 
 }
