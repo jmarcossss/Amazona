@@ -8,7 +8,7 @@ import OrderStatusItemEntity from '../../src/entities/order-status-item.entity';
 
 const request = supertest(app);
 
-describe('UserController', () => {
+describe('OrderController', () => {
   const mockedOrderId: string = "b9c4a338-e19e-4bfa-bc83-45171017407c";
   const mockedUserId: string = "ce6f5c66-1967-4b21-9929-51ca7d652151";
   const mockedProductName: string = "Camisa Adidas"
@@ -66,7 +66,7 @@ describe('UserController', () => {
     statusId: "0fc0ea4f-840a-4a45-b657-1a364fb4fe72",
     date: "2023-01-29T06:00:20Z"
   });
-  const mockedOrderCreated: OrderEntity = new OrderEntity({
+  const newMockedOrder: OrderEntity = new OrderEntity({
     id: "b9c4a338-e19e-4bfa-bc83-45171017407c",
     userId: "ce6f5c66-1967-4b21-9929-51ca7d652151",
     totalValue: "600",
@@ -155,7 +155,7 @@ describe('UserController', () => {
   });
 
   it('[Post] /api/orders should create an order', async () => {
-    const response = await request.post('/api/orders').send(mockedOrderCreated);
+    const response = await request.post('/api/orders').send(newMockedOrder);
     const result: string = response.body.msgCode;
     expect(result).toEqual('success');
   });
