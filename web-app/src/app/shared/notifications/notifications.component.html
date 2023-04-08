@@ -1,13 +1,53 @@
 <div class="item1 medium-text">
-<h3>Notificações</h3>
-<p>selcione uma data</p>
-<mat-form-field class="box-datepicker clickable" appearance="outline" (click)="picker.open()">
-    <input class="border-forms small-text" matInput [matDatepicker]="picker" placeholder="DD/MM/YYYY">
-    <mat-datepicker #picker panelClass="my-custom-class"></mat-datepicker>
-</mat-form-field>
-<div class="margem result-text">Total de resultados: 3 itens</div>    
+    <h3>Notificações</h3>
+    <p>selcione uma data</p>
+    <mat-form-field 
+     appearance="outline" 
+     (click)="picker.open()">
+        <input class="border-forms small-text" matInput [matDatepicker]="picker" placeholder="DD/MM/YYYY">
+        <mat-datepicker #picker panelClass="my-custom-class"></mat-datepicker>
+    </mat-form-field>
+    <div class="result-text">Total de resultados: 3 itens</div>
 
-    <app-card>
-    
-    </app-card>
+    <div class="notCard">
+        <app-card class="notCard">
+            <div class="data-box">
+                <span class="small-text">29 de Janeiro de 2023 às 15:21</span>
+            </div>
+            <div class="pedido-box">
+                <span class="medium-text">Pedido de (Camisa Puma - Masculina) realizado com sucesso</span>
+            </div>
+            <div class="details-box">
+                <a href="https://google.com" style="  color: var(--color-details);"><span class="medium-text">Clique para ver mais detalhes</span></a>
+            </div>
+        </app-card>
+    </div>
+
+    <div class="notCard">
+        <app-card class="notCard">
+            <div class="data-box">
+                <span class="small-text">29 de Janeiro de 2023 às 15:21</span>
+            </div>
+            <div class="pedido-box">
+                <span class="medium-text">Pedido de (Camisa Puma - Masculina) realizado com sucesso</span>
+            </div>
+            <div class="details-box">
+                <a href="https://google.com" style="  color: var(--color-details);"><span class="medium-text">Clique para ver mais detalhes</span></a>
+            </div>
+        </app-card>
+    </div>
+
+    <div class="notCard">
+        <app-card class="notCard">
+            <div class="data-box">
+                <span class="small-text">29 de Janeiro de 2023 às 15:21</span>
+            </div>
+            <div class="pedido-box">
+                <span class="medium-text">Pedido de (Camisa Puma - Masculina) realizado com sucesso</span>
+            </div>
+            <div class="details-box">
+                <a href="https://google.com" style="  color: var(--color-details);"><span class="medium-text">Clique para ver mais detalhes</span></a>
+            </div>
+        </app-card>
+    </div>
 </div>

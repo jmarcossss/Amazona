@@ -85,9 +85,18 @@
 }
 
 .fullMenu{
-  width: flex;
-}
+  position: absolute;
+  width: 526px !important;
+  height: 526px;
+  left: 978px;
+  top: 144px;
+  }
 
 .menuDiv {
   padding: 20px;
+  width: flex;
+  height: flex;
+}
+::ng-deep .mat-mdc-menu-panel {
+  max-width: fit-content !important;
 }
