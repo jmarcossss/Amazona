@@ -1,11 +1,6 @@
 import UserModel from '../../src/models/user.model';
 import app from '../../src/app';
 import supertest from 'supertest';
-import AuthenticationService from '../../src/services/authentication.service';
-import Injector from '../../src/di/injector';
-import { di } from '../../src/di/index';
-import UserRepository from '../../src/repositories/user.repository';
-import UserService from '../../src/services/user.service';
 const request = supertest(app);
 import EmailService from '../../src/services/email.service';
 
