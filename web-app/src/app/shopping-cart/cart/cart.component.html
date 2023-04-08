@@ -1,3 +1,21 @@
-<mat-card>
-  <mat-card-content>Create Order</mat-card-content>
-</mat-card>
+<div class="body">
+  <div class="container">
+    <div class="products-container">
+      <header>
+        <h3>MEU CARRINHO</h3>
+        <div>
+          <h3>QUANTIDADE</h3>
+          <h3>UNITÁRIO</h3>
+          <h3>TOTAL</h3>
+        </div>
+      </header>
+      <div class="products-items-container">
+        <app-cart-product-item></app-cart-product-item>
+        <app-cart-product-item></app-cart-product-item>
+        <app-cart-product-item></app-cart-product-item>
+        <app-cart-product-item></app-cart-product-item>
+      </div>
+    </div>
+    <app-cart-resume></app-cart-resume>
+  </div>
+</div>

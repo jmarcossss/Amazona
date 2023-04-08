@@ -1,0 +1,35 @@
+.body {
+  width: 100% !important;
+}
+
+header h3 {
+  font-size: var(--font-inputs);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-inactive);
+
+  padding: 14px;
+}
+
+.resume-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.resume-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resume-item h3 {
+  font-size: var(--font-inputs);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-inactive);
+}
+
+.total h3 {
+  font-size: var(--font-title) !important;
+  font-weight: var(--font-weight-medium) !important;
+  color: var(--color-texts) !important;
+}

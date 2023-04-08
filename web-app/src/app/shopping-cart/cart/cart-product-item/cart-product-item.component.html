@@ -1,0 +1,30 @@
+<app-card [style]="{ padding: '16px 32px' }">
+  <div class="container">
+    <div class="img-container">
+      <img
+        src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+        alt="product-img"
+      />
+    </div>
+
+    <div class="info-container">
+      <h2>Product name</h2>
+      <br />
+      <p>Marca: Adidas</p>
+    </div>
+
+    <div class="qtd-container">
+      <button (click)="increment()">+</button>
+      <input min="0" max="5" [value]="quantity" />
+      <button (click)="decrement()">-</button>
+    </div>
+
+    <div class="unit-price-container">
+      <p>R$ 400,00</p>
+    </div>
+
+    <div class="total-price-container">
+      <p>R$ 400,00</p>
+    </div>
+  </div>
+</app-card>
