@@ -10,7 +10,7 @@
     "watch:data": "if [ ! -f \"./dist/src/data/products.json\" ]; then npm run copy:json; fi && onchange 'src/data/*.json' -- npm run copy:json",
     "build": "env-cmd -f .env.${env} tsc && npm run copy:json",
     "deploy": "env-cmd -f .env.${env} npm run build && vercel --prod",
-    "test": "env-cmd -f .env.${env} jest --verbose --coverage  --config ./jest.config.js --detectOpenHandles",
+    "test": "env-cmd -f .env.test jest --verbose --coverage  --config ./jest.config.js --detectOpenHandles",
     "lint": "eslint '**/*.ts'"
   },
   "keywords": [],

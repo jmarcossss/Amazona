@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import Env from '../env';
 import Identifiable from './identifiable';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -7,9 +8,22 @@ export default class JsonHandler<T extends Identifiable> {
   private filePath: string;
 
   constructor(fileName: string) {
-    this.filePath = path.join(__dirname, '..', 'data', `${fileName}`);
-  }
+    let rightPath = path.join(__dirname, '..', 'data', `${fileName}`);
 
+    if (Env.ENV === 'TEST') {
+      rightPath = path.join(
+        __dirname,
+        '..',
+        '..',
+        'dist',
+        'src',
+        'data',
+        `${fileName}`
+      );
+    }
+
+    this.filePath = rightPath;
+  }
   async writeJsonFile(newObject: T): Promise<T | undefined> {
     try {
       const jsonData: T[] | void = await this.readJsonFile();
