@@ -14,14 +14,48 @@ import { ErrorResponse } from '../../shared/utils/response';
 export class RecoverPasswordService  extends BaseService{
   private prefix: string = '/authentication/recover-password'
 
-  public recorverPassawordRequestEmail: FormGroup;
-  public recorverPassawordRequestcode: FormGroup;
-  public recorverPassawordRequestPassword: FormGroup;
+  public recoverPasswordRequestEmailForm: FormGroup;
+  public recoverPasswordRequestCodeForm: FormGroup;
+  public recoverPasswordRequestPasswordForm: FormGroup;
 
   recoverPasswordStep: BehaviorSubject<RecoverPasswordStep> =
     new BehaviorSubject<RecoverPasswordStep>(RecoverPasswordStep.RequestEmail);
-  public signUpFormStep$ = this.recoverPasswordStep.asObservable();
+  public recoverPasswordStep$ = this.recoverPasswordStep.asObservable();
 
+
+  public recoverPasswordRequestEmailValidateStatus: BehaviorSubject<
+    RequestStatus<string, ErrorResponse>
+  > = new BehaviorSubject<RequestStatus<string, ErrorResponse>>(
+    RequestStatus.idle()
+  );
+
+  public recoverPasswordRequestEmailValidateStatus$ =
+    this.recoverPasswordRequestEmailValidateStatus.asObservable();
+
+  public recoverPasswordRequestCodeValidateStatus: BehaviorSubject<
+    RequestStatus<string, ErrorResponse>
+  > = new BehaviorSubject<RequestStatus<string, ErrorResponse>>(
+    RequestStatus.idle()
+  );
+
+  public recoverPasswordRequestCodeValidateStatus$ =
+    this.recoverPasswordRequestCodeValidateStatus.asObservable();
+
+  public recoverPasswordRequestPasswordValidateStatus: BehaviorSubject<
+    RequestStatus<string, ErrorResponse>
+  > = new BehaviorSubject<RequestStatus<string, ErrorResponse>>(
+    RequestStatus.idle()
+  );
+
+  public recoverPasswordRequestPasswordValidateStatus$ =
+    this.recoverPasswordRequestPasswordValidateStatus.asObservable();
+
+
+  public recoverPasswordStatus: BehaviorSubject<RequestStatus<string, ErrorResponse>> =
+    new BehaviorSubject<RequestStatus<string, ErrorResponse>>(
+      RequestStatus.idle()
+    );
+  public recoverPasswordStatus$ = this.recoverPasswordStatus.asObservable();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,19 +63,18 @@ export class RecoverPasswordService  extends BaseService{
   ){
     super()
 
-    this. recorverPassawordRequestEmail = this.formBuilder.group({
-      username: ['', Validators.minLength(4)],
+    this.recoverPasswordRequestEmailForm = this.formBuilder.group({
       email: [
         '',
         [Validators.compose([Validators.required, Validators.email])],
       ],
     });
 
-    this.recorverPassawordRequestcode = this.formBuilder.group({
+    this. recoverPasswordRequestCodeForm = this.formBuilder.group({
       code: ['', Validators.required]
     });
 
-    this. recorverPassawordRequestPassword = this.formBuilder.group({
+    this.recoverPasswordRequestPasswordForm = this.formBuilder.group({
             password: [
               '',
               [
@@ -64,6 +97,40 @@ export class RecoverPasswordService  extends BaseService{
             ],
           });
     }
+
+  public async submitRequestEmail(): Promise<void> {
+    await this.recoverPassword();
+  }
+
+  public async submitRequestCode(): Promise<void> {
+    await this.recoverPassword();
+  }
+
+  public async submitRequestPassword(): Promise<void> {
+    await this.recoverPassword();
+  }
+
+  public async recoverPassword(): Promise<void> {
+    this.recoverPasswordStatus.next(RequestStatus.loading());
+
+    const response = await firstValueFrom(
+      this.httpService.post(`${this.prefix}`,
+        {
+          username: this.recoverPasswordRequestEmailForm.getRawValue().email,
+          code: this.recoverPasswordRequestCodeForm.getRawValue().code,
+          password: this.recoverPasswordRequestPasswordForm.getRawValue().password
+        }
+        )
+      );
+    response.handle({
+      onSuccess: (_) => {
+        this.recoverPasswordStatus.next(RequestStatus.success(''));
+      },
+      onFailure: (error) => {
+        this.recoverPasswordStatus.next(RequestStatus.failure(error));
+      },
+    });
+  }
 }
 
 

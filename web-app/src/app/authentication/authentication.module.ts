@@ -4,6 +4,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { SignInModule } from './sign-in/sign-in.module';
+import { RecoverPasswordModule } from './recover-password/recover-password.module';
 
 @NgModule({
   declarations: [SignUpComponent],
@@ -11,6 +12,7 @@ import { SignInModule } from './sign-in/sign-in.module';
     CommonModule,
     AuthenticationRoutingModule,
     SharedModule,
-    SignInModule],
+    SignInModule,
+    RecoverPasswordModule],
 })
 export class AuthenticationModule {}
