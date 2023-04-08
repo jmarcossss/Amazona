@@ -5,9 +5,6 @@
 .direction-column{
   flex-direction: column;
 }
-.child-pattern{
-  
-}
 #container {
   background: var(--color-background);
   width: 100vw;
