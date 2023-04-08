@@ -99,4 +99,5 @@
 }
 ::ng-deep .mat-mdc-menu-panel {
   max-width: fit-content !important;
+  left: 180px !important;
 }

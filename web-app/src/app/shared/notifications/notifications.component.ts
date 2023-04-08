@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class NotificationsComponent {
 
+  Data: Date = new Date();
+
+  dataSelecionada(selectedDate: Date){
+    this.Data = selectedDate;
+  }
+
 }
