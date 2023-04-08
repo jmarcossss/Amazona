@@ -16,7 +16,7 @@ export class HistoryService extends BaseService{
   private userId: string = 'aa6c5fd5-2f03-45b9-8749-f94bd20704be'
   public historyForm: FormGroup; 
   statusAtivo: boolean;
-  statusConcluido: boolean;
+  statusProcessando: boolean;
   statusCancelado: boolean;
   inputName;
   beginDate;
@@ -43,29 +43,48 @@ export class HistoryService extends BaseService{
     this.beginDate = this.historyForm.get('DateBegin');
     this.endDate = this.historyForm.get('DateEnd');
     this.statusAtivo = false;
-    this.statusConcluido = false;
+    this.statusProcessando = false;
     this.statusCancelado = false;
   }
   public setAtivo(): void{
     this.statusAtivo = true;
   }
   public setConcluido(): void{
-    this.statusConcluido = true;
+    this.statusProcessando = true;
   }
   public setCancelado(): void{
     this.statusCancelado = true;
   }
   public clean(): void{
     this.statusAtivo = false;
-    this.statusConcluido = false;
+    this.statusProcessando = false;
     this.statusCancelado = false;
     this.inputName?.setValue("")
     this.beginDate?.setValue("")
     this.endDate?.setValue("")
   }
   public async buscar(): Promise<OrderModel[]> {
-    const response = await firstValueFrom(
-      this.httpService.get(`${this.prefix}/${this.userId}`)
+    console.log(`${this.beginDate?.value} ${typeof(this.beginDate?.value)}       ${this.endDate?.value} ${typeof(this.endDate?.value)}`)
+    let uri: string = `${this.prefix}/${this.userId}?`
+    if(!!this.inputName){
+      uri += `productName=${encodeURIComponent(this.inputName.value)}&`
+    }
+    if(!!this.beginDate?.value && !!this.endDate?.value){
+      console.log(`entrando em datas`)
+      uri += `initialDate=${encodeURIComponent(this.beginDate.value)}&endDate=${encodeURIComponent(this.endDate.value)}`
+    }
+
+    let statusString: string = ""
+    if(this.statusAtivo) statusString += "active"
+    if(this.statusProcessando) statusString += "processing"
+    if(this.statusCancelado) statusString += "canceled"
+    
+    if(!!statusString){
+      uri += `historiesStatus=${statusString}&`
+    }
+    
+    const response = await firstValueFrom( 
+      this.httpService.get(uri)
     );
     let resposta: OrderModel[]  = []
     response.handle({
