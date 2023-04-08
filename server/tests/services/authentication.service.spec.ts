@@ -4,6 +4,7 @@ import Injector from '../../src/di/injector';
 import { di } from '../../src/di/index';
 import UserRepository from '../../src/repositories/user.repository';
 import UserEntity from '../../src/entities/user.entity';
+import UserModel from '../../src/models/user.model';
 import { NotFoundError, BadRequestError, InternalServerError } from '../../src/utils/errors/http.error';
 
 describe('UserService', () => {
@@ -11,6 +12,16 @@ describe('UserService', () => {
   let userService: UserService;
   let userRepository: UserRepository;
   let injector: Injector = di;
+  const mockedUserModel = new UserModel({
+    id: "0b718259-44a4-4a03-9491-c4374f5e3b33",
+    CPF: "00342153411",
+    name: "Rafinha dos Reis",
+    username: "rafinha",
+    email: "rrl3@cin.ufpe.br",
+    payment: "PIX",
+    address: [],
+    phone: "",
+  });
   const mockedUser = new UserEntity({
     id: "0b718259-44a4-4a03-9491-c4374f5e3b33",
     CPF: "00342153411",
@@ -90,7 +101,7 @@ describe('UserService', () => {
     jest.spyOn(userRepository, 'getUsers').mockResolvedValue(mockedUsers);
 
     const result = await autheticationService.signIn(user);
-    expect(result).toEqual(mockedUser);
+    expect(result).toEqual(mockedUserModel);
   });
 
   it('[signIn] should sign in an user using username', async () => {
@@ -98,7 +109,7 @@ describe('UserService', () => {
     jest.spyOn(userRepository, 'getUsers').mockResolvedValue(mockedUsers);
 
     const result = await autheticationService.signIn(user);
-    expect(result).toEqual(mockedUser);
+    expect(result).toEqual(mockedUserModel);
   });
 
   it('[signIn] should throw a NotFoundError due to unkown email', async () => {
@@ -143,17 +154,16 @@ describe('UserService', () => {
 
     jest.spyOn(userRepository, 'getUsers').mockResolvedValue(mockedUsers);
 
-    const result = await autheticationService.signUpValidation(newMockedUser);
-    expect(result).toBeUndefined();
+    expect(async () => { await autheticationService.signUpValidation(user)}).rejects.toThrow(BadRequestError);
   });
 
-  it('[signUpValidation] should throw BadRequestError due CPF, email and password invalid format', async () => {
+  it('[signUpValidation] should throw BadRequestError due to data invalid format', async () => {
     const user = new UserEntity({
-      CPF: "error123",
+      CPF: "error",
       name: "Sophia Moraes",
       username: "sophie", 
-      email: "sophie",
-      password: "error321",
+      email: "error",
+      password: "error",
       payment: "PIX",
       address: [],
       phone: "",
@@ -161,9 +171,7 @@ describe('UserService', () => {
     })
 
     jest.spyOn(userRepository, 'getUsers').mockResolvedValue(mockedUsers);
-
-    const result = await autheticationService.signUpValidation(newMockedUser);
-    expect(result).toBeUndefined();
+    expect(async () => { await autheticationService.signUpValidation(user)}).rejects.toThrow(BadRequestError);
   });
 
   it('[signUp] should sign up an user', async () => {
