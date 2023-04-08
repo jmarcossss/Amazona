@@ -30,7 +30,7 @@ export class ApiMessageCodes {
       case ApiMessageCodes.CPF_invalid_format:
         return 'Esse CPF não é válido';
       case ApiMessageCodes.sign_up_error:
-        return 'Erro ao cadastrar';
+        return 'Erro ao cadastrar, tente novamente mais tarde!';
       case ApiMessageCodes.reset_password_error:
         return 'Erro ao redefinir a senha';
       case ApiMessageCodes.incorrect_recovery_code:

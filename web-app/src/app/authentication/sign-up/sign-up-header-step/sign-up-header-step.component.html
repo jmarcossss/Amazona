@@ -1,0 +1,59 @@
+<div class="header">
+  <ng-container
+    [ngTemplateOutlet]="sectionItem"
+    [ngTemplateOutletContext]="{
+      active: signUpFormStep == 1,
+      pastSection: signUpFormStep > 1,
+      sectionNumber: 1,
+      sectionTitle: 'Dados pessoais',
+      hasHr: true
+    }"
+  >
+  </ng-container>
+
+  <ng-container
+    [ngTemplateOutlet]="sectionItem"
+    [ngTemplateOutletContext]="{
+      active: signUpFormStep == 2,
+      pastSection: signUpFormStep > 2,
+      sectionNumber: 2,
+      sectionTitle: 'Endereço',
+      hasHr: true
+    }"
+  ></ng-container>
+
+  <ng-container
+    [ngTemplateOutlet]="sectionItem"
+    [ngTemplateOutletContext]="{
+      active: signUpFormStep == 3,
+      pastSection: signUpFormStep > 3,
+      sectionNumber: 3,
+      sectionTitle: 'Pagamento',
+      hasHr: false
+    }"
+  ></ng-container>
+</div>
+
+<ng-template
+  #sectionItem
+  let-active="active"
+  let-pastSection="pastSection"
+  let-sectionNumber="sectionNumber"
+  let-sectionTitle="sectionTitle"
+  let-hasHr="hasHr"
+>
+  <div
+    [ngClass]="{
+      active: active,
+      'past-section': pastSection
+    }"
+    class="step"
+  >
+    <div class="section">
+      <div *ngIf="!pastSection" class="section-number">{{ sectionNumber }}</div>
+      <mat-icon *ngIf="pastSection" class="section-number">check</mat-icon>
+      <h3 class="section-title">{{ sectionTitle }}</h3>
+    </div>
+    <hr *ngIf="hasHr" />
+  </div>
+</ng-template>
