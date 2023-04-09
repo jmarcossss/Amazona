@@ -1,16 +1,12 @@
-import UserService from '../../src/services/user.service';
-import AuthenticationService from '../../src/services/authentication.service';
 import Injector from '../../src/di/injector';
 import { di } from '../../src/di/index';
-import UserRepository from '../../src/repositories/user.repository';
-import UserEntity from '../../src/entities/user.entity';
 import { NotFoundError, BadRequestError, InternalServerError } from '../../src/utils/errors/http.error';
 import NotificationService from '../../src/services/notification.service';
 import NotificationRepository from '../../src/repositories/notification.repository';
 import NotificationEntity from '../../src/entities/notification.entity';
 import NotificationModel from '../../src/models/notification.model';
 
-describe('UserService', () => {
+describe('NotificationService', () => {
   let notificationService: NotificationService
   let notificationRepository: NotificationRepository;
   let injector: Injector = di;
