@@ -1,0 +1,58 @@
+.head{
+  padding-bottom: 20px !important;
+}
+
+.param{
+  padding-bottom: 8px !important;
+}
+
+.item1 {
+  flex-grow: 1;
+  align-self: stretch;
+}
+
+.medium-text {
+  font-size: 10px;
+  line-height: 12px;
+}
+
+
+.small-text {
+  font-size: 8px;
+  line-height: 10px;
+}
+
+
+.result-text {
+  margin-top: 5px;
+  margin-bottom: 4px;
+  color: var(--color-texts);
+}
+
+.data-box {
+  padding-top: 5px;
+  padding-left: 6px;
+  padding-bottom: 3px;
+}
+
+.pedido-box {
+  padding-bottom: 12.5px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.details-box {
+  padding-left: 6px;
+  padding-bottom: 5px;
+}
+
+.notCard {
+  width: auto;
+  padding-bottom: 12.37px !important;
+}
+
+.border-forms{
+  border: 1px solid #818181;
+  border-radius: 8px;
+}
+
