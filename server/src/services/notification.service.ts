@@ -19,7 +19,7 @@ class NotificationService {
   ) {
     this.notificationRepository = notificationRepository;
   }
-  public async getNotifications(userId: string, date: any): Promise<NotificationModel[]> {
+  public async getNotifications(userId: string, date?: any): Promise<NotificationModel[]> {
     try {
       let notifications = await this.notificationRepository.getNotifications();
       if(!!date){ /* check if it is undefined */

@@ -115,7 +115,7 @@ class OrderService {
       throw e;
     }
   }
-  public async getHistoryByUserIdAuxiliary(order: OrderModel, historiesStatus: any, productName: any, initialDate: any, endDate: any): Promise<OrderModel | undefined> {
+  private async getHistoryByUserIdAuxiliary(order: OrderModel, historiesStatus: any, productName: any, initialDate: any, endDate: any): Promise<OrderModel | undefined> {
     let hasStatusHistory = false;
     let hasSomeProductWithName = false;
     let hasPurchaseDate = false;
@@ -228,7 +228,7 @@ class OrderService {
 
       if (!order) {
         throw new BadRequestError({
-          msg: 'order not updated!',
+          msg: 'order not created!',
           msgCode: OrderServiceMessageCode.order_not_created,
         });
       }
