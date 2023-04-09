@@ -3,6 +3,7 @@ import UserRepository from '../repositories/user.repository';
 import { BadRequestError, NotFoundError, InternalServerError} from '../utils/errors/http.error';
 import UserService from './user.service';
 import EmailService from './email.service';
+import UserModel from '../models/user.model';
 
 class AuthenticationServiceMessageCode {
   public static readonly incorrect_credentials = 'incorrect_credentials';
@@ -31,7 +32,7 @@ class AuthenticationService {
     this.pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   }
 
-  public async signIn(data: UserEntity): Promise<UserEntity | undefined> {
+  public async signIn(data: UserEntity): Promise<UserModel | undefined> {
     try {
       const users = await this.userRepository.getUsers();
       const user = users.find((user) => ( user.email === data.email) || 
@@ -51,7 +52,7 @@ class AuthenticationService {
         });
       }
 
-      return user;
+      return new UserModel(user);
       
     } catch (e) {
       throw e;

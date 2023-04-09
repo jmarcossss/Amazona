@@ -4,6 +4,8 @@ import NotificationRepository from '../repositories/notification.repository';
 import { BadRequestError, NotFoundError } from '../utils/errors/http.error';
 import logger from '../logger';
 import EmailService from './email.service';
+import UserService from './user.service';
+import UserEntity from '../entities/user.entity';
 
 class NotificationServiceMessageCode {
   public static readonly notification_not_found = 'notification_not_found';
@@ -13,13 +15,15 @@ class NotificationServiceMessageCode {
 
 class NotificationService {
   private notificationRepository: NotificationRepository;
-  
+  private userService: UserService;
   constructor(
     notificationRepository: NotificationRepository,
+    userService: UserService,
   ) {
     this.notificationRepository = notificationRepository;
+    this.userService = userService;
   }
-  public async getNotifications(userId: string, date: any): Promise<NotificationModel[]> {
+  public async getNotifications(userId: string, date?: any): Promise<NotificationModel[]> {
     try {
       let notifications = await this.notificationRepository.getNotifications();
       if(!!date){ /* check if it is undefined */
@@ -66,8 +70,8 @@ class NotificationService {
           msgCode: NotificationServiceMessageCode.notification_not_created,
         });
       }
-
-      await EmailService.sendEmail("kennedycmelo@gmail.com", data.title, data.description)
+      const user: UserEntity = await this.userService.getUserById(data.userId);
+      await EmailService.sendEmail(user.email, data.title, data.description)
     } catch (e) {
       throw e;
     }
