@@ -87,6 +87,9 @@ export class ProfileService extends BaseService {
     const mockedId = "ce6f5c66-1967-4b21-9929-51ca7d652151";
     this.profileSaveValidateStatus.next(RequestStatus.loading());
     
+    console.log("PersonalDataForm" + this.profilePersonalDataForm.getRawValue());
+    console.log("AddressForm" + this.profileAddressForm.getRawValue());
+
     const response = await firstValueFrom(
       this.httpService.post(`${this.prefix}/${mockedId}`, {
         ...this.profilePersonalDataForm.getRawValue(),
@@ -112,9 +115,10 @@ export class ProfileService extends BaseService {
     const mockedId = "ce6f5c66-1967-4b21-9929-51ca7d652151";
     this.profileDeleteValidateStatus.next(RequestStatus.loading());
 
+    console.log("DeleteForm" + this.profileDeleteForm.getRawValue());
     const response = await firstValueFrom(
       this.httpService.post(`${this.prefix}/${mockedId}`, {
-        ...this.profileDeleteForm.getRawValue()
+        password: this.profileDeleteForm.getRawValue().password
       })
     );
 
