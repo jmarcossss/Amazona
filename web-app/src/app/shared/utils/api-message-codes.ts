@@ -10,6 +10,7 @@ export class ApiMessageCodes {
   public static readonly sign_up_error = 'sing_up_error';
   public static readonly reset_password_error = 'reset_password_error';
   public static readonly incorrect_recovery_code = 'incorrect_recovery_code';
+  public static readonly user_not_found = 'user_not_found';
 
   static codeToMessage(code: string): string {
     switch (code) {
@@ -35,6 +36,8 @@ export class ApiMessageCodes {
         return 'Erro ao redefinir a senha';
       case ApiMessageCodes.incorrect_recovery_code:
         return 'Código de recuperação incorreto';
+      case ApiMessageCodes.user_not_found:
+        return 'Usuário não encontrado';
 
       default:
         return 'Erro deconhecido';
