@@ -27,10 +27,10 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackBarService } from '../services/snack-bar.service';
 import { CardComponent } from './card/card.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-
 
 @NgModule({
   declarations: [
