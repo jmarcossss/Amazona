@@ -60,6 +60,18 @@ export class HistoryService extends BaseService{
   public setCanceled(): void{
     this.statusCanceled = true;
   }
+  public checkRecomprar(currentOrder: string): boolean{
+    return (currentOrder === 'delivered' || currentOrder === 'canceled')
+  }
+  public checkAcompanharPedido(currentOrder: string): boolean{
+    return (currentOrder === 'in transit' || currentOrder === 'confirmed')
+  }
+  public checkNotaFiscal(currentOrder: string): boolean{
+    return (currentOrder === 'in transit' || currentOrder === 'confirmed' || currentOrder === 'delivered')
+  }
+  public checkCancelar(currentOrder: string): boolean{
+    return (currentOrder === 'in transit' || currentOrder === 'confirmed')
+  }
   public clean(): void{
     this.statusConfirmed = false;
     this.statusInTransit = false;

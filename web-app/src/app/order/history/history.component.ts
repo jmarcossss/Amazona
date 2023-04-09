@@ -25,7 +25,7 @@ export class HistoryComponent implements OnInit{
   ngOnInit() {
     this.clean()
     this.historyForm = this.historyService.historyForm
-    
+
     this.historyService.historyStatus$.subscribe((status) => {
       status.maybeMap({
         succeeded: (orders: any[]) => {
@@ -55,6 +55,18 @@ export class HistoryComponent implements OnInit{
   }
   setCanceled(): void{
     this.historyService.setCanceled();
+  }
+  checkRecomprar(currentOrder: string): boolean{
+    return this.historyService.checkRecomprar(currentOrder)
+  }
+  checkAcompanharPedido(currentOrder: string): boolean{
+    return this.historyService.checkAcompanharPedido(currentOrder)
+  }
+  checkNotaFiscal(currentOrder: string): boolean{
+    return this.historyService.checkNotaFiscal(currentOrder)
+  }
+  checkCancelar(currentOrder: string): boolean{
+    return this.historyService.checkCancelar(currentOrder)
   }
   public async buscar(): Promise<void>{
     this.orders = await this.historyService.buscar();

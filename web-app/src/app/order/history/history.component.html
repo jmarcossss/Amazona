@@ -110,9 +110,12 @@
           </div>
         </div>
         <div class="item1 flexbox direction-column">
-          <app-button class="margem" type="btn medium" label="ACOMPANHAR PEDIDO"></app-button>
-          <app-button class="margem" type="btn medium black-outline" label="NOTA FISCAL"></app-button>
-          <app-button class="margem" type="btn medium danger-outline" label="CANCELAR"></app-button>
+          
+          <app-button *ngIf="checkRecomprar(order.statusHistory[order.statusHistory.length - 1].status.status)" class="margem" type="btn medium" label="RECOMPRAR"></app-button>
+          <app-button *ngIf="checkAcompanharPedido(order.statusHistory[order.statusHistory.length - 1].status.status)" class="margem" type="btn medium" label="ACOMPANHAR PEDIDO"></app-button>
+          <app-button *ngIf="checkNotaFiscal(order.statusHistory[order.statusHistory.length - 1].status.status)" class="margem" type="btn medium black-outline" label="NOTA FISCAL"></app-button>
+          <app-button *ngIf="checkCancelar(order.statusHistory[order.statusHistory.length - 1].status.status)" class="margem" type="btn medium danger-outline" label="CANCELAR"></app-button>
+          
         </div>
       </div>
     </div>
