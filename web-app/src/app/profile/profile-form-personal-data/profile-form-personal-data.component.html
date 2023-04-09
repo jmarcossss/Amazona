@@ -1,0 +1,46 @@
+<div>
+  <div class="grid-container">
+    <div>
+      <app-text-input
+        class="name"
+        label="Nome"
+        [control]="profilePersonalDataForm.get('name')"
+      ></app-text-input>
+      <app-text-input
+        class="CPF"
+        label="CPF"
+        [control]="profilePersonalDataForm.get('CPF')"
+        [mask]="cpfMask"
+      ></app-text-input>
+      <app-text-input
+        class="phone"
+        label="Celular"
+        placeholder="(81) 99999-9999"
+        [control]="profilePersonalDataForm.get('phone')"
+        [mask]="cellphoneMask"
+      ></app-text-input>
+    </div>
+
+    <div>
+      <app-text-input
+        class="username"
+        label="Nome de usuário"
+        placeholder=""
+        [control]="profilePersonalDataForm.get('username')"
+      ></app-text-input>
+
+      <app-text-input
+        class="email"
+        label="Email"
+        type="email"
+        [control]="profilePersonalDataForm.get('email')"
+      ></app-text-input>
+
+      <app-text-input
+      class="payment"
+      label="Método de pagamento"
+      [control]="profilePersonalDataForm.get('payment')"
+    ></app-text-input>
+    </div>
+  </div>
+</div>

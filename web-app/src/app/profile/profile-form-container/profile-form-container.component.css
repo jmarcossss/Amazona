@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.container mat-card-content {
+  padding: 0 !important;
+}
+
+.title {
+  font-size: var(--font-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-details);
+  align-self: flex-start;
+
+  margin-bottom: 32px;
+}
+
+.subtitle {
+  font-size: var(--font-subtitle);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-inative);
+  align-self: flex-start;
+
+  margin-bottom: 16px;
+}

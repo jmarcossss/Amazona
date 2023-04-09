@@ -1,0 +1,9 @@
+.container {
+    margin: 80px auto;
+    width: 1000px !important;
+  }
+  
+  .container img {
+    width: 200px;
+  }
+  

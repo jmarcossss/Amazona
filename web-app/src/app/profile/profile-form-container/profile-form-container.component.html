@@ -1,0 +1,17 @@
+<app-card [style]="{ padding: '52px 62px' }">
+  <h1 class="title">
+    Meu Perfil
+  </h1>
+  <h2 class="subtitle">
+    {{
+      profileForm == 1
+        ? "Dados pessoais"
+        : profileForm == 2
+        ? "Endereço"
+        : "Deletar"
+    }}
+  </h2>
+  <mat-card-content>
+    <ng-content></ng-content>
+  </mat-card-content>
+</app-card>
