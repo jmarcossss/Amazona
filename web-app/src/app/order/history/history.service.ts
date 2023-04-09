@@ -13,11 +13,12 @@ import OrderModel from '../../models/order.model';
 
 export class HistoryService extends BaseService{
   private prefix: string = '/orders/history';
-  private userId: string = 'aa6c5fd5-2f03-45b9-8749-f94bd20704be'
+  private userId: string = 'ce6f5c66-1967-4b21-9929-51ca7d652151'
   public historyForm: FormGroup; 
-  statusAtivo: boolean;
-  statusProcessando: boolean;
-  statusCancelado: boolean;
+  statusConfirmed: boolean;
+  statusInTransit: boolean;
+  statusDelivered: boolean;
+  statusCanceled: boolean;
   inputName;
   beginDate;
   endDate;
@@ -42,42 +43,46 @@ export class HistoryService extends BaseService{
     this.inputName = this.historyForm.get('InputName');
     this.beginDate = this.historyForm.get('DateBegin');
     this.endDate = this.historyForm.get('DateEnd');
-    this.statusAtivo = false;
-    this.statusProcessando = false;
-    this.statusCancelado = false;
+    this.statusConfirmed = false;
+    this.statusInTransit = false;
+    this.statusDelivered = false;
+    this.statusCanceled = false;
   }
-  public setAtivo(): void{
-    this.statusAtivo = true;
+  public setConfirmed(): void{
+    this.statusConfirmed = true;
   }
-  public setConcluido(): void{
-    this.statusProcessando = true;
+  public setInTransit(): void{
+    this.statusInTransit = true;
   }
-  public setCancelado(): void{
-    this.statusCancelado = true;
+  public setDelivered(): void{
+    this.statusDelivered = true;
+  }
+  public setCanceled(): void{
+    this.statusCanceled = true;
   }
   public clean(): void{
-    this.statusAtivo = false;
-    this.statusProcessando = false;
-    this.statusCancelado = false;
+    this.statusConfirmed = false;
+    this.statusInTransit = false;
+    this.statusDelivered = false;
+    this.statusCanceled = false;
     this.inputName?.setValue("")
     this.beginDate?.setValue("")
     this.endDate?.setValue("")
   }
   public async buscar(): Promise<OrderModel[]> {
-    console.log(`${this.beginDate?.value} ${typeof(this.beginDate?.value)}       ${this.endDate?.value} ${typeof(this.endDate?.value)}`)
     let uri: string = `${this.prefix}/${this.userId}?`
     if(!!this.inputName){
       uri += `productName=${encodeURIComponent(this.inputName.value)}&`
     }
     if(!!this.beginDate?.value && !!this.endDate?.value){
-      console.log(`entrando em datas`)
       uri += `initialDate=${encodeURIComponent(this.beginDate.value)}&endDate=${encodeURIComponent(this.endDate.value)}`
     }
 
     let statusString: string = ""
-    if(this.statusAtivo) statusString += "active"
-    if(this.statusProcessando) statusString += "processing"
-    if(this.statusCancelado) statusString += "canceled"
+    if(this.statusConfirmed) statusString += "confirmed"
+    if(this.statusInTransit) statusString += "in transit"
+    if(this.statusDelivered) statusString += "delivered"
+    if(this.statusCanceled) statusString += "canceled"
     
     if(!!statusString){
       uri += `historiesStatus=${statusString}&`

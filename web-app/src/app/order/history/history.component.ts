@@ -6,6 +6,7 @@ import { FormGroup } from '@angular/forms';
 import { HistoryService } from './history.service';
 import { FormControl } from '@angular/forms';
 import OrderModel from 'src/app/models/order.model';
+
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -24,21 +25,38 @@ export class HistoryComponent implements OnInit{
   ngOnInit() {
     this.clean()
     this.historyForm = this.historyService.historyForm
+    
+    this.historyService.historyStatus$.subscribe((status) => {
+      status.maybeMap({
+        succeeded: (orders: any[]) => {
+          console.warn(orders);
+          this.orders = orders;
+        },
+        failed: (_) => {
+          this.snackBarService.showError({
+            message: 'error loading orders',
+          });
+        },
+      });
+    });
   }
   public async clean(): Promise<void>{
     this.historyService.clean()
     await this.buscar();
   }
-  setAtivo(): void{
-    this.historyService.setAtivo();
+  setConfirmed(): void{
+    this.historyService.setConfirmed();
   }
-  setConcluido(): void{
-    this.historyService.setConcluido();
-  }setCancelado(): void{
-    this.historyService.setCancelado();
+  setInTransit(): void{
+    this.historyService.setInTransit();
+  }
+  setDelivered(): void{
+    this.historyService.setDelivered();
+  }
+  setCanceled(): void{
+    this.historyService.setCanceled();
   }
   public async buscar(): Promise<void>{
     this.orders = await this.historyService.buscar();
-    console.log(this.orders)
   }
 }

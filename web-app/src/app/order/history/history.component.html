@@ -51,9 +51,10 @@
             <span>Selecione Status</span> <br>
             <button mat-button [matMenuTriggerFor]="menu">Status</button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="setAtivo()">Ativo</button>
-              <button mat-menu-item (click)="setConcluido()">Concluído</button>
-              <button mat-menu-item (click)="setCancelado()">Cancelado</button>
+              <button mat-menu-item (click)="setConfirmed()">Confirmado</button>
+              <button mat-menu-item (click)="setInTransit()">Em trânsito</button>
+              <button mat-menu-item (click)="setDelivered()">Entregue</button>
+              <button mat-menu-item (click)="setCanceled()">Cancelado</button>
             </mat-menu>
           </div>
           
