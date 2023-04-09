@@ -25,7 +25,7 @@ export class RequestPasswordComponent implements OnInit {
   ngOnInit(){
     this.recoverPasswordRequestPasswordForm = this.recoverPasswordService.recoverPasswordRequestPasswordForm;
 
-    this.recoverPasswordService.recoverPasswordStatus$
+    this.recoverPasswordService.recoverPasswordRequestPasswordValidateStatus$
       .pipe(distinctUntilChanged((a, b) => a.status === b.status))
       .subscribe((status) => {
         status.maybeMap({
@@ -36,6 +36,9 @@ export class RequestPasswordComponent implements OnInit {
               ),
             });
           },
+          succeeded:(_) => {
+            this.router.navigate(['/']);
+          }
         });
       });
   }

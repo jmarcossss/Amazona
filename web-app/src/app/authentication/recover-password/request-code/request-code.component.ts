@@ -15,8 +15,6 @@ export class RequestCodeComponent  implements OnInit {
 
   recoverPasswordRequestCodeForm!: FormGroup;
 
-
-
     constructor(
     public recoverPasswordService: RecoverPasswordService,
     private snackBarService: SnackBarService
@@ -25,7 +23,7 @@ export class RequestCodeComponent  implements OnInit {
   ngOnInit(){
     this.recoverPasswordRequestCodeForm = this.recoverPasswordService.recoverPasswordRequestCodeForm;
 
-    this.recoverPasswordService.recoverPasswordStatus$
+    this.recoverPasswordService.recoverPasswordRequestCodeValidateStatus$
       .pipe(distinctUntilChanged((a, b) => a.status === b.status))
       .subscribe((status) => {
         status.maybeMap({

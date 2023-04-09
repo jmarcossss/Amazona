@@ -22,7 +22,7 @@ export class RequestEmailComponent  implements OnInit {
   ngOnInit(){
     this.recoverPasswordRequestEmailForm = this.recoverPasswordService.recoverPasswordRequestEmailForm;
 
-    this.recoverPasswordService.recoverPasswordStatus$
+    this.recoverPasswordService.recoverPasswordRequestEmailValidateStatus$
       .pipe(distinctUntilChanged((a, b) => a.status === b.status))
       .subscribe((status) => {
         status.maybeMap({

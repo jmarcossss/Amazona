@@ -18,6 +18,7 @@ export class RecoverPasswordService  extends BaseService{
   public recoverPasswordRequestCodeForm: FormGroup;
   public recoverPasswordRequestPasswordForm: FormGroup;
 
+
   recoverPasswordStep: BehaviorSubject<RecoverPasswordStep> =
     new BehaviorSubject<RecoverPasswordStep>(RecoverPasswordStep.RequestEmail);
   public recoverPasswordStep$ = this.recoverPasswordStep.asObservable();
@@ -32,6 +33,8 @@ export class RecoverPasswordService  extends BaseService{
   public recoverPasswordRequestEmailValidateStatus$ =
     this.recoverPasswordRequestEmailValidateStatus.asObservable();
 
+
+
   public recoverPasswordRequestCodeValidateStatus: BehaviorSubject<
     RequestStatus<string, ErrorResponse>
   > = new BehaviorSubject<RequestStatus<string, ErrorResponse>>(
@@ -40,6 +43,8 @@ export class RecoverPasswordService  extends BaseService{
 
   public recoverPasswordRequestCodeValidateStatus$ =
     this.recoverPasswordRequestCodeValidateStatus.asObservable();
+
+
 
   public recoverPasswordRequestPasswordValidateStatus: BehaviorSubject<
     RequestStatus<string, ErrorResponse>
@@ -50,12 +55,6 @@ export class RecoverPasswordService  extends BaseService{
   public recoverPasswordRequestPasswordValidateStatus$ =
     this.recoverPasswordRequestPasswordValidateStatus.asObservable();
 
-
-  public recoverPasswordStatus: BehaviorSubject<RequestStatus<string, ErrorResponse>> =
-    new BehaviorSubject<RequestStatus<string, ErrorResponse>>(
-      RequestStatus.idle()
-    );
-  public recoverPasswordStatus$ = this.recoverPasswordStatus.asObservable();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -100,71 +99,69 @@ export class RecoverPasswordService  extends BaseService{
     await this.recoverPasswordReset();
   }
 
+
   public async recoverPasswordEmail(): Promise<void> {
-    this.recoverPasswordStatus.next(RequestStatus.loading());
+    this.recoverPasswordRequestEmailValidateStatus.next(RequestStatus.loading());
 
     const response = await firstValueFrom(
       this.httpService.post(`${this.prefix}`,
           this.recoverPasswordRequestEmailForm.getRawValue()
         )
       );
-      console.log(this.recoverPasswordRequestEmailForm.getRawValue());
     response.handle({
       onSuccess: (_) => {
-        this.recoverPasswordStatus.next(RequestStatus.success(''));
+        this.recoverPasswordRequestEmailValidateStatus.next(RequestStatus.success(''));
 
         this.recoverPasswordStep.next(RecoverPasswordStep.RequestCode);
       },
       onFailure: (error) => {
-        this.recoverPasswordStatus.next(RequestStatus.failure(error));
+        this.recoverPasswordRequestEmailValidateStatus.next(RequestStatus.failure(error));
       },
     });
   }
 
+
+
     public async recoverPasswordCode(): Promise<void> {
-    this.recoverPasswordStatus.next(RequestStatus.loading());
+    this.recoverPasswordRequestCodeValidateStatus.next(RequestStatus.loading());
 
     const response = await firstValueFrom(
-      this.httpService.post(`${this.prefix}'/code'`, {
+      this.httpService.post(`${this.prefix}/code`, {
         email: this.recoverPasswordRequestEmailForm.getRawValue().email,
-        code: this.recoverPasswordRequestCodeForm.getRawValue().code
+        code: this.recoverPasswordRequestCodeForm.getRawValue().code,
       }
         )
       );
-      console.log(this.recoverPasswordRequestEmailForm.getRawValue());
     response.handle({
       onSuccess: (_) => {
-        this.recoverPasswordStatus.next(RequestStatus.success(''));
+        this.recoverPasswordRequestCodeValidateStatus.next(RequestStatus.success(''));
 
         this.recoverPasswordStep.next(RecoverPasswordStep.RequestPassword);
       },
       onFailure: (error) => {
-        this.recoverPasswordStatus.next(RequestStatus.failure(error));
+        this.recoverPasswordRequestCodeValidateStatus.next(RequestStatus.failure(error));
       },
     });
   }
 
 
     public async recoverPasswordReset(): Promise<void> {
-    this.recoverPasswordStatus.next(RequestStatus.loading());
+    this.recoverPasswordRequestPasswordValidateStatus.next(RequestStatus.loading());
 
     const response = await firstValueFrom(
-      this.httpService.post(`${this.prefix}'/reset'`,{
+      this.httpService.put(`${this.prefix}/reset`,{
 
         email: this.recoverPasswordRequestEmailForm.getRawValue().email,
-        password: this.recoverPasswordRequestPasswordForm.getRawValue().code
+        password: this.recoverPasswordRequestPasswordForm.getRawValue().password,
       }
         )
       );
-      console.log(this.recoverPasswordRequestEmailForm.getRawValue());
     response.handle({
       onSuccess: (_) => {
-        this.recoverPasswordStatus.next(RequestStatus.success(''));
-
-        this.recoverPasswordStep.next(RecoverPasswordStep.End);
+        this.recoverPasswordRequestPasswordValidateStatus.next(RequestStatus.success(''));
       },
       onFailure: (error) => {
-        this.recoverPasswordStatus.next(RequestStatus.failure(error));
+        this.recoverPasswordRequestPasswordValidateStatus.next(RequestStatus.failure(error));
       },
     });
   }
