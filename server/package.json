@@ -8,9 +8,10 @@
     "build:watch": "env-cmd -f .env.${env} tsc-watch --onSuccess \"node dist/src/index.js\"",
     "copy:json": "copyfiles -u 1 ./src/data/*.json ./dist/src",
     "watch:data": "if [ ! -f \"./dist/src/data/products.json\" ]; then npm run copy:json; fi && onchange 'src/data/*.json' -- npm run copy:json",
-    "build": "env-cmd -f .env.${env} tsc && npm run copy:json",
-    "deploy": "env-cmd -f .env.${env} npm run build && vercel --prod",
     "test": "env-cmd -f .env.test jest --verbose --coverage  --config ./jest.config.js --detectOpenHandles",
+    "build": "tsc && npm run copy:json",
+    "prod": "node dist/src/index.js",
+    "prettier": "prettier --write 'src/**/*.{ts,js}'",
     "lint": "eslint '**/*.ts'"
   },
   "keywords": [],
