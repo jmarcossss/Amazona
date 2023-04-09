@@ -10,6 +10,7 @@ export class TextInputComponent {
   @Input() control?: AbstractControl | null = new FormControl();
   @Input() pattern: RegExp | string = '';
   @Input() mask?: string;
+  @Input() maxLength: string | null = null;
   @Input() type: string = 'text';
   @Input() label: string = '';
   @Input() hint: string = '';

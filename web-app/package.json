@@ -7,7 +7,8 @@
     "build": "NODE_ENV=${env} ng build --configuration=${env}",
     "deploy": "NODE_ENV=${env} npm run build && vercel --prod",
     "watch": "NODE_ENV=${env} ng build --watch --configuration=${env}",
-    "test": "NODE_ENV=${env} ng test --watch --configuration=${env}"
+    "test": "NODE_ENV=${env} ng test --configuration=${env}",
+    "test:e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -32,6 +33,8 @@
     "@angular-devkit/build-angular": "^15.1.5",
     "@angular/cli": "~15.1.5",
     "@angular/compiler-cli": "^15.1.0",
+    "@cucumber/cucumber": "^8.11.1",
+    "@serenity-js/web": "^3.1.1",
     "@types/jasmine": "~4.3.0",
     "dotenv-webpack": "^8.0.1",
     "jasmine-core": "~4.5.0",
@@ -40,6 +43,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "protractor": "^7.0.0",
+    "protractor-cucumber-framework": "^9.1.0",
     "typescript": "~4.9.4"
   }
 }

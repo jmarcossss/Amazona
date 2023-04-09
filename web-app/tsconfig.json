@@ -21,6 +21,11 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"]
   },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "./e2e/step-definitions/**/*.steps.ts"
+  ],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
