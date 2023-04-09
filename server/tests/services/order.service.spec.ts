@@ -7,85 +7,85 @@ import UserRepository from '../../src/repositories/user.repository';
 import UserEntity from '../../src/entities/user.entity';
 import OrderRepository from '../../src/repositories/order.repository';
 import { NotFoundError, BadRequestError, InternalServerError } from '../../src/utils/errors/http.error';
+import OrderEntity from '../../src/entities/order.entity';
+import ProductService from '../../src/services/product.service';
+import NotificationService from '../../src/services/notification.service';
+import SectorRepository from '../../src/repositories/sector.repository';
+import BrandRepository from '../../src/repositories/brand.repository';
+import ProductCategoriesRepository from '../../src/repositories/product-categories.repository';
 
 describe('UserService', () => {
+  let orderRepository: OrderRepository;
   let orderService: OrderService
-  let userService: UserService;
-  let userRepository: UserRepository;
+  let productService: ProductService;
+  let NotificationService: NotificationService
   let injector: Injector = di;
-  const mockedUser = new UserEntity({
-    id: "0b718259-44a4-4a03-9491-c4374f5e3b33",
-    CPF: "00342153411",
-    name: "Rafinha dos Reis",
-    username: "rafinha",
-    email: "rrl3@cin.ufpe.br",
-    password: "1234567a",
-    payment: "PIX",
-    address: [],
-    phone: "", 
-    code: "1234"
-  });
-  const newMockedUser = new UserEntity({
-    CPF: "00042123411",
-    name: "Sophia Moraes", 
-    username: "sophie", 
-    email: "sophia@mail.com", 
-    password: "baunilh0",
-    payment: "PIX",
-    address: [],
-    phone: "",
-    code: ""
-  });
-  const mockedUsers: UserEntity[] = [new UserEntity({
-    id: "ce6f5c66-1967-4b21-9929-51ca7d652151",
-    CPF: "12989087064",
-    name: "Clarinha",
-    username: "acrucha",
-    email: "acrucha@mail.com",
-    password: "abcdef12",
-    payment: "PIX",
-    address: [
-        "Avenida Acrucha 5", "Avenida Clara 10"
+  const mockedOrder = new OrderEntity({
+    id: "b9c4a338-e19e-4bfa-bc83-45171017407c",
+    userId: "ce6f5c66-1967-4b21-9929-51ca7d652151",
+    totalValue: "600",
+    purchaseDate: "2023-01-29T06:00:00Z",
+    statusHistory: [
+      {
+        id: "c1894648-0e07-48b2-b988-b05ed49c9aa6",
+        statusId: "f307102d-698b-4ad5-adf6-de7281243583",
+        date: "2023-01-29T06:00:00Z"
+      },
+      {
+        id: "042045ac-b6a5-4e0b-8f80-cb85d823af8d",
+        statusId: "8bbb7b46-17d6-4df3-8171-0003814e3812",
+        date: "2023-01-29T08:00:00Z"
+      }
     ],
-    phone: "999789910",
-    code: ""
-  }), 
-    new UserEntity({
-      id: "0b718259-44a4-4a03-9491-c4374f5e3b33",
-      CPF: "00342153411",
-      name: "Rafinha dos Reis",
-      username: "rafinha",
-      email: "rrl3@cin.ufpe.br",
-      password: "1234567a",
-      payment: "PIX",
-      address: [],
-      phone: "", 
-      code: "1234"
-  }),
-    new UserEntity({
-      id: "6f4bead0-2504-4035-9cc4-335d5e42dd24",
-      CPF: "12342153400",
-      name: "Pâmela Cristian",
-      username: "pampam",
-      email: "pam@mail.com",
-      password: "abcdef00",
-      payment: "Crédito 0001",
-      address: [],
-      phone: "", 
-      code: ""
-  })];
+    productsIds: [
+      "a66807c2-d202-4b7e-853d-f2c5bfbb2f6f"
+    ],
+    address: "Endereco tal",
+    payment: "pix"
+  });
+  const newMockedOrder = new OrderEntity({
+    id: "",
+    userId: "2",
+    totalValue: "900",
+    purchaseDate: "2022-02-29T02:00:00Z",
+    statusHistory: [
+      {
+        id: "2",
+        statusId: "8bbb7b46-17d6-4df3-8171-0003814e3812",
+        date: "2022-02-29T02:00:00Z"
+      }
+    ],
+    productsIds: [
+      "a66807c2-d202-4b7e-853d-f2c5bfbb2f6f"
+    ],
+    address: "Aniceto Varejão",
+    payment: "credCard"
+  
+  });
+  const mockedOrders: OrderEntity[] = [mockedOrder]
 
-  beforeEach(() => {
-    injector.registerRepository(UserRepository, new UserRepository());
-    userRepository = injector.getRepository(UserRepository);
+/*   beforeEach(() => {
+    injector.registerRepository(OrderRepository, new OrderRepository());
+    orderRepository = injector.getRepository(OrderRepository);
+    
+    injector.registerRepository(SectorRepository, new SectorRepository());
+    sectorRepository = injector.getRepository(SectorRepository);
+    
+    injector.registerRepository(BrandRepository, new BrandRepository());
+    brandRepository = injector.getRepository(BrandRepository);
+    
+    injector.registerRepository(ProductCategoriesRepository, new ProductCategoriesRepository());
+    productCategoriesRepository = injector.getRepository(ProductCategoriesRepository);
+    
+    injector.registerRepository(SectorRepository, new SectorRepository());
+    sectorRepository = injector.getRepository(SectorRepository);
+    
+    injector.registerRepository(SectorRepository, new SectorRepository());
+    sectorRepository = injector.getRepository(SectorRepository);
+    
 
-    injector.registerService(UserService, new UserService(userRepository));
-    userService = injector.getService(UserService);
-
-    injector.registerService(AuthenticationService, new AuthenticationService(
-                             userService, userRepository));
-     
-    autheticationService = injector.getService(AuthenticationService);
+    injector.registerService(OrderService, new OrderService(orderRepository));
+    orderService = injector.getService(OrderService);
   });
 
   it('[signIn] should sign in an user using email', async () => {
@@ -95,8 +95,8 @@ describe('UserService', () => {
     const result = await autheticationService.signIn(user);
     expect(result).toEqual(mockedUser);
   });
-
-  it('[signIn] should sign in an user using username', async () => {
+ */
+  /* it('[signIn] should sign in an user using username', async () => {
     const user = new UserEntity({username: "rafinha", password: "1234567a"});
     jest.spyOn(userRepository, 'getUsers').mockResolvedValue(mockedUsers);
 
@@ -228,5 +228,5 @@ describe('UserService', () => {
     jest.spyOn(userService, 'getUserById').mockResolvedValue(updatedUser);
 
     expect(async () => { await autheticationService.resetPassword(email, password)}).rejects.toThrow(BadRequestError);
-  });
+  }); */
 });
