@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ProfileService } from '../profile.service';
-import ValidatorsPattern from '../../shared/utils/validators-pattern';
-import InputMask from '../../shared/utils/input-mask';
+import { Router } from '@angular/router';
 import { ApiMessageCodes } from '../../shared/utils/api-message-codes';
 import { SnackBarService } from '../../services/snack-bar.service';
 import { distinctUntilChanged } from 'rxjs';
-import { style } from '@angular/animations';
 
 @Component({
   selector: 'app-profile-form-delete',
@@ -17,7 +15,8 @@ export class ProfileFormDeleteComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -47,6 +46,8 @@ export class ProfileFormDeleteComponent implements OnInit {
             this.snackBarService.showSuccess({
               message: 'Sua conta foi deletada com sucesso',
             });
+
+            this.router.navigate(['authentication/sign-in']);
           }
         });
       });
