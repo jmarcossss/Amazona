@@ -33,11 +33,6 @@ export class RequestEmailComponent  implements OnInit {
               ),
             });
           },
-          succeeded: (_) => {
-            this.recoverPasswordService.recoverPasswordStep.next(RecoverPasswordStep.RequestCode);
-
-            this.recoverPasswordService.recoverPasswordRequestEmailValidateStatus.next(RequestStatus.success(''));
-          },
         });
       });
   }

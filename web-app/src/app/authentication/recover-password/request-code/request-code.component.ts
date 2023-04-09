@@ -36,11 +36,6 @@ export class RequestCodeComponent  implements OnInit {
               ),
             });
           },
-          succeeded: (_) => {
-            this.recoverPasswordService.recoverPasswordStep.next(RecoverPasswordStep.RequestPassword);
-
-            this.recoverPasswordService.recoverPasswordRequestCodeValidateStatus.next(RequestStatus.success(''));
-          },
         });
       });
   }

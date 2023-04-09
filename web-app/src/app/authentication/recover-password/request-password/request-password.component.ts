@@ -36,13 +36,6 @@ export class RequestPasswordComponent implements OnInit {
               ),
             });
           },
-          succeeded: (_) => {
-            this.snackBarService.showSuccess({
-              message: 'Redefinição de senha realizada com sucesso!',
-            });
-
-            this.router.navigate(['/']);
-          },
         });
       });
   }
