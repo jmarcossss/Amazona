@@ -25,7 +25,7 @@ class UserController {
     this.router.put(`${this.prefix}/:id`, (req: Request, res: Response) =>
       this.updateUserById(req, res)
     );
-    this.router.delete(`${this.prefix}/:id`, (req: Request, res: Response) =>
+    this.router.post(`${this.prefix}/:id`, (req: Request, res: Response) =>
       this.deleteUserById(req, res)
     );
   }

@@ -44,16 +44,16 @@ describe('UserController', () => {
     expect(result).toEqual('success');
   });
 
-  it('[DELETE] /api/users/:id should receive incorrect_password error message', async () => {
+  it('[POST] /api/users/:id should receive incorrect_password error message', async () => {
     const password = {password: "error321"}
-    const response = await request.delete('/api/users/' + mockedUserId).send(password);
+    const response = await request.post('/api/users/' + mockedUserId).send(password);
     const result = response.body.msgCode;
 
     expect(result).toEqual('incorrect_password');
   });
 
-  it('[DELETE] /api/users/:id should delete an user by id', async () => {
-    const response = await request.delete('/api/users/' + mockedUserId).send(mockedUserPassword);
+  it('[POST] /api/users/:id should delete an user by id', async () => {
+    const response = await request.post('/api/users/' + mockedUserId).send(mockedUserPassword);
     const result = response.body.msgCode;
 
     expect(result).toEqual('success');
