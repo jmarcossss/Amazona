@@ -15,7 +15,7 @@ describe('UserService', () => {
     CPF: "12989087064",
     name: "Clara Acrucha",
     username: "acrucha",
-    email: "acrucha@mail.com",
+    email: "mvsm3@mail.com",
     password: "abcdef12",
     payment: "PIX",
     address: [
@@ -30,7 +30,7 @@ describe('UserService', () => {
     CPF: "12345678911",
     name: "Clarinha",
     username: "acruchinha",
-    email: "clara@mail.com",
+    email: "mvsm3@mail.com",
     password: "clara123",
     payment: "Crédito 0004",
     address: [
@@ -45,7 +45,7 @@ describe('UserService', () => {
     CPF: "12989087064",
     name: "Clarinha",
     username: "acrucha",
-    email: "acrucha@mail.com",
+    email: "mvsm3@mail.com",
     password: "abcdef12",
     payment: "PIX",
     address: [

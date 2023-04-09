@@ -13,7 +13,7 @@ describe('UserController', () => {
     CPF: "12989087064",
     name: "Clara Acrucha",
     username: "acrucha",
-    email: "acrucha@mail.com",
+    email: "mvsm3@mail.com",
     payment: "PIX",
     address: ["Avenida Acrucha 5"],
     phone: "999789923"

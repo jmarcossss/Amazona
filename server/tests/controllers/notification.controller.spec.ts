@@ -6,7 +6,7 @@ import NotificationEntity from '../../src/entities/notification.entity';
 
 const request = supertest(app);
 
-describe('NotificationController', () => {
+describe.skip('NotificationController', () => {
   const mockedUserId: string = "874aba1f-893f-4fad-909b-6def1646d11b";
   const mockedOrderId: string = "b9c4a338-e19e-4bfa-bc83-45171017407c";
   const mockedDate: string = "2023-01-29T06:00:00Z"

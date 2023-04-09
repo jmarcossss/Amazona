@@ -11,7 +11,7 @@ describe('AuthenticationController', () => {
     CPF: "12989087064",
     name: "Clara Acrucha",
     username: "acrucha",
-    email: "acrucha@mail.com",
+    email: "mvsm3@mail.com",
     payment: "PIX",
     address: ["Avenida Acrucha 5"],
     phone: "999789923"
@@ -46,7 +46,7 @@ describe('AuthenticationController', () => {
       CPF: "12989087064",
       name: "Sophia Moraes",
       username: "pampam", 
-      email: "pam@mail.com",
+      email: "aas10@mail.com",
       password: "baunilh0",
       payment: "PIX",
       address: [],
