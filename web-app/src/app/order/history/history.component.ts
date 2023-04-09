@@ -10,26 +10,25 @@ import OrderModel from 'src/app/models/order.model';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
-  styleUrls: ['./history.component.css']
+  styleUrls: ['./history.component.css'],
 })
-export class HistoryComponent implements OnInit{
-  historyForm!: FormGroup; 
+export class HistoryComponent implements OnInit {
+  historyForm!: FormGroup;
   orders: OrderModel[];
   constructor(
     private historyService: HistoryService,
     private snackBarService: SnackBarService,
-    private router: Router,
+    private router: Router
   ) {
-    this.orders = []
+    this.orders = [];
   }
   ngOnInit() {
-    this.clean()
-    this.historyForm = this.historyService.historyForm
+    this.clean();
+    this.historyForm = this.historyService.historyForm;
 
     this.historyService.historyStatus$.subscribe((status) => {
       status.maybeMap({
         succeeded: (orders: any[]) => {
-          console.warn(orders);
           this.orders = orders;
         },
         failed: (_) => {
@@ -40,35 +39,35 @@ export class HistoryComponent implements OnInit{
       });
     });
   }
-  public async clean(): Promise<void>{
-    this.historyService.clean()
+  public async clean(): Promise<void> {
+    this.historyService.clean();
     await this.buscar();
   }
-  setConfirmed(): void{
+  setConfirmed(): void {
     this.historyService.setConfirmed();
   }
-  setInTransit(): void{
+  setInTransit(): void {
     this.historyService.setInTransit();
   }
-  setDelivered(): void{
+  setDelivered(): void {
     this.historyService.setDelivered();
   }
-  setCanceled(): void{
+  setCanceled(): void {
     this.historyService.setCanceled();
   }
-  checkRecomprar(currentOrder: string): boolean{
-    return this.historyService.checkRecomprar(currentOrder)
+  checkRecomprar(currentOrder: string): boolean {
+    return this.historyService.checkRecomprar(currentOrder);
   }
-  checkAcompanharPedido(currentOrder: string): boolean{
-    return this.historyService.checkAcompanharPedido(currentOrder)
+  checkAcompanharPedido(currentOrder: string): boolean {
+    return this.historyService.checkAcompanharPedido(currentOrder);
   }
-  checkNotaFiscal(currentOrder: string): boolean{
-    return this.historyService.checkNotaFiscal(currentOrder)
+  checkNotaFiscal(currentOrder: string): boolean {
+    return this.historyService.checkNotaFiscal(currentOrder);
   }
-  checkCancelar(currentOrder: string): boolean{
-    return this.historyService.checkCancelar(currentOrder)
+  checkCancelar(currentOrder: string): boolean {
+    return this.historyService.checkCancelar(currentOrder);
   }
-  public async buscar(): Promise<void>{
+  public async buscar(): Promise<void> {
     this.orders = await this.historyService.buscar();
   }
 }

@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CartModule } from './cart/cart.module';
 
 @NgModule({
-  imports: [CommonModule, ShoppingCartRoutingModule, SharedModule, CartModule],
   declarations: [CreateOrderComponent],
+  imports: [CommonModule, ShoppingCartRoutingModule, SharedModule, CartModule],
 })
 export class ShoppingCartModule {}

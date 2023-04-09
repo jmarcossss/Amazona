@@ -29,13 +29,17 @@ header h3 {
   font-size: var(--font-inputs);
   font-weight: var(--font-weight-regular);
   color: var(--color-inactive);
+
+  width: 50%;
 }
 
 header > div {
   display: flex;
   flex-direction: row;
+  flex: 1;
+  text-align: center;
   justify-content: space-between;
-  gap: 50px;
+  gap: 24px;
 }
 
 .products-items-container {

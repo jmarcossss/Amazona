@@ -4,6 +4,7 @@ import { BaseService } from '../services/base.service';
 import { RequestStatus } from '../shared/utils/request-status';
 import { ErrorResponse } from '../shared/utils/response';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import ProductModel from '../models/product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +12,11 @@ import { BehaviorSubject, firstValueFrom } from 'rxjs';
 export class HomeService extends BaseService {
   private productsPrefix: string = '/products';
 
-  // TODO: update with ProductModel[]
-  public productsStatus: BehaviorSubject<RequestStatus<any[], ErrorResponse>> =
-    new BehaviorSubject<RequestStatus<any[], ErrorResponse>>(
-      RequestStatus.idle()
-    );
+  public productsStatus: BehaviorSubject<
+    RequestStatus<ProductModel[], ErrorResponse>
+  > = new BehaviorSubject<RequestStatus<ProductModel[], ErrorResponse>>(
+    RequestStatus.idle()
+  );
   public productsStatus$ = this.productsStatus.asObservable();
 
   constructor(private httpService: HttpService) {
@@ -31,7 +32,12 @@ export class HomeService extends BaseService {
 
     response.handle({
       onSuccess: (response) => {
-        let products = response.data;
+        let products: ProductModel[] = [];
+        if (Array.isArray(response.data)) {
+          products = response.data.map((product) => {
+            return new ProductModel(product);
+          });
+        }
 
         this.productsStatus.next(RequestStatus.success(products));
       },

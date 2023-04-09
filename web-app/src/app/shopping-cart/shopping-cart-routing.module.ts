@@ -20,6 +20,6 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [],
+  exports: [RouterModule],
 })
 export class ShoppingCartRoutingModule {}
