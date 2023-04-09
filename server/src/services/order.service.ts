@@ -228,7 +228,7 @@ class OrderService {
 
       if (!order) {
         throw new BadRequestError({
-          msg: 'order not updated!',
+          msg: 'order not created!',
           msgCode: OrderServiceMessageCode.order_not_created,
         });
       }
