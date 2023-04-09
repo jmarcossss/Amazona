@@ -33,11 +33,13 @@ export class RequestStatus<T, E = any> {
     loading,
     succeeded,
     failed,
+    orElse,
   }: {
     idle?: () => K;
     loading?: () => K;
     succeeded?: (data: T) => K;
     failed?: (error: E) => K;
+    orElse?: () => K;
   }): K {
     switch (this.status) {
       case RequestStatusStatus.Idle:
@@ -57,7 +59,7 @@ export class RequestStatus<T, E = any> {
           return undefined as unknown as K;
         }
       default:
-        return undefined as unknown as K;
+        return orElse ? orElse() : (undefined as unknown as K);
     }
   }
 }

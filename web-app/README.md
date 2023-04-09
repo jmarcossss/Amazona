@@ -47,8 +47,54 @@ This will start a development server and serve the application using the specifi
 
 ## Testing
 
-To run tests for a specific environment, run the following command:
+### To run unit tests, run the following command:
 
 ```
 env=dev npm run test
 ```
+
+### To run e2e tests, run the following commands:
+
+Leave the application running
+
+```
+env=dev npm run start
+```
+
+Run the tests
+
+```
+npm run test:e2e
+```
+
+### Solutions to possible problems
+
+#### If you are having an error when running the tests. Try the following steps:
+
+Remove node_modules
+
+```
+rm -rf node_modules
+```
+
+Remove .angular/cache
+
+```
+rm -rf .angular/cache
+```
+
+Run npm install
+
+```
+npm install
+```
+
+Run the app again, and then run the tests. It is important that the app is running on port 4200.
+
+#### If you still have a problem, try running the following command:
+
+```
+node node_modules/protractor/bin/webdriver-manager update
+```
+
+And after that, try to run the tests. Remembering, the app needs to be running.
