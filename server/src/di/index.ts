@@ -8,6 +8,7 @@ import SectorRepository from '../repositories/sector.repository';
 import UserRepository from '../repositories/user.repository';
 import AuthenticationService from '../services/authentication.service';
 import BrandService from '../services/brand.service';
+import EmailService from '../services/email.service';
 import NotificationService from '../services/notification.service';
 import OrderStatusService from '../services/order-status.service';
 import OrderService from '../services/order.service';
@@ -82,7 +83,8 @@ di.registerRepository(NotificationRepository, new NotificationRepository());
 di.registerService(
   NotificationService,
   new NotificationService(
-    di.getRepository(NotificationRepository)
+    di.getRepository(NotificationRepository),
+    di.getService(UserService)
   )
 );
 
