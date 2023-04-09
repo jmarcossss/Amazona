@@ -88,6 +88,8 @@ import { CardComponent } from './card/card.component';
     ButtonComponent,
     DatePickerComponent,
     TextInputComponent,
+    ReactiveFormsModule,
+    RouterModule,
     CardComponent,
   ],
   providers: [provideNgxMask(), SnackBarService],
