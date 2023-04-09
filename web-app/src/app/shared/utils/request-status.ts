@@ -12,6 +12,22 @@ export class RequestStatus<T, E = any> {
     this.status = status;
   }
 
+  isIdle(): boolean {
+    return this.status === RequestStatusStatus.Idle;
+  }
+
+  isLoading(): boolean {
+    return this.status === RequestStatusStatus.Loading;
+  }
+
+  isSuccess(): boolean {
+    return this.status === RequestStatusStatus.Success;
+  }
+
+  isFailure(): boolean {
+    return this.status === RequestStatusStatus.Failure;
+  }
+
   static idle<T>(): RequestStatusIdle<T> {
     return new RequestStatusIdle();
   }

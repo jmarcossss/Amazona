@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -27,7 +28,6 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackBarService } from '../services/snack-bar.service';
 import { CardComponent } from './card/card.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -61,6 +61,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatPaginatorModule,
     MatSortModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     CommonModule,
@@ -83,6 +84,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatPaginatorModule,
     MatSortModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     ButtonComponent,
     DatePickerComponent,
     TextInputComponent,
