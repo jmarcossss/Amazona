@@ -1,4 +1,3 @@
-import UserModel from '../../src/models/user.model';
 import OrderModel from '../../src/models/order.model';
 import app from '../../src/app';
 
@@ -162,7 +161,7 @@ describe('OrderController', () => {
 
   it('[PUT] /api/orders/status/:id should update an order by id inserting a status in its statusHistory', async () => {
     const response = await request.put(`/api/orders/status/${mockedOrderId}`).send(updatedMockedStatus);
-    const result: UserModel = response.body.msgCode;
+    const result: string = response.body.msgCode;
 
     expect(result).toEqual('success');
   });
