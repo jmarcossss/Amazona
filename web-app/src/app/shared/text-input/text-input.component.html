@@ -17,6 +17,7 @@
       [formControl]="formControll"
       [pattern]="pattern"
       [mask]="mask"
+      [maxlength]="maxLength"
     />
     <mat-hint *ngIf="!!hint">{{ hint }}</mat-hint>
     <mat-error *ngIf="formControllHasError()">

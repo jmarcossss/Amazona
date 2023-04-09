@@ -12,6 +12,22 @@ export class RequestStatus<T, E = any> {
     this.status = status;
   }
 
+  isIdle(): boolean {
+    return this.status === RequestStatusStatus.Idle;
+  }
+
+  isLoading(): boolean {
+    return this.status === RequestStatusStatus.Loading;
+  }
+
+  isSuccess(): boolean {
+    return this.status === RequestStatusStatus.Success;
+  }
+
+  isFailure(): boolean {
+    return this.status === RequestStatusStatus.Failure;
+  }
+
   static idle<T>(): RequestStatusIdle<T> {
     return new RequestStatusIdle();
   }
@@ -33,11 +49,13 @@ export class RequestStatus<T, E = any> {
     loading,
     succeeded,
     failed,
+    orElse,
   }: {
     idle?: () => K;
     loading?: () => K;
     succeeded?: (data: T) => K;
     failed?: (error: E) => K;
+    orElse?: () => K;
   }): K {
     switch (this.status) {
       case RequestStatusStatus.Idle:
@@ -57,7 +75,7 @@ export class RequestStatus<T, E = any> {
           return undefined as unknown as K;
         }
       default:
-        return undefined as unknown as K;
+        return orElse ? orElse() : (undefined as unknown as K);
     }
   }
 }
