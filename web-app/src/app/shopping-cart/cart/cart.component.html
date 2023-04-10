@@ -18,6 +18,12 @@
         ></app-cart-product-item>
       </div>
     </div>
-    <app-cart-resume></app-cart-resume>
+    <div class="resume-container">
+      <app-shopping-cart-resume
+        [products]="(shoppingCartService.cart$ | async) ?? []"
+      ></app-shopping-cart-resume>
+      <div style="margin-bottom: 40px"></div>
+      <app-button label="CONTINUAR" (click)="goToOrder()"></app-button>
+    </div>
   </div>
 </div>

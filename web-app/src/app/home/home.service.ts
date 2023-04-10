@@ -5,8 +5,6 @@ import { RequestStatus } from '../shared/utils/request-status';
 import { ErrorResponse } from '../shared/utils/response';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import ProductModel from '../models/product.model';
-import { Router } from '@angular/router';
-import { ShoppingCartService } from '../shopping-cart/shopping-cart.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +19,7 @@ export class HomeService extends BaseService {
   );
   public productsStatus$ = this.productsStatus.asObservable();
 
-  constructor(
-    private httpService: HttpService,
-    private shoppingCartService: ShoppingCartService,
-    private router: Router
-  ) {
+  constructor(private httpService: HttpService) {
     super();
   }
 
@@ -51,11 +45,5 @@ export class HomeService extends BaseService {
         this.productsStatus.next(RequestStatus.failure(error));
       },
     });
-  }
-
-  async buyProduct(product: ProductModel): Promise<void> {
-    this.shoppingCartService.addProductToCart(product);
-
-    this.router.navigate(['/shopping-cart/cart']);
   }
 }

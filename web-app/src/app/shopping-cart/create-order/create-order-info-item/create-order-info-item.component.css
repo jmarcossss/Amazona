@@ -1,0 +1,25 @@
+.body {
+  width: 100% !important;
+}
+
+header h3 {
+  font-size: var(--font-inputs);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-inactive);
+
+  padding: 14px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  flex: 1;
+  width: 100% !important;
+}
+
+.container a {
+  font-size: var(--font-texts);
+  color: var(--color-details);
+}

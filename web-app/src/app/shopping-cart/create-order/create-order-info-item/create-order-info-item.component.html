@@ -1,0 +1,13 @@
+<div class="body">
+  <header>
+    <h3>{{ label }}</h3>
+  </header>
+  <app-card [style]="{ padding: '16px 22px' }">
+    <div class="container">
+      <ng-content></ng-content>
+      <a *ngIf="!!actionLabel" routerLink="{{ actionNavigation }}">
+        {{ actionLabel }}
+      </a>
+    </div>
+  </app-card>
+</div>
