@@ -1,5 +1,4 @@
 import BaseModel from './base.model';
-import OrderModel from './order.model'
 export default class NotificationModel extends BaseModel {
   title: string;
   description: string;
