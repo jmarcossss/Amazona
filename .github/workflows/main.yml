@@ -1,0 +1,44 @@
+name: Main CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+  
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+          
+      - name: install-dependencies
+        run: |
+          apt get update -y
+          apt get upgrade -y
+          apt install nodejs -y
+          apt install npm -y
+          
+          pushd server || exit 1
+          npm install
+          popd || exit 1
+        
+      - name: build
+        run: |
+          pushd server || exit 1
+          env=example npm run build
+          if [ $? -ne 0 ]; then
+            echo "Build failed!"
+            exit 1
+          fi
+          popd || exit 1
+     
+      - name: test
+        run: |
+          pushd server || exit 1
+          env=example npm run test
+          if [ $? -ne 0 ]; then
+            echo "Some tests failed!"
+            exit 1
+          fi
+          popd || exit 1
