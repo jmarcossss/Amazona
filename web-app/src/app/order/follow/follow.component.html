@@ -1,8 +1,8 @@
 <div class="container">
   <h1>Acompanhamento do pedido</h1>
   <app-card [style]="{ width: '999px', padding: '10px' }">
-    <p *ngIf="!statusCanceled">Estimativa para entrega em {{ 14 }} dias</p>
-    <p *ngIf="statusCanceled">Produto cancelado, não há estimativa para entrega</p>
+    <p *ngIf="!statusCanceled && statusText !== 'Produto inexistente'">Estimativa para entrega em {{ 14 }} dias</p>
+    <p *ngIf="statusCanceled || statusText === 'Produto inexistente'">Produto inexistente/cancelado, não há estimativa para entrega</p>
     <h2>{{ statusText }}</h2>
     <div class="image-container">
       <div class="espaco">
@@ -15,7 +15,7 @@
       </div>
 
       <div class="ajustaHora">
-        <div *ngIf="!statusCanceled"><h3>7 dias</h3></div>
+        <div *ngIf="!statusCanceled && statusText !== 'Produto inexistente'"><h3>7 dias</h3></div>
         <h4>----------------------------></h4>
       </div>
 
@@ -29,7 +29,7 @@
       </div>
 
       <div class="ajustaHora">
-        <div *ngIf="!statusCanceled"><h3>7 dias</h3></div>
+        <div *ngIf="!statusCanceled && statusText !== 'Produto inexistente'"><h3>7 dias</h3></div>
         <h4>----------------------------></h4>
       </div>
 
@@ -45,3 +45,4 @@
 
   </app-card>
 </div>
+

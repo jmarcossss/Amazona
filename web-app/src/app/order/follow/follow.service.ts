@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OrderStatusService {
-  private apiUrl = 'http://localhost:3000/api/order-status';
+  private apiUrl = process.env['API_URL'];
 
   constructor(private http: HttpClient) {}
 
   getOrderStatus(orderId: number): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any>(`${this.apiUrl}/order-status`);
   }
 }

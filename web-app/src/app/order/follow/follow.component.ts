@@ -29,8 +29,14 @@ export class FollowComponent implements OnInit {
     this.orderStatusService.getOrderStatus(this.orderId).subscribe(response => {
       if (response.msgCode === 'success') {
         const orderStatus = response.data.find((order: any) => order.id === this.orderId);
-        if (orderStatus) {
+        if (orderStatus && orderStatus.status) {
           this.updateStatus(orderStatus.status);
+        } else {
+          this.statusText = 'Produto inexistente';
+          this.statusConfirmed = false;
+          this.statusInTransit = false;
+          this.statusDelivered = false;
+          this.statusCanceled = false;
         }
       }
     });
@@ -44,7 +50,12 @@ export class FollowComponent implements OnInit {
       this.statusInTransit = mappedStatus.flags.inTransit;
       this.statusDelivered = mappedStatus.flags.delivered;
       this.statusCanceled = mappedStatus.flags.canceled;
+    } else {
+      this.statusText = 'Produto inexistente';
+      this.statusConfirmed = false;
+      this.statusInTransit = false;
+      this.statusDelivered = false;
+      this.statusCanceled = false;
     }
   }
-  
 }
