@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrderStatusService } from './follow.service'
+import { OrderStatusService } from './follow.service';
 
 @Component({
   selector: 'app-follow',
@@ -9,12 +9,18 @@ import { OrderStatusService } from './follow.service'
 })
 export class FollowComponent implements OnInit {
   orderId!: number;
-  status = 'Confirmado';
   statusText = 'Confirmado';
   statusConfirmed = true;
   statusInTransit = false;
   statusDelivered = false;
   statusCanceled = false;
+
+  statusArray = [
+    { key: 'confirmed', text: 'Confirmado', flags: { confirmed: true, inTransit: false, delivered: false, canceled: false }},
+    { key: 'in transit', text: 'Em trânsito', flags: { confirmed: false, inTransit: true, delivered: false, canceled: false }},
+    { key: 'delivered', text: 'Entregue', flags: { confirmed: false, inTransit: false, delivered: true, canceled: false }},
+    { key: 'canceled', text: 'Cancelado', flags: { confirmed: false, inTransit: false, delivered: false, canceled: true }},
+  ];
 
   constructor(private route: ActivatedRoute, private orderStatusService: OrderStatusService) {}
 
@@ -31,20 +37,13 @@ export class FollowComponent implements OnInit {
   }
 
   updateStatus(status: string) {
-    this.status = status;
-    this.statusConfirmed = status === 'active';
-    this.statusInTransit = status === 'processing';
-    this.statusDelivered = status === 'delivered';
-    this.statusCanceled = status === 'canceled';
-    
-    if (this.statusConfirmed) {
-      this.statusText = 'Confirmado';
-    } else if (this.statusInTransit) {
-      this.statusText = 'Em trânsito';
-    } else if (this.statusDelivered) {
-      this.statusText = 'Entregue';
-    } else if (this.statusCanceled) {
-      this.statusText = 'Cancelado';
+    const mappedStatus = this.statusArray.find(s => s.key === status);
+    if (mappedStatus) {
+      this.statusText = mappedStatus.text;
+      this.statusConfirmed = mappedStatus.flags.confirmed;
+      this.statusInTransit = mappedStatus.flags.inTransit;
+      this.statusDelivered = mappedStatus.flags.delivered;
+      this.statusCanceled = mappedStatus.flags.canceled;
     }
   }
   

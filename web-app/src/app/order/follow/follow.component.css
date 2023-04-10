@@ -43,6 +43,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .step-active {
@@ -70,4 +71,8 @@ p {
 
 .ajustaHora{
   align-items: center;
+}
+
+.status {
+  margin-top: 7px;
 }

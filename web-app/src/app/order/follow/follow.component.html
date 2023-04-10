@@ -1,17 +1,17 @@
 <div class="container">
-  <h1>Acompanhamento do pedido {{ orderId }}</h1>
+  <h1>Acompanhamento do pedido</h1>
   <app-card [style]="{ width: '999px', padding: '10px' }">
     <p *ngIf="!statusCanceled">Estimativa para entrega em {{ 14 }} dias</p>
     <p *ngIf="statusCanceled">Produto cancelado, não há estimativa para entrega</p>
     <h2>{{ statusText }}</h2>
     <div class="image-container">
       <div class="espaco">
-        <div class="step" [ngClass]="{'step-active': statusConfirmed}">
+        <div class="step" [ngClass]="{'step-active': statusConfirmed || statusInTransit || statusDelivered}">
           <div class="step-content">
             <img src="../../../assets/images/Big Parcel.png" alt="icone1">
           </div>
         </div>
-        <div class="status" *ngIf="statusConfirmed">Confirmado</div>
+        <div class="status" *ngIf="statusConfirmed || statusInTransit || statusDelivered">Confirmado</div>
       </div>
 
       <div class="ajustaHora">
@@ -20,12 +20,12 @@
       </div>
 
       <div class="espaco">
-        <div class="step" [ngClass]="{'step-active': statusInTransit}">
+        <div class="step" [ngClass]="{'step-active': statusInTransit || statusDelivered}">
           <div class="step-content">
             <img src="../../../assets/images/Open Box.png" alt="icone2">
           </div>
         </div>
-        <div class="status" *ngIf="statusInTransit">Em trânsito</div>
+        <div class="status" *ngIf="statusInTransit || statusDelivered">Em trânsito</div>
       </div>
 
       <div class="ajustaHora">
@@ -39,7 +39,7 @@
             <img src="../../../assets/images/Smart Home Checked.png" alt="icone3">
           </div>
         </div>
-        <div *ngIf="statusDelivered">Entregue</div>
+        <div class="status" *ngIf="statusDelivered">Entregue</div>
       </div>
     </div>
 
