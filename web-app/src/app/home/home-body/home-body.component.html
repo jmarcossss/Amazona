@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="banner-container">
+    <img src="assets/images/image.jpg" alt="Imagem" />
+    <div class="overlay">
+      <h2>Amazona</h2>
+      <p>
+        Compre de tudo na Amazona, a maior loja de ecommerce do mundo. Encontre
+        produtos com os melhores preços e receba em sua casa com rapidez e
+        segurança.
+      </p>
+      <button>COMPRAR</button>
+    </div>
+  </div>
+
+  <div
+    class="progress"
+    *ngIf="(this.homeService.productsStatus$ | async)?.isLoading()"
+  >
+    <mat-spinner [diameter]="32"></mat-spinner>
+  </div>
+
+  <div
+    class="empty-or-error"
+    *ngIf="
+      (this.homeService.productsStatus$ | async)?.isFailure() ||
+      this.products.length === 0
+    "
+  >
+    <h2>
+      {{
+        (this.homeService.productsStatus$ | async)?.isFailure()
+          ? "Ocorreu um erro ao carregar os produtos, tente novamente!"
+          : "Nenhum produto encontrado."
+      }}
+    </h2>
+  </div>
+
+  <div
+    id="product-container"
+    *ngIf="(this.homeService.productsStatus$ | async)?.isSuccess()"
+  >
+    <ng-container
+      *ngFor="let product of products"
+      [ngTemplateOutlet]="productItem"
+      [ngTemplateOutletContext]="{
+        productId: product.id,
+        productName: product.name,
+        productPrice: product.value,
+        productBrand: product.brand.name
+      }"
+    ></ng-container>
+  </div>
+</div>
+
+<ng-template
+  #productItem
+  let-productId="productId"
+  let-productName="productName"
+  let-productPrice="productPrice"
+  let-productBrand="productBrand"
+>
+  <div class="product" (click)="buyProduct(productId)">
+    <img
+      src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+      alt="Nome do produto"
+    />
+    <div class="product-info">
+      <div class="name-and-price">
+        <h2>{{ productName }}</h2>
+        <h2>{{ productPrice }}</h2>
+      </div>
+      <p>Marcar: {{ productBrand }}</p>
+    </div>
+  </div>
+</ng-template>

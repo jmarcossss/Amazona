@@ -1,0 +1,15 @@
+<div class="form-container">
+  <app-card [style]="{ padding: '80px'}" class="form">
+    <img src="../../../assets/images/logo-colorful.png" alt="imagem de uma roupa" />
+    <h1>Esqueci minha senha</h1>
+    <h3>Se você esqueceu sua senha, insira seu email de cadastro.<br> Enviaremos um código para redefinir sua senha.</h3>
+    <div class="input-container">
+      <app-text-input label="Email" placeholder="Informe o e-mail"
+        [control]="recoverPasswordRequestEmailForm.get('email')"></app-text-input>
+    </div>
+    <div class="button-container">
+      <app-button type="btn large" label="ENVIAR" (click)="onSubmit()"></app-button>
+      <a>Ainda não tem uma conta? <span routerLink="/authentication/sign-up">Cadastre-se</span> </a>
+    </div>
+  </app-card>
+</div>

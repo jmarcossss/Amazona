@@ -1,3 +1,38 @@
-<mat-card>
-  <mat-card-content>SignIn</mat-card-content>
-</mat-card>
+<div id="container">
+  <div class="img-container">
+    <img src="../../../assets/images/img-login.png" alt="imagem de uma roupa" />
+  </div>
+  <div class="form-container">
+    <app-card [style]="{ padding: '80px'}" class="form">
+        <img
+          src="../../../assets/images/logo-colorful.png"
+          alt="imagem de uma roupa"
+        />
+        <h1>Seja bem-vindo!</h1>
+        <div class="input-container">
+          <app-text-input
+          label="Usuário"
+          placeholder="Informe o e-mail ou usuário"
+          [control]="signInForm.get('username')"
+          ></app-text-input>
+          <app-text-input
+          label="Senha"
+          type="password"
+          placeholder="Informe sua senha"
+          [control]="signInForm.get('password')"
+          ></app-text-input>
+        </div>
+        <div class="text-container">
+          <a  routerLink="/authentication/recover-password">Esqueci minha senha</a>
+        </div>
+        <div class="button-container">
+          <app-button
+          type="btn large"
+          label="ENTRAR"
+          (click)="onSubmit()"
+          ></app-button>
+          <a>Ainda não tem uma conta? <span routerLink="/authentication/sign-up">Cadastre-se</span> </a>
+        </div>
+      </app-card>
+  </div>
+</div>
