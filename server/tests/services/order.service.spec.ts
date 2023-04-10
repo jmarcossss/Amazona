@@ -18,6 +18,12 @@ import ProductCategoriesService from '../../src/services/product-categories.serv
 import OrderStatusService from '../../src/services/order-status.service';
 import OrderStatusItemEntity from '../../src/entities/order-status-item.entity';
 import OrderModel from '../../src/models/order.model';
+import UserEntity from '../../src/entities/user.entity';
+import UserRepository from '../../src/repositories/user.repository';
+import UserService from '../../src/services/user.service';
+import EmailService from '../../src/services/email.service';
+import OrderStatusItemModel from '../../src/models/order-status-item.model';
+import ProductModel from '../../src/models/product.model';
 
 describe('OrderService', () => {
   // repositories
@@ -103,7 +109,6 @@ describe('OrderService', () => {
     address: "Endereco tal",
     payment: "pix"
   });
-
   const mockedOrderModel = new OrderModel({
     id: mockedOrderId,
     userId: mockedUserId,
@@ -152,7 +157,7 @@ describe('OrderService', () => {
 
   const newMockedOrder = new OrderEntity({
     id: "",
-    userId: "2",
+    userId: mockedUserId,
     totalValue: "900",
     purchaseDate: "2022-02-29T02:00:00Z",
     statusHistory: [
@@ -169,9 +174,24 @@ describe('OrderService', () => {
     payment: "credCard"
   
   });
+
   const mockedOrders: OrderEntity[] = [mockedOrder]
   const mockedOrdersModel: OrderModel[] = [mockedOrderModel]
-  
+  const userMocked = new UserEntity({
+    id: "ce6f5c66-1967-4b21-9929-51ca7d652151",
+    CPF: "12989087064",
+    name: "Clara Acrucha",
+    username: "acrucha",
+    email: "acrucha@mail.com",
+    password: "abcdef12",
+    payment: "PIX",
+    address: [
+        "Avenida Acrucha 5"
+    ],
+    phone: "999789923",
+    code: ""
+  });
+
   beforeEach(() => {
     //repositories
     injector.registerRepository(SectorRepository, new SectorRepository());
@@ -195,6 +215,10 @@ describe('OrderService', () => {
     injector.registerRepository(OrderRepository, new OrderRepository());
     orderRepository = injector.getRepository(OrderRepository);
     
+    injector.registerRepository(UserRepository, new UserRepository())
+    let userRepository = injector.getRepository(UserRepository);
+    
+    
     //Services
     injector.registerService(SectorService, new SectorService(sectorRepository));
     sectorService = injector.getService(SectorService);
@@ -211,7 +235,10 @@ describe('OrderService', () => {
     injector.registerService(OrderStatusService, new OrderStatusService(orderStatusRepository));
     orderStatusService = injector.getService(OrderStatusService);
     
-    injector.registerService(NotificationService, new NotificationService(notificationRepository));
+    injector.registerService(UserService, new UserService(userRepository))
+    let userService = injector.getService(UserService);
+    
+    injector.registerService(NotificationService, new NotificationService(notificationRepository, userService));
     notificationService = injector.getService(NotificationService);
     
     injector.registerService(OrderService, new OrderService(orderRepository, orderStatusService, productService, notificationService));
@@ -226,9 +253,9 @@ describe('OrderService', () => {
     expect(result).toEqual(mockedOrdersModel);
   });
 
-  it('[getOrderById] should a order Id', async () => {
+  it('[getOrderById] should return a order by Id', async () => {
     jest.spyOn(orderRepository, 'getOrderById').mockResolvedValue(mockedOrder);
-
+    
     const result = await orderService.getOrderById(mockedOrderId);
     expect(result).toEqual(mockedOrderModel);
   });
@@ -241,7 +268,8 @@ describe('OrderService', () => {
 
   it('[createOrder] should creat a order', async () => {
     jest.spyOn(orderRepository, 'createOrder').mockResolvedValue(newMockedOrder);
-
+    jest.spyOn(EmailService, 'sendEmail').mockResolvedValue(void 0);
+    
     const result = await orderService.createOrder(newMockedOrder);
     expect(result).toBeUndefined();
   });
@@ -275,43 +303,51 @@ describe('OrderService', () => {
   });
 
   it('[getHistoryByUserId] should get orders by a userId', async () => {
+    jest.spyOn(orderService, 'getAllOrderByUserId').mockResolvedValue(mockedOrdersModel);
     
     const result = await orderService.getHistoryByUserId(mockedUserId, undefined, undefined, undefined, undefined);
     expect(result).toEqual(mockedOrdersModel);
   });
 
   it('[getHistoryByUserId] should get orders by a userId with a specific product name', async () => {
+    jest.spyOn(orderService, 'getAllOrderByUserId').mockResolvedValue(mockedOrdersModel);
     
     const result = await orderService.getHistoryByUserId(mockedUserId, undefined, mockedProductName, undefined, undefined);
     expect(result).toEqual(mockedOrdersModel);
   });
 
   it('[getHistoryByUserId] should get orders empty by a userId with a specific product name that does not exist', async () => {
+    jest.spyOn(orderService, 'getAllOrderByUserId').mockResolvedValue(mockedOrdersModel);
     
     const result = await orderService.getHistoryByUserId(mockedUserId, undefined, mockedNotProductName, undefined, undefined);
     expect(result).toEqual([]);
   });
   it('[getHistoryByUserId] should get orders by a userId with specific multiple status', async () => {
+    jest.spyOn(orderService, 'getAllOrderByUserId').mockResolvedValue(mockedOrdersModel);
     
     const result = await orderService.getHistoryByUserId(mockedUserId, mockedMultipleStatus, undefined, undefined, undefined);
     expect(result).toEqual(mockedOrdersModel);
   });
   it('[getHistoryByUserId] should get orders by a userId with a specific product name and multiple status', async () => {
+    jest.spyOn(orderService, 'getAllOrderByUserId').mockResolvedValue(mockedOrdersModel);
     
     const result = await orderService.getHistoryByUserId(mockedUserId, mockedMultipleStatus, mockedProductName, undefined, undefined);
     expect(result).toEqual(mockedOrdersModel);
   });
   it('[getHistoryByUserId] should get orders by a userId with a purchaseDate between between initialDate and endDate', async () => {
+    jest.spyOn(orderService, 'getAllOrderByUserId').mockResolvedValue(mockedOrdersModel);
     
     const result = await orderService.getHistoryByUserId(mockedUserId, undefined, undefined, mockedInitialDate, mockedEndDate);
     expect(result).toEqual(mockedOrdersModel);
   });
   it('[getHistoryByUserId] should get orders by a userId with a specific product name and a purchaseDate between between initialDate and endDate', async () => {
+    jest.spyOn(orderService, 'getAllOrderByUserId').mockResolvedValue(mockedOrdersModel);
     
     const result = await orderService.getHistoryByUserId(mockedUserId, undefined, mockedProductName, mockedInitialDate, mockedEndDate);
     expect(result).toEqual(mockedOrdersModel);
   });
   it('[getHistoryByUserId] should get orders by a userId with a specific product name, a purchaseDate between between initialDate and endDate and multiple status', async () => {
+    jest.spyOn(orderService, 'getAllOrderByUserId').mockResolvedValue(mockedOrdersModel);
     
     const result = await orderService.getHistoryByUserId(mockedUserId, mockedMultipleStatus, mockedProductName, mockedInitialDate, mockedEndDate);
     expect(result).toEqual(mockedOrdersModel);

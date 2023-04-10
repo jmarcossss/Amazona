@@ -4,6 +4,7 @@ import app from '../../src/app';
 import supertest from 'supertest';
 import OrderEntity from '../../src/entities/order.entity';
 import OrderStatusItemEntity from '../../src/entities/order-status-item.entity';
+import EmailService from '../../src/services/email.service';
 
 const request = supertest(app);
 function transformReponseInOrderModel(response: any): OrderModel[]{
@@ -75,7 +76,7 @@ describe('OrderController', () => {
     date: "2023-01-29T06:00:20Z"
   });
   const newMockedOrder: OrderEntity = new OrderEntity({
-    id: "b9c4a338-e19e-4bfa-bc83-45171017407c",
+    id: "ed64e12b-0784-4263-9462-9d8cc4a20b7a",
     userId: "ce6f5c66-1967-4b21-9929-51ca7d652151",
     totalValue: "600",
     purchaseDate: "2023-01-29T06:00:00Z",
@@ -132,13 +133,16 @@ describe('OrderController', () => {
     expect(transformReponseInOrderModel(response)).toEqual(mockedOrderArray);
   });
 
-  it('[Post] /api/orders should create an order', async () => {
+  it('[POST] /api/orders should create an order', async () => {
+    jest.spyOn(EmailService, 'sendEmail').mockResolvedValue(void 0);
     const response = await request.post('/api/orders').send(newMockedOrder);
     const result: string = response.body.msgCode;
     expect(result).toEqual('success');
   });
 
   it('[PUT] /api/orders/status/:id should update an order by id inserting a status in its statusHistory', async () => {
+    jest.spyOn(EmailService, 'sendEmail').mockResolvedValue(void 0);
+
     const response = await request.put(`/api/orders/status/${mockedOrderId}`).send(updatedMockedStatus);
     const result: string = response.body.msgCode;
 
