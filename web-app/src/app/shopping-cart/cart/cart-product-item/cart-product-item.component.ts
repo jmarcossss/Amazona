@@ -24,14 +24,12 @@ export class CartProductItemComponent implements OnInit {
   }
 
   increment() {
-    if (this.quantity < 5) {
-      this.quantity++;
-      this.shoppingCartService.addProductToCart(this.product);
-    }
+    this.quantity++;
+    this.shoppingCartService.addProductToCart(this.product);
   }
 
   decrement() {
-    if (this.quantity >= 0) {
+    if (this.quantity > 0) {
       this.quantity--;
       this.shoppingCartService.removeProductFromCart(this.product.id);
     }

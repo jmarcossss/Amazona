@@ -33,5 +33,7 @@ export class CartComponent implements OnInit {
       const product = products.find((p) => p.id === productId)!;
       return { product, quantity };
     });
+
+    this.cart.sort((a, b) => a.product.name.localeCompare(b.product.name));
   }
 }

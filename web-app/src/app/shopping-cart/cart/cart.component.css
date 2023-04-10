@@ -35,10 +35,12 @@ header h3 {
 
 header > div {
   display: flex;
-  flex-direction: row;
   flex: 1;
-  text-align: center;
+  flex-direction: row;
   justify-content: space-between;
+
+  text-align: center;
+
   gap: 24px;
 }
 

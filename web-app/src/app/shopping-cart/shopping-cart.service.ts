@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import ProductModel from '../models/product.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class ShoppingCartService {
   >([]);
   public cart$ = this.cart.asObservable();
 
-  constructor() {
+  constructor(private router: Router) {
     this.getCart();
   }
 
@@ -33,16 +34,18 @@ export class ShoppingCartService {
   }
 
   public addProductToCart(product: ProductModel) {
-    let cart = this.getCart();
-    let newCart = cart;
+    const cart = this.getCart();
 
-    newCart.push(product);
-    this.cart.next(newCart);
-    localStorage.setItem(this.cartLocalStorageId, JSON.stringify(newCart));
+    let updatedCart = cart;
+
+    updatedCart.push(product);
+    this.cart.next(updatedCart);
+    localStorage.setItem(this.cartLocalStorageId, JSON.stringify(updatedCart));
   }
 
   public removeProductFromCart(id: string) {
     const cart = this.getCart();
+
     const indexToRemove = cart.findIndex(
       (item: ProductModel) => item.id === id
     );
@@ -56,5 +59,9 @@ export class ShoppingCartService {
 
     this.cart.next(newCart);
     localStorage.setItem(this.cartLocalStorageId, JSON.stringify(newCart));
+  }
+
+  public finishOrder() {
+    this.router.navigate(['/create-order']);
   }
 }

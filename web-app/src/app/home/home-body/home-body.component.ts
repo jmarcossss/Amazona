@@ -3,7 +3,6 @@ import { HomeService } from '../home.service';
 import { SnackBarService } from '../../services/snack-bar.service';
 import ProductModel from '../../models/product.model';
 import { currencyFormatterBR } from '../../shared/utils/currency-formatter';
-import { ShoppingCartService } from '../../shopping-cart/shopping-cart.service';
 
 @Component({
   selector: 'app-home-body',
@@ -15,8 +14,7 @@ export class HomeBodyComponent implements OnInit {
 
   constructor(
     public homeService: HomeService,
-    private snackBarService: SnackBarService,
-    private shoppingCartService: ShoppingCartService
+    private snackBarService: SnackBarService
   ) {}
 
   ngOnInit(): void {
@@ -44,10 +42,7 @@ export class HomeBodyComponent implements OnInit {
     let product = this.products.find((product) => product.id === productId);
 
     if (!!product) {
-      this.shoppingCartService.addProductToCart(product);
-
-      // TODO: Change to use router
-      window.location.replace('/shopping-cart/cart');
+      this.homeService.buyProduct(product);
     }
   }
 }

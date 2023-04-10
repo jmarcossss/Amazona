@@ -44,5 +44,7 @@ export class CartResumeComponent {
     );
   }
 
-  finishOrder() {}
+  finishOrder() {
+    this.shoppingCartService.finishOrder();
+  }
 }
