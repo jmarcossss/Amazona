@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import * as moment from 'moment';
-import { interval } from 'rxjs';
+import { OrderStatusService } from './follow.service'
 
 @Component({
   selector: 'app-follow',
@@ -10,45 +9,43 @@ import { interval } from 'rxjs';
 })
 export class FollowComponent implements OnInit {
   orderId!: number;
-  deliveryDate: moment.Moment = moment().add(4, 'minutes');
-  timeRemaining: any = {};
   status = 'Confirmado';
+  statusText = 'Confirmado';
+  statusConfirmed = true;
+  statusInTransit = false;
+  statusDelivered = false;
+  statusCanceled = false;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private orderStatusService: OrderStatusService) {}
 
   ngOnInit() {
     this.orderId = this.route.snapshot.params['id'];
-    interval(1000).subscribe(() => {
-      this.timeRemaining = this.getTimeRemaining();
+    this.orderStatusService.getOrderStatus(this.orderId).subscribe(response => {
+      if (response.msgCode === 'success') {
+        const orderStatus = response.data.find((order: any) => order.id === this.orderId);
+        if (orderStatus) {
+          this.updateStatus(orderStatus.status);
+        }
+      }
     });
   }
 
-  getTimeRemaining() {
-    const now = moment();
-    const duration = moment.duration(this.deliveryDate.diff(now));
-    const minutes = duration.asMinutes();
-
-    if (minutes > 2) {
-      this.status = 'Confirmado';
-    } else if (minutes <= 2 && minutes > 1) {
-      this.status = 'Em trânsito';
-    } else {
-      this.status = 'Entregue';
-    }
-
-    const days = duration.days();
-    const hours = duration.hours();
-    let minutesRemaining = duration.minutes();
-    const seconds = duration.seconds();
-
-    if (duration.asSeconds() > 0) {
-      minutesRemaining = minutesRemaining < 0 ? 0 : minutesRemaining;
-      const timeRemaining = { days, hours, minutes: minutesRemaining, seconds };
-      return timeRemaining;
-    } else {
-      const timeRemaining = { days, hours, minutes: 0, seconds: 0 };
-      this.status = 'Entregue';
-      return timeRemaining;
+  updateStatus(status: string) {
+    this.status = status;
+    this.statusConfirmed = status === 'active';
+    this.statusInTransit = status === 'processing';
+    this.statusDelivered = status === 'delivered';
+    this.statusCanceled = status === 'canceled';
+    
+    if (this.statusConfirmed) {
+      this.statusText = 'Confirmado';
+    } else if (this.statusInTransit) {
+      this.statusText = 'Em trânsito';
+    } else if (this.statusDelivered) {
+      this.statusText = 'Entregue';
+    } else if (this.statusCanceled) {
+      this.statusText = 'Cancelado';
     }
   }
+  
 }

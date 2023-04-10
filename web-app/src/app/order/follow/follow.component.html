@@ -1,49 +1,45 @@
 <div class="container">
   <h1>Acompanhamento do pedido {{ orderId }}</h1>
   <app-card [style]="{ width: '999px', padding: '10px' }">
-    <p>Estimativa para entrega em
-      {{ timeRemaining.days }} dias,
-      {{ timeRemaining.hours }} horas,
-      {{ timeRemaining.minutes }} minutos e
-      {{ timeRemaining.seconds }} segundos
-    </p>
-    <h2>{{ status }}</h2>
+    <p *ngIf="!statusCanceled">Estimativa para entrega em {{ 14 }} dias</p>
+    <p *ngIf="statusCanceled">Produto cancelado, não há estimativa para entrega</p>
+    <h2>{{ statusText }}</h2>
     <div class="image-container">
       <div class="espaco">
-        <div class="step" [ngClass]="{'step-active': timeRemaining.minutes >= 0}" (ngClassChange)="status = 'Confirmado'">
+        <div class="step" [ngClass]="{'step-active': statusConfirmed}">
           <div class="step-content">
             <img src="../../../assets/images/Big Parcel.png" alt="icone1">
           </div>
         </div>
-        <div class="status" *ngIf="timeRemaining.minutes >= 0">Confirmado<br>{{deliveryDate.format('DD/MM/YYYY')}}</div>
+        <div class="status" *ngIf="statusConfirmed">Confirmado</div>
       </div>
 
       <div class="ajustaHora">
-      <h3>HORA AQUI</h3>
-      <h4>----------------------------></h4>
+        <div *ngIf="!statusCanceled"><h3>7 dias</h3></div>
+        <h4>----------------------------></h4>
       </div>
 
       <div class="espaco">
-        <div class="step" [ngClass]="{'step-active': timeRemaining.minutes <= 2}" (ngClassChange)="status = 'Em trânsito'">
+        <div class="step" [ngClass]="{'step-active': statusInTransit}">
           <div class="step-content">
             <img src="../../../assets/images/Open Box.png" alt="icone2">
           </div>
         </div>
-        <div class="status" *ngIf="timeRemaining.minutes <= 2">Em trânsito<br>{{deliveryDate.format('DD/MM/YYYY')}}</div>
+        <div class="status" *ngIf="statusInTransit">Em trânsito</div>
       </div>
 
       <div class="ajustaHora">
-      <h3>HORA AQUI</h3>
-      <h4>----------------------------></h4>
+        <div *ngIf="!statusCanceled"><h3>7 dias</h3></div>
+        <h4>----------------------------></h4>
       </div>
 
       <div class="espaco">
-        <div class="step stepHome" [ngClass]="{'step-active': timeRemaining.minutes <= 1}" (ngClassChange)="status = 'Entregue'">
+        <div class="step stepHome" [ngClass]="{'step-active': statusDelivered}">
           <div class="step-content">
             <img src="../../../assets/images/Smart Home Checked.png" alt="icone3">
           </div>
         </div>
-        <div *ngIf="timeRemaining.minutes <= 1">Entregue<br>{{deliveryDate.format('DD/MM/YYYY')}}</div>
+        <div *ngIf="statusDelivered">Entregue</div>
       </div>
     </div>
 

@@ -27,7 +27,7 @@ h2 {
 }
 
 h3 {
-  margin-left: 25px;
+  margin-left: 50px;
 }
 
 p {
@@ -46,8 +46,8 @@ p {
 }
 
 .step-active {
-  background-color: var(--color-success)
-}
+    background-color: var(--color-success)
+  }
 
 .step-content {
   display: flex;
