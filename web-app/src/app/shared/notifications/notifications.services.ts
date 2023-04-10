@@ -38,7 +38,6 @@ export class NotificationsService extends BaseService {
       dateActual: ''
     });
     this.actualDate = this.notificationForm.get('dateActual');
-    alert(this.actualDate?.value)
     this.statusAtivo = false;
     this.statusProcessando = false;
     this.statusCancelado = false;
@@ -64,12 +63,7 @@ export class NotificationsService extends BaseService {
   }
 
   public async buscar(selectedDate?: Date ): Promise<NotificationModel[]> {
-    console.log(`${selectedDate}`)
     let uri: string = `${this.prefix}/${this.userId}?`
-    if (!!selectedDate) {
-      console.log(`entrando em datas`)
-      uri += `date=${encodeURIComponent(selectedDate?.toISOString())}`
-    }
 
     const response = await firstValueFrom(
       this.httpService.get(uri)
@@ -77,7 +71,8 @@ export class NotificationsService extends BaseService {
     let resposta: NotificationModel[] = []
     response.handle({
       onSuccess: (resp) => {
-        const notifications = (resp.data as any[]).map((notification: any) => new NotificationModel(notification))
+        const notifications = (resp.data as any[]).map((notification: any) => 
+        new NotificationModel(notification))
         this.notificationStatus.next(RequestStatus.success(resp));
         resposta = notifications
       },

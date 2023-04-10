@@ -60,13 +60,20 @@ export class NotificationsComponent implements OnInit {
   
   public async buscar(selectedDate?: Date): Promise<void> {
     this.notifications = await this.notificationService.buscar(selectedDate);    
-    console.log(this.notifications)
+    const data1 = selectedDate?.toISOString();
+    const data2 = new Date(this.notifications[0].date);
+    const data3 = data2.toISOString();
+
+    if(!!selectedDate && !(data3 == data1)){
+      let aux: NotificationModel[] = []
+      this.notifications = aux;
+    }
   }
 
 
   dataSelecionada(selectedDate: Date) {
-    this.Data = selectedDate;
+    
+    selectedDate.setHours(selectedDate.getHours() + 3);
     this.buscar(selectedDate);
   }
-
 }
