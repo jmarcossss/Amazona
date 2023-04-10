@@ -41,7 +41,7 @@ export class SignUpFormPaymentComponent implements OnInit {
               message: 'Cadastro realizado com sucesso!',
             });
 
-            this.router.navigate(['/']);
+            this.router.navigate(['/authentication/sign-in']);
           },
         });
       });

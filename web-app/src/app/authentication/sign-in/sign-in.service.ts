@@ -5,13 +5,12 @@ import { HttpService, Response } from '../../services/http.service';
 import { BehaviorSubject, firstValueFrom, map } from 'rxjs';
 import { RequestStatus } from '../../shared/utils/request-status';
 import { ErrorResponse } from '../../shared/utils/response';
-
+import { AuthenticationService } from '../authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
-
-export class SignInService extends BaseService{
+export class SignInService extends BaseService {
   private prefix: string = '/authentication/sign-in';
 
   public signInForm: FormGroup;
@@ -25,15 +24,16 @@ export class SignInService extends BaseService{
 
   constructor(
     private formBuilder: FormBuilder,
-    private httpService: HttpService
-    ) {
-    super()
+    private httpService: HttpService,
+    private authenticationService: AuthenticationService
+  ) {
+    super();
     this.signInForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: [
         '',
         [
-            Validators.compose([
+          Validators.compose([
             Validators.required,
             Validators.minLength(8),
             Validators.maxLength(8),
@@ -46,24 +46,23 @@ export class SignInService extends BaseService{
     this.signInForm.markAllAsTouched();
 
     if (this.signInForm.valid) {
-
       this.signInStatus.next(RequestStatus.loading());
 
       const response = await firstValueFrom(
-        this.httpService.post(`${this.prefix}`,
-         {
+        this.httpService.post(`${this.prefix}`, {
           username: this.signInForm.getRawValue().username,
           email: this.signInForm.getRawValue().username,
-          password: this.signInForm.getRawValue().password
-        }
-        )
+          password: this.signInForm.getRawValue().password,
+        })
       );
 
       response.handle({
-        onSuccess: (data) => {
+        onSuccess: (response) => {
+          if (!!response.data) {
+            this.authenticationService.setUser(response.data);
+          }
 
-
-          this.signInStatus.next(RequestStatus.success(data));
+          this.signInStatus.next(RequestStatus.success(response.data));
         },
         onFailure: (error) => {
           this.signInStatus.next(RequestStatus.failure(error));
@@ -72,5 +71,3 @@ export class SignInService extends BaseService{
     }
   }
 }
-
-
