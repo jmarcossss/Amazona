@@ -1,60 +1,30 @@
 <div class="item1 medium-text">
     <h3 class="head">Notificações</h3>
-    <p class="param">selcione uma data</p>
-    <mat-form-field appearance="fill">
-        <input
-          matInput
-          [matDatepicker]="picker"
-          placeholder="Selecione uma data"
-          (dateChange)="dataSelecionada($event.value)"
-        />
+    <!-- <p class="param">selcione uma data</p> -->
+    <mat-form-field appearance="fill"  [formGroup] = "notificationForm"  >
+        <input matInput 
+        [matDatepicker]="picker" 
+        placeholder="Selecione uma data"
+        (dateChange)="dataSelecionada($event.value)"
+        formControlName = "dateActual"/> 
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      
-    <div class="result-text">Total de resultados: 3 itens</div>
-    <div class="notCard">
-        <app-card class="notCard">
-            <div class="data-box">
-                <span class="small-text">{{Data}}</span>
-            </div>
-            <div class="pedido-box">
-                <span class="medium-text">Pedido de (Camisa Puma - Masculina) realizado com sucesso</span>
-            </div>
-            <div class="details-box">
-                <a href="https://google.com" style="  color: var(--color-details);"><span class="medium-text">Clique
-                        para ver mais detalhes</span></a>
-            </div>
-        </app-card>
-    </div>
+    </mat-form-field>
+    
+    <div class="result-text">Total de resultados: {{notifications.length}}</div>
 
-    <div class="notCard">
-        <app-card class="notCard">
-            <div class="data-box">
-                <span class="small-text">{{Data}}</span>
-            </div>
-            <div class="pedido-box">
-                <span class="medium-text">Pedido de (Camisa Puma - Masculina) realizado com sucesso</span>
-            </div>
-            <div class="details-box">
-                <a href="https://google.com" style="  color: var(--color-details);"><span class="medium-text">Clique
-                        para ver mais detalhes</span></a>
-            </div>
-        </app-card>
-    </div>
-
-    <div class="notCard">
-        <app-card class="notCard">
-            <div class="data-box">
-                <span class="small-text">{{Data}}</span>
-            </div>
-            <div class="pedido-box">
-                <span class="medium-text">Pedido de (Camisa Puma - Masculina) realizado com sucesso</span>
-            </div>
-            <div class="details-box">
-                <a href="https://google.com" style="  color: var(--color-details);"><span class="medium-text">Clique
-                        para ver mais detalhes</span></a>
-            </div>
-        </app-card>
+    <div *ngFor="let notification of notifications">
+            <app-card class="notCard">
+                <div class="data-box">
+                    <span class="small-text">{{notification.date}}</span>
+                </div>
+                <div class="pedido-box">
+                    <span class="medium-text">{{notification.description}}</span>
+                </div>
+                <div class="details-box">
+                    <a routerLink="/order/history" style="  color: var(--color-details);"><span class="medium-text">Clique
+                            para ver mais detalhes</span></a>
+                </div>
+            </app-card>
     </div>
 </div>
