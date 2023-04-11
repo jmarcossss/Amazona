@@ -90,11 +90,3 @@ npm install
 ```
 
 Run the app again, and then run the tests. It is important that the app is running on port 4200.
-
-#### If you still have a problem, try running the following command:
-
-```
-node node_modules/protractor/bin/webdriver-manager update
-```
-
-And after that, try to run the tests. Remembering, the app needs to be running.
