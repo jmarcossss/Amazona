@@ -13,6 +13,8 @@ export class SignUpComponent implements OnInit {
   constructor(private signUpService: SignUpService) {}
 
   ngOnInit() {
+    this.signUpService.initState();
+
     this.signUpService.signUpFormStep$.subscribe((signUpFormStep) => {
       this.signUpFormStep = signUpFormStep;
     });

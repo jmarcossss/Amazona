@@ -5,11 +5,6 @@
   >
     <div class="radio-container">
       <mat-radio-button class="pix" value="pix">PIX</mat-radio-button>
-      <app-text-input
-        *ngIf="paymentOption === 'pix'"
-        placeholder="Informe o código PIX"
-        [control]="signUpPaymentForm.get('payment')"
-      ></app-text-input>
     </div>
     <div class="radio-container">
       <mat-radio-button class="credit" value="credit"
@@ -34,6 +29,7 @@
       label="PRÓXIMO"
       type="btn medium"
       (click)="onSubmit()"
+      [disabled]="!signUpPaymentForm.valid"
     ></app-button>
   </div>
 </div>

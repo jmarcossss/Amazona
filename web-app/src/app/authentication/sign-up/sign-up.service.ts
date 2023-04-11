@@ -26,6 +26,7 @@ export class SignUpService extends BaseService {
   > = new BehaviorSubject<RequestStatus<string, ErrorResponse>>(
     RequestStatus.idle()
   );
+
   public signUpPersonalDataValidateStatus$ =
     this.signUpPersonalDataValidateStatus.asObservable();
 
@@ -33,6 +34,7 @@ export class SignUpService extends BaseService {
     new BehaviorSubject<RequestStatus<string, ErrorResponse>>(
       RequestStatus.idle()
     );
+
   public signUpStatus$ = this.signUpStatus.asObservable();
 
   constructor(
@@ -44,7 +46,10 @@ export class SignUpService extends BaseService {
       name: ['', Validators.required],
       CPF: ['', Validators.required],
       phone: ['', Validators.minLength(11)],
-      username: ['', Validators.minLength(4)],
+      username: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(4)]),
+      ],
       email: [
         '',
         [Validators.compose([Validators.required, Validators.email])],
@@ -68,9 +73,20 @@ export class SignUpService extends BaseService {
     });
 
     this.signUpPaymentForm = this.formBuilder.group({
-      paymentOption: [''],
+      paymentOption: ['', Validators.required],
       payment: [''],
     });
+  }
+
+  public initState() {
+    this.signUpPersonalDataForm.reset();
+    this.signUpAddressForm.reset();
+    this.signUpPaymentForm.reset();
+
+    this.signUpFormStep.next(SignUpFormStep.PersonalData);
+
+    this.signUpPersonalDataValidateStatus.next(RequestStatus.idle());
+    this.signUpStatus.next(RequestStatus.idle());
   }
 
   public async submitPersonalData(): Promise<void> {
@@ -116,7 +132,19 @@ export class SignUpService extends BaseService {
   }
 
   public async submitPayment(): Promise<void> {
-    await this.signUp();
+    this.signUpPaymentForm.markAllAsTouched();
+
+    if (this.signUpPaymentForm.valid) {
+      await this.signUp();
+    } else {
+      this.signUpStatus.next(
+        RequestStatus.failure(
+          new ErrorResponse({
+            msg: 'Você precisa selecionar uma opçaõ de pagamento!',
+          })
+        )
+      );
+    }
   }
 
   public async signUp(): Promise<void> {

@@ -38,6 +38,19 @@
 
       <button
         mat-icon-button
+        routerLink="/shopping-cart/cart"
+        routerLinkActive="active"
+      >
+        <mat-icon
+          [matBadge]="cartItems"
+          [matBadgeHidden]="!cartItems"
+          matBadgeColor="warn"
+          >shopping_cart</mat-icon
+        >
+      </button>
+
+      <button
+        mat-icon-button
         (click)="onClickNotification()"
         [matMenuTriggerFor]="menu"
       >
@@ -45,6 +58,7 @@
           showNotification ? "notifications_active" : "notifications_none"
         }}</mat-icon>
       </button>
+
       <mat-menu
         class="fullMenu"
         #menu="matMenu"
@@ -58,18 +72,6 @@
 
       <button mat-icon-button routerLink="/profile" routerLinkActive="active">
         <mat-icon>person</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        routerLink="/shopping-cart/cart"
-        routerLinkActive="active"
-      >
-        <mat-icon
-          [matBadge]="cartItems"
-          [matBadgeHidden]="!cartItems"
-          matBadgeColor="warn"
-          >shopping_cart</mat-icon
-        >
       </button>
     </div>
   </mat-toolbar-row>
