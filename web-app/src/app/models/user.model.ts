@@ -9,20 +9,20 @@ class UserModel extends BaseModel {
   address: string[];
   phone: string;
 
-  constructor({
+  constructor({ 
     id,
-    CPF,
-    name,
+    CPF, 
+    name, 
     username,
     email,
-    payment,
-    address,
-    phone,
-  }: {
-    id: string;
-    CPF: string;
-    name: string;
-    username: string;
+    payment, 
+    address, 
+    phone
+  } : { 
+    id: string,
+    CPF: string; 
+    name: string; 
+    username: string; 
     email: string;
     payment: string;
     address: string[];
@@ -32,7 +32,7 @@ class UserModel extends BaseModel {
     this.CPF = CPF;
     this.name = name;
     this.username = username;
-    this.email = email;
+    this.email =email;
     this.payment = payment;
     this.address = address;
     this.phone = phone;

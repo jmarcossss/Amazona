@@ -1,4 +1,4 @@
-export default class BaseModel {
+export default class BaseModel{
   id: string;
 
   constructor(id: string) {
