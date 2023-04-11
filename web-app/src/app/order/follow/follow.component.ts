@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderStatusService } from './follow.service';
+import OrderStatusModel from '../../models/order-status.model';
 
 @Component({
   selector: 'app-follow',
@@ -9,53 +10,20 @@ import { OrderStatusService } from './follow.service';
 })
 export class FollowComponent implements OnInit {
   orderId!: number;
-  statusText = 'Confirmado';
-  statusConfirmed = true;
-  statusInTransit = false;
-  statusDelivered = false;
-  statusCanceled = false;
-
-  statusArray = [
-    { key: 'confirmed', text: 'Confirmado', flags: { confirmed: true, inTransit: false, delivered: false, canceled: false }},
-    { key: 'in transit', text: 'Em trânsito', flags: { confirmed: false, inTransit: true, delivered: false, canceled: false }},
-    { key: 'delivered', text: 'Entregue', flags: { confirmed: false, inTransit: false, delivered: true, canceled: false }},
-    { key: 'canceled', text: 'Cancelado', flags: { confirmed: false, inTransit: false, delivered: false, canceled: true }},
-  ];
+  orderStatus!: OrderStatusModel;
 
   constructor(private route: ActivatedRoute, private orderStatusService: OrderStatusService) {}
 
   ngOnInit() {
     this.orderId = this.route.snapshot.params['id'];
-    this.orderStatusService.getOrderStatus(this.orderId).subscribe(response => {
-      if (response.msgCode === 'success') {
-        const orderStatus = response.data.find((order: any) => order.id === this.orderId);
-        if (orderStatus && orderStatus.status) {
-          this.updateStatus(orderStatus.status);
-        } else {
-          this.statusText = 'Produto inexistente';
-          this.statusConfirmed = false;
-          this.statusInTransit = false;
-          this.statusDelivered = false;
-          this.statusCanceled = false;
-        }
+    this.orderStatusService.getOrderStatus(this.orderId).subscribe(
+      (statusModel) => {
+        this.orderStatus = statusModel;
+      },
+      (error) => {
+        console.error('Error ao obter status do pedido:', error);
+        this.orderStatus = new OrderStatusModel({ id: '', status: '', errorMessage: 'Erro ao obter status do pedido' });
       }
-    });
-  }
-
-  updateStatus(status: string) {
-    const mappedStatus = this.statusArray.find(s => s.key === status);
-    if (mappedStatus) {
-      this.statusText = mappedStatus.text;
-      this.statusConfirmed = mappedStatus.flags.confirmed;
-      this.statusInTransit = mappedStatus.flags.inTransit;
-      this.statusDelivered = mappedStatus.flags.delivered;
-      this.statusCanceled = mappedStatus.flags.canceled;
-    } else {
-      this.statusText = 'Produto inexistente';
-      this.statusConfirmed = false;
-      this.statusInTransit = false;
-      this.statusDelivered = false;
-      this.statusCanceled = false;
-    }
+    );
   }
 }

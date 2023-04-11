@@ -6,9 +6,10 @@ import { CancellationComponent } from './cancellation/cancellation.component';
 import { OrderRoutingModule } from './order-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { FollowComponent } from './follow/follow.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [DetailsComponent, HistoryComponent, CancellationComponent, FollowComponent],
-  imports: [CommonModule, OrderRoutingModule, SharedModule],
+  imports: [CommonModule, OrderRoutingModule, SharedModule, HttpClientModule],
 })
 export class OrderModule {}
