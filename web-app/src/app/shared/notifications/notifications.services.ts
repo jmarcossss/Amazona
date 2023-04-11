@@ -6,36 +6,35 @@ import { BehaviorSubject, firstValueFrom, map } from 'rxjs';
 import { RequestStatus } from '../utils/request-status';
 import { ErrorResponse } from '../utils/response';
 import NotificationModel from 'src/app/models/notification.model';
-import { NotificationsComponent } from './notifications.component';
+import { AuthenticationService } from '../../authentication/authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class NotificationsService extends BaseService {
   private prefix: string = '/notifications/user';
-  private userId: string = 'ce6f5c66-1967-4b21-9929-51ca7d652151'
   public notificationForm: FormGroup;
   statusAtivo: boolean;
   statusProcessando: boolean;
   statusCancelado: boolean;
   actualDate;
 
-  public notificationStatus: BehaviorSubject<RequestStatus<any, ErrorResponse>> =
-    new BehaviorSubject<RequestStatus<any, ErrorResponse>>(
-      RequestStatus.idle()
-    );
+  public notificationStatus: BehaviorSubject<
+    RequestStatus<any, ErrorResponse>
+  > = new BehaviorSubject<RequestStatus<any, ErrorResponse>>(
+    RequestStatus.idle()
+  );
 
   public notificationStatus$ = this.notificationStatus.asObservable();
 
-
   constructor(
     private formBuilder: FormBuilder,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private authenticationService: AuthenticationService
   ) {
-    super()
+    super();
     this.notificationForm = this.formBuilder.group({
-      dateActual: ''
+      dateActual: '',
     });
     this.actualDate = this.notificationForm.get('dateActual');
     this.statusAtivo = false;
@@ -59,30 +58,27 @@ export class NotificationsService extends BaseService {
     this.statusAtivo = false;
     this.statusProcessando = false;
     this.statusCancelado = false;
-    this.actualDate?.setValue("")
+    this.actualDate?.setValue('');
   }
 
-  public async buscar(selectedDate?: Date ): Promise<NotificationModel[]> {
-    let uri: string = `${this.prefix}/${this.userId}?`
+  public async buscar(selectedDate?: Date): Promise<NotificationModel[]> {
+    let userId = this.authenticationService.getUser()?.id;
+    let uri: string = `${this.prefix}/${userId}?`;
 
-    const response = await firstValueFrom(
-      this.httpService.get(uri)
-    );
-    let resposta: NotificationModel[] = []
+    const response = await firstValueFrom(this.httpService.get(uri));
+    let resposta: NotificationModel[] = [];
     response.handle({
       onSuccess: (resp) => {
-        const notifications = (resp.data as any[]).map((notification: any) => 
-        new NotificationModel(notification))
+        const notifications = (resp.data as any[]).map(
+          (notification: any) => new NotificationModel(notification)
+        );
         this.notificationStatus.next(RequestStatus.success(resp));
-        resposta = notifications
+        resposta = notifications;
       },
       onFailure: (error) => {
         this.notificationStatus.next(RequestStatus.failure(error));
       },
     });
-    return (resposta as NotificationModel[])
+    return resposta as NotificationModel[];
   }
-
-
-
 }

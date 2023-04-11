@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiMessageCodes } from '../../shared/utils/api-message-codes';
-import { Router } from '@angular/router';
 import { SnackBarService } from '../../services/snack-bar.service';
 import { FormGroup } from '@angular/forms';
 import { HistoryService } from './history.service';
-import { FormControl } from '@angular/forms';
 import OrderModel from 'src/app/models/order.model';
 
 @Component({
@@ -17,8 +14,7 @@ export class HistoryComponent implements OnInit {
   orders: OrderModel[];
   constructor(
     private historyService: HistoryService,
-    private snackBarService: SnackBarService,
-    private router: Router
+    private snackBarService: SnackBarService
   ) {
     this.orders = [];
   }
