@@ -43,6 +43,10 @@
   font-family: var(--font-family-base);
 }
 
+a {
+  cursor: pointer;
+}
+
 button {
   border: none;
 }
