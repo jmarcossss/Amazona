@@ -47,7 +47,7 @@ export class ProfileFormDeleteComponent implements OnInit {
               message: 'Sua conta foi deletada com sucesso',
             });
 
-            this.router.navigate(['authentication/sign-in']);
+            this.router.navigate(['/authentication/sign-in']);
           }
         });
       });

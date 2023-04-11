@@ -6,25 +6,16 @@ import { ProfileForm } from './enums/profile-form.enum';
 import { HttpService } from '../services/http.service';
 import { RequestStatus } from '../shared/utils/request-status';
 import { ErrorResponse } from '../shared/utils/response';
+import UserModel from '../models/user.model';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService extends BaseService {
   private prefix: string = '/users';
-  private mockedUser =
-  {
-    "id": "ce6f5c66-1967-4b21-9929-51ca7d652151",
-    "CPF": "12989087064",
-    "name": "Clara Acrucha",
-    "username": "acruchao",
-    "email": "acrucha@mail.com",
-    "payment": "PIX",
-    "address": [
-        "Avenida Acrucha 5"
-    ],
-    "phone": "999789923", 
-  }
+  private user: UserModel | undefined;
+  private userId: string;
 
   public profilePersonalDataForm: FormGroup;
   public profileAddressForm: FormGroup;
@@ -48,26 +39,52 @@ export class ProfileService extends BaseService {
 
   constructor(
     private formBuilder: FormBuilder,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private authenticationService: AuthenticationService
   ) {
     super();
+
+    this.user = this.authenticationService.getUser();
+    this.userId = this.user?.id || '';
+
     this.profilePersonalDataForm = this.formBuilder.group({
-      name: [this.mockedUser.name, Validators.required],
-      CPF: [this.mockedUser.CPF],
-      phone: [this.mockedUser.phone, Validators.minLength(11)],
-      username: [this.mockedUser.username],
-      email: [this.mockedUser.email],
-      payment: [this.mockedUser.payment]
+      name: ['', Validators.required],
+      CPF: [''],
+      phone: ['', Validators.minLength(11)],
+      username: [''],
+      email: [''],
+      payment: ['']
     });
 
     this.profileAddressForm = this.formBuilder.group({
-      mainAddress: [this.mockedUser.address[0] ? this.mockedUser.address[0] : ''],
-      address2: [this.mockedUser.address[1] ? this.mockedUser.address[1] : ''],
-      address3: [this.mockedUser.address[2] ? this.mockedUser.address[2] : ''],
+      mainAddress: [''],
+      address2: [''],
+      address3: [''],
     });
 
     this.profileDeleteForm = this.formBuilder.group({
       password: ['']
+    });
+
+    this.updateForms();
+  }
+
+  private updateForms() {
+    if(!this.user) return;
+
+    this.profilePersonalDataForm = this.formBuilder.group({
+      name: [this.user.name, Validators.required],
+      CPF: [this.user.CPF],
+      phone: [this.user.phone, Validators.minLength(11)],
+      username: [this.user.username],
+      email: [this.user.email],
+      payment: [this.user.payment]
+    });
+
+    this.profileAddressForm = this.formBuilder.group({
+      mainAddress: [this.user.address[0] ? this.user.address[0] : ''],
+      address2: [this.user.address[1] ? this.user.address[1] : ''],
+      address3: [this.user.address[2] ? this.user.address[2] : ''],
     });
   }
 
@@ -84,11 +101,10 @@ export class ProfileService extends BaseService {
   }
 
   public async update(): Promise<void> {
-    const mockedId = "ce6f5c66-1967-4b21-9929-51ca7d652151";
     this.profileSaveValidateStatus.next(RequestStatus.loading());
 
     const response = await firstValueFrom(
-      this.httpService.post(`${this.prefix}/${mockedId}`, {
+      this.httpService.put(`${this.prefix}/${this.userId}`, {
         ...this.profilePersonalDataForm.getRawValue(),
         address: [
           this.profileAddressForm.getRawValue().mainAddress,
@@ -109,11 +125,10 @@ export class ProfileService extends BaseService {
   }
 
   public async delete(): Promise<void> {
-    const mockedId = "ce6f5c66-1967-4b21-9929-51ca7d652151";
     this.profileDeleteValidateStatus.next(RequestStatus.loading());
 
     const response = await firstValueFrom(
-      this.httpService.post(`${this.prefix}/${mockedId}`, {
+      this.httpService.post(`${this.prefix}/${this.userId}`, {
         password: this.profileDeleteForm.getRawValue().password
       })
     );
