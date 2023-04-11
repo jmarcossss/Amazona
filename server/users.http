@@ -1,0 +1,170 @@
+POST http://localhost:3000/api/authentication/sign-in
+Content-Type: application/json
+
+{
+    "username": "aas10@cin.ufpe.com",
+    "password": "abcdef12"
+}
+
+###
+GET http://localhost:3000/api/orders/b9c4a338-e19e-4bfa-bc83-45171017407c
+
+###
+POST http://localhost:3000/api/orders/
+Content-Type: application/application/json
+
+{
+   {
+    "id": "b9c4a338-e19e-4bfa-bc83-45171017407c",
+    "userId": "aa6c5fd5-2f03-45b9-8749-f94bd20704be",
+    "totalValue": "600",
+    "purchaseDate": "2023-01-29T06:00:00Z",
+    "statusHistory": [
+      {
+        "id": "c1894648-0e07-48b2-b988-b05ed49c9aa6",
+        "statusId": "f307102d-698b-4ad5-adf6-de7281243583",
+        "date": "2023-01-29T06:00:00Z"
+      },
+      {
+        "id": "042045ac-b6a5-4e0b-8f80-cb85d823af8d",
+        "statusId": "8bbb7b46-17d6-4df3-8171-0003814e3812",
+        "date": "2023-01-29T08:00:00Z"
+      }
+    ],
+    "productsIds": [
+      "a66807c2-d202-4b7e-853d-f2c5bfbb2f6f"
+    ],
+    "address": "Endereco tal",
+    "payment": "pix"
+  }
+}
+
+###
+POST http://localhost:3000/api/authentication/sign-up/validation
+Content-Type: application/json
+
+{
+    "CPF": "12989087064",
+    "name": "Clara Acrucha",
+    "username": "acrucha",
+    "email": "acrucha@mail.com",
+    "password": "abcdef12",
+    "payment": "PIX",
+    "address": [
+        "Avenida Acrucha 5"
+    ],
+    "phone": "999789923", 
+    "code": ""
+}
+
+###
+POST http://localhost:3000/api/authentication/sign-up
+Content-Type: application/json
+
+{
+      "CPF": "error12",
+      "name": "Sophia Moraes",
+      "username": "sophie", 
+      "email": "sophie",
+      "password": "a",
+      "payment": "PIX",
+      "address": [],
+      "phone": "",
+      "code": ""
+}
+
+
+
+###
+POST http://localhost:3000/api/authentication/sign-up/validation
+Content-Type: application/json
+
+{
+    "CPF": "0613471156a",
+    "name": "Clara Acrucha",
+    "username": "acrucha",
+    "email": "acrucha@mail.com",
+    "password": "abcdef12",
+    "payment": "PIX",
+    "address": [
+        "Avenida Acrucha 5"
+    ],
+    "phone": "999789923", 
+    "code": ""
+}
+
+###
+GET http://localhost:3000/api/users
+
+###
+GET http://localhost:3000/api/users/ce6f5c66-1967-4b21-9929-51ca7d652151
+
+###
+PUT http://localhost:3000/api/users/ce6f5c66-1967-4b21-9929-51ca7d652151
+Content-Type: application/json
+
+{
+    "CPF": "12989087064",
+    "name": "aaa Acrucha",
+    "username": "acrucha",
+    "email": "acrucha@mail.com",
+    "password": "abcdef12",
+    "payment": "PIX",
+    "address": [
+        "Avenida Acrucha 5"
+    ],
+    "phone": "999789923", 
+    "code": ""
+}
+
+###
+POST http://localhost:3000/api/authentication/sign-up/recover-password
+Content-Type: application/json
+
+{
+    "email": "rrl3@cin.ufpe.br"
+}
+
+###
+POST http://localhost:3000/api/authentication/sign-up/recover-password/code
+Content-Type: application/json
+
+{
+    "email": "rrl3@cin.ufpe.br",
+    "code": "2106"
+}
+
+###
+PUT http://localhost:3000/api/authentication/sign-up/recover-password/reset
+Content-Type: application/json
+
+{
+    "email": "acrucha@mail.com",
+    "password": "123456ui"
+}
+
+###
+PUT http://localhost:3000/api/users/ce6f5c66-1967-4b21-9929-51ca7d652151
+Content-Type: application/json
+
+{
+    "CPF": "UIUI",
+    "name": "aaaaaaaaaaaaaaaaaaaaaaaa",
+    "username": "",
+    "email": "UIUI@mail.com",
+    "password": "AAA",
+    "payment": "aaaaaaaaaaaaaaaaaaaaaaaa",
+    "address": [
+        "AA Acrucha 5"
+    ],
+    "phone": "AA", 
+    "code": "a"
+}
+
+###
+POST http://localhost:3000/api/users/0b718259-44a4-4a03-9491-c4374f5e3b33
+Content-Type: application/json
+
+{
+    "password": "1234567a"
+}

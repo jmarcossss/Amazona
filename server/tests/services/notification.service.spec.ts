@@ -72,6 +72,7 @@ describe('NotificationService', () => {
     
     injector.registerService(NotificationService, new NotificationService(notificationRepository, 
                              userService));
+
     notificationService = injector.getService(NotificationService);
   });
 
