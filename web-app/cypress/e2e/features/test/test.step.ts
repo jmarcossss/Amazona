@@ -7,5 +7,6 @@ Given(
     cy.visit('/');
 
     cy.get('input[placeholder="Informe o e-mail ou usuário"]').type(cpf);
+    cy.log('Usuário informado');
   }
 );

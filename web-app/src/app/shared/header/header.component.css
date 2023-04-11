@@ -97,7 +97,8 @@
   width: flex;
   height: flex;
 }
-::ng-deep .mat-mdc-menu-panel {
+
+.fullMenu ::ng-deep .mat-mdc-menu-panel {
   max-width: fit-content !important;
   right: 180px !important;
 }
