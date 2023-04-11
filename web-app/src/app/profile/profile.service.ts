@@ -135,6 +135,7 @@ export class ProfileService extends BaseService {
 
     response.handle({
       onSuccess: (_) => {
+        this.authenticationService.clear();
         this.profileDeleteValidateStatus.next(RequestStatus.success(''));
       },
       onFailure: (error) => {
