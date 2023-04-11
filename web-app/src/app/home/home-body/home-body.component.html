@@ -23,14 +23,15 @@
     class="empty-or-error"
     *ngIf="
       (this.homeService.productsStatus$ | async)?.isFailure() ||
-      this.products.length === 0
+      (this.products.length === 0 &&
+        !(this.homeService.productsStatus$ | async)?.isLoading())
     "
   >
     <h2>
       {{
         (this.homeService.productsStatus$ | async)?.isFailure()
           ? "Ocorreu um erro ao carregar os produtos, tente novamente!"
-          : "Nenhum produto encontrado."
+          : "Nenhum produto encontrado"
       }}
     </h2>
   </div>
@@ -67,7 +68,7 @@
     <div class="product-info">
       <div class="name-and-price">
         <h2>{{ productName }}</h2>
-        <h2>{{ productPrice }}</h2>
+        <h2>{{ formatPrice(productPrice) }}</h2>
       </div>
       <p>Marcar: {{ productBrand }}</p>
     </div>

@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 16px;
+}
+
+.container .icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+
+  background-color: #d9d9d9;
+}
+
+.container .icon-container mat-icon {
+  font-size: 52px;
+  width: 52px;
+  height: 52px;
+  color: var(--color-inactive);
+}
+
+.container h1 {
+  font-size: var(--font-title);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-inactive);
+}

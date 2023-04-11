@@ -1,1 +1,60 @@
-<p>create-order works!</p>
+<div class="body">
+  <div class="container">
+    <div class="general-info-container">
+      <app-create-order-info-item
+        label="ENDEREÇO DE ENTREGA"
+        actionLabel="Alterar endereço"
+        actionNavigation="/profile"
+      >
+        <h3>{{ activeOrder.address ?? "Defina um endereço de entrega!" }}</h3>
+      </app-create-order-info-item>
+      <app-create-order-info-item
+        label="MÉTODO DE PAGAMENTO"
+        actionNavigation="/profile"
+      >
+        <h3>{{ activeOrder.payment }}</h3>
+      </app-create-order-info-item>
+      <app-create-order-info-item
+        label="REVISAR ITENS"
+        actionLabel="Alterar itens"
+        actionNavigation="/shopping-cart/cart"
+      >
+        <div class="products-container">
+          <ng-container
+            *ngFor="
+              let item of shoppingCartService.tranformCartToShow(
+                activeOrder.products ?? []
+              )
+            "
+            [ngTemplateOutlet]="productItem"
+            [ngTemplateOutletContext]="{
+              title: item.product.name,
+              price: item.product.value,
+              quantity: item.quantity
+            }"
+          ></ng-container>
+        </div>
+      </app-create-order-info-item>
+    </div>
+    <div class="resume-container">
+      <app-shopping-cart-resume
+        [products]="activeOrder.products ?? []"
+      ></app-shopping-cart-resume>
+      <div style="margin-bottom: 40px"></div>
+      <app-button label="FINALIZAR PEDIDO" (click)="createOrder()"></app-button>
+    </div>
+  </div>
+</div>
+
+<ng-template
+  #productItem
+  let-title="title"
+  let-price="price"
+  let-quantity="quantity"
+>
+  <div class="product-item-container">
+    <h3 style="width: 150px">{{ title }}</h3>
+    <h3>{{ price }}</h3>
+    <h3>Quantidade: {{ quantity }}</h3>
+  </div>
+</ng-template>
