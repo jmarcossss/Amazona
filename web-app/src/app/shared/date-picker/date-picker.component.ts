@@ -6,5 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./date-picker.component.css'],
 })
 export class DatePickerComponent {
+
   @Input() onDateSelected: (selectedDate: Date) => void = () => {};
 }
