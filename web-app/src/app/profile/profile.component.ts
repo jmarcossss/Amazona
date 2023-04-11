@@ -1,21 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProfileForm } from './enums/profile-form.enum';
+import { ProfileService } from './profile.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
+  profileForm!: ProfileForm;
 
- funcTest() {
+  constructor(private profileService: ProfileService) {}
 
-    console.log("Button Clicked!");
+  ngOnInit() {
+    this.profileService.profileForm$.subscribe((profileForm) => {
+      this.profileForm = profileForm;
+    });
   }
 
-  funcTest2() {
-
-    console.log("Button Clicked 2!");
+  public onClickDelete() {
+    this.profileService.submitDelete();
   }
 
-
+  public onClickSave() {
+    this.profileService.submitSave();
+  }
 }
