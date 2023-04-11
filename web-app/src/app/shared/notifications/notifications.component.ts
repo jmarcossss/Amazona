@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiMessageCodes } from '../../shared/utils/api-message-codes';
-import { Router } from '@angular/router';
 import { SnackBarService } from '../../services/snack-bar.service';
 import { FormGroup } from '@angular/forms';
 import { NotificationsService } from './notifications.services';
-import { FormControl } from '@angular/forms';
 import NotificationModel from 'src/app/models/notification.model';
 
 @Component({
@@ -19,8 +16,7 @@ export class NotificationsComponent implements OnInit {
 
   constructor(
     private notificationService: NotificationsService,
-    private snackBarService: SnackBarService,
-    private router: Router
+    private snackBarService: SnackBarService
   ) {
     this.notifications = [];
   }
