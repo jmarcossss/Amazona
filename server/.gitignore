@@ -31,4 +31,5 @@ lib/
 .env.test
 .env.dev
 .env.prod
+.env.test
 .vercel

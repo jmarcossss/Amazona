@@ -3,11 +3,12 @@ import app from '../../src/app';
 import supertest from 'supertest';
 import NotificationModel from '../../src/models/notification.model';
 import NotificationEntity from '../../src/entities/notification.entity';
+import EmailService from '../../src/services/email.service';
 
 const request = supertest(app);
 
-describe.skip('NotificationController', () => {
-  const mockedUserId: string = "874aba1f-893f-4fad-909b-6def1646d11b";
+describe('NotificationController', () => {
+  const mockedUserId: string = "ce6f5c66-1967-4b21-9929-51ca7d652151";
   const mockedOrderId: string = "b9c4a338-e19e-4bfa-bc83-45171017407c";
   const mockedDate: string = "2023-01-29T06:00:00Z"
   const mockedNotDate: string = "2025-03-21T06:00:00Z"
@@ -63,6 +64,7 @@ describe.skip('NotificationController', () => {
     expect(finalResult).toEqual([]);
   });
   it('[POST] /api/notifications should create an notification', async () => {
+    jest.spyOn(EmailService, 'sendEmail').mockResolvedValue(void 0);
     const response = await request.post('/api/notifications').send(newmockedNotification);
     const result: string = response.body.msgCode;
     expect(result).toEqual('success');

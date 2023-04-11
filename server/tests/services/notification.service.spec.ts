@@ -5,15 +5,18 @@ import NotificationService from '../../src/services/notification.service';
 import NotificationRepository from '../../src/repositories/notification.repository';
 import NotificationEntity from '../../src/entities/notification.entity';
 import NotificationModel from '../../src/models/notification.model';
-import UserRepository from '../../src/repositories/user.repository';
+import EmailService from '../../src/services/email.service';
 import UserService from '../../src/services/user.service';
+import UserRepository from '../../src/repositories/user.repository';
+import UserEntity from '../../src/entities/user.entity';
 
-describe.skip('NotificationService', () => {
-  let notificationService: NotificationService
-  let userService: UserService
+describe('NotificationService', () => {
+  let notificationService: NotificationService;
   let notificationRepository: NotificationRepository;
+  let userService: UserService;
   let injector: Injector = di;
-  const mockedUserId: string = "874aba1f-893f-4fad-909b-6def1646d11b"
+
+  const mockedUserId: string = "ce6f5c66-1967-4b21-9929-51ca7d652151"
   const mockedDate: string = "2023-01-29T06:00:00Z"
   const mockedNotDate: string = "2011-03-21T06:00:00Z"
   
@@ -42,18 +45,34 @@ describe.skip('NotificationService', () => {
   });
   const mockedNotifications: NotificationEntity[] = [mockedNotification]
   const mockedNotificationsModel: NotificationModel[] = [mockedNotificationModel]
-  
+  const userMocked = new UserEntity({
+    id: mockedUserId,
+    CPF: "12989087064",
+    name: "Clara Acrucha",
+    username: "acrucha",
+    email: "acrucha@mail.com",
+    password: "abcdef12",
+    payment: "PIX",
+    address: [
+        "Avenida Acrucha 5"
+    ],
+    phone: "999789923",
+    code: ""
+  });
+
   beforeEach(() => {
     injector.registerRepository(NotificationRepository, new NotificationRepository());
     notificationRepository = injector.getRepository(NotificationRepository);
 
-    injector.registerRepository(UserRepository, new UserRepository());
+    injector.registerRepository(UserRepository, new UserRepository())
     let userRepository = injector.getRepository(UserRepository);
+    
+    injector.registerService(UserService, new UserService(userRepository))
+    userService = injector.getService(UserService);
+    
+    injector.registerService(NotificationService, new NotificationService(notificationRepository, 
+                             userService));
 
-    injector.registerService(UserService, new UserService(userRepository));
-    userService = injector.getRepository(UserService);
-
-    injector.registerService(NotificationService, new NotificationService(notificationRepository, userService));
     notificationService = injector.getService(NotificationService);
   });
 
@@ -80,6 +99,8 @@ describe.skip('NotificationService', () => {
 
   it('[createNotification] should creat a notification', async () => {
     jest.spyOn(notificationRepository, 'createNotification').mockResolvedValue(newMockedNotification);
+    jest.spyOn(userService, 'getUserById').mockResolvedValue(userMocked)
+    jest.spyOn(EmailService, 'sendEmail').mockResolvedValue(void 0);
 
     const result = await notificationService.createNotification(newMockedNotification);
     expect(result).toBeUndefined();
@@ -87,6 +108,7 @@ describe.skip('NotificationService', () => {
 
   it('[createNotification] throw a BadRequestError due the repository return undefined', async () => {
     jest.spyOn(notificationRepository, 'createNotification').mockResolvedValue(undefined);
+    jest.spyOn(EmailService, 'sendEmail').mockResolvedValue(void 0);
 
     expect(async () => { await notificationService.createNotification(newMockedNotification)}).rejects.toThrow(BadRequestError);
   });
