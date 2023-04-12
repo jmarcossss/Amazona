@@ -1,3 +1,29 @@
-<mat-card>
-  <mat-card-content>Create Order</mat-card-content>
-</mat-card>
+<div class="body">
+  <app-cart-empty-message *ngIf="cart.length <= 0"></app-cart-empty-message>
+  <div class="container" *ngIf="cart.length > 0">
+    <div class="products-container">
+      <header>
+        <h3>MEU CARRINHO</h3>
+        <div>
+          <h3>QUANTIDADE</h3>
+          <h3>UNITÁRIO</h3>
+          <h3>TOTAL</h3>
+        </div>
+      </header>
+      <div class="products-items-container">
+        <app-cart-product-item
+          *ngFor="let cartItem of cart"
+          [product]="cartItem.product"
+          [quantity]="cartItem.quantity"
+        ></app-cart-product-item>
+      </div>
+    </div>
+    <div class="resume-container">
+      <app-shopping-cart-resume
+        [products]="(shoppingCartService.cart$ | async) ?? []"
+      ></app-shopping-cart-resume>
+      <div style="margin-bottom: 40px"></div>
+      <app-button label="CONTINUAR" (click)="goToOrder()"></app-button>
+    </div>
+  </div>
+</div>

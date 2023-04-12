@@ -1,3 +1,124 @@
-<mat-card>
-  <mat-card-content>History</mat-card-content>
-</mat-card>
+<div id="container" class="flexbox direction-column"> 
+  <app-card class="box">
+    <div class="flexbox">
+      <div class="item20">
+        <!-- forms -->
+        <div id="form" class="gray" [formGroup] = "historyForm">
+          <label for="form-field" class="big-text">Pesquisa</label>
+          <mat-form-field id="form-field" appearance="outline" floatLabel="always" fxFlex>
+            <input
+              class="border-forms"
+              type="email"
+              matInput
+              placeholder="Número do pedido ou nome do produto"
+              formControlName = "InputName"
+            />
+          </mat-form-field>
+          
+        </div>
+        <!-- Data e status -->
+        <div class="flexbox gray">
+          <div class="item1 medium-text" [formGroup] = "historyForm">
+            <span>Selecione um intervalo de datas</span> <br>
+            <mat-form-field class="box-datepicker" appearance="outline" >
+              <input 
+                class="border-forms small-text"
+                matInput
+                [matDatepicker]="picker1"
+                placeholder="começo"
+                formControlName = "DateBegin"
+              >
+              <mat-hint class="small-text">MM/DD/YYYY</mat-hint>
+              <mat-datepicker #picker1 panelClass="my-custom-class"></mat-datepicker>
+            </mat-form-field>
+            <span class="medium-text margem-lado">
+              Até
+            </span>
+            <mat-form-field class="box-datepicker" appearance="outline" >
+              <input 
+                class="border-forms small-text"
+                matInput
+                [matDatepicker]="picker2"
+                placeholder="fim"
+                formControlName = "DateEnd"
+              >
+              <mat-hint class="small-text">MM/DD/YYYY</mat-hint>
+              <mat-datepicker #picker2 panelClass="my-custom-class"></mat-datepicker>
+            </mat-form-field>
+            <div class="margem result-text">Total de resultados: {{orders.length}} itens</div>
+          </div>
+          <div class="item2">
+            <span>Selecione Status</span> <br>
+            <button mat-button [matMenuTriggerFor]="menu">Status</button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="setConfirmed()">Confirmado</button>
+              <button mat-menu-item (click)="setInTransit()">Em trânsito</button>
+              <button mat-menu-item (click)="setDelivered()">Entregue</button>
+              <button mat-menu-item (click)="setCanceled()">Cancelado</button>
+            </mat-menu>
+          </div>
+          
+        </div>
+      </div>
+  
+      <div class="item1 flexbox direction-column">
+        <app-button class="margin-button-black" type="btn medium black" label="BUSCAR" (click)="buscar()"></app-button>
+        <app-button class="margin-button-white" type="btn medium black-outline" label="LIMPAR" (click)="clean()"></app-button>
+      </div>  
+    </div>
+    
+  </app-card>
+  
+  <app-card class="box" *ngFor="let order of orders">
+    <div *ngFor="let product of order.products">
+      <div class="box-top">
+        <div class="mini-box">
+          <span class="white medium-text">Pedido Realizado</span> <br>
+          <span class="white small-text">{{order.purchaseDate}}</span>
+        </div>
+        <div class="mini-box">
+          <span class="white medium-text">Total</span> <br>
+          <span class="white small-text">{{product.value}}</span>
+        </div>
+        <div class="mini-box">
+          <span class="white medium-text">Enviar para</span> <br>
+          <span class="white small-text">Kennedy</span>
+        </div>
+        <div class="mini-box">
+          <span class="white medium-text">Status</span> <br>
+          <span class="white small-text">{{order.statusHistory[order.statusHistory.length - 1].status.status}}</span>
+        </div>
+        <div class="mini-box right">
+          <span class="white medium-text">Pedido Nº #123314</span> <br>
+          <a class="white small-text">Ver detalhes do pedido</a>
+        </div>
+      </div>
+      <div class="flexbox box-bottom">
+        <div class="item1">
+          <div class=" margem-img">
+            <img src="https://alternativafotoproduto.com.br/media/catalog/product/cache/1/image/800x/9df78eab33525d08d6e5fb8d27136e95/c/a/camiseta-neon-pink-para-sublima_o-alternativa-fotoproduto.jpg" alt="">
+          </div>
+          
+        </div>
+        <div class="item2 flexbox direction-column">
+          <div class="item2 black dark">
+            <div class="margin-text title">{{product.name}}</div>
+          </div>
+          <div class="item1 black light subtitle">
+            <span>Marca: {{product.brand.name}}</span> <br>
+            <span>Categoria do Produto: {{product.productCategory.name}}</span> 
+          </div>
+        </div>
+        <div class="item1 flexbox direction-column">
+          
+          <app-button *ngIf="checkRecomprar(order.statusHistory[order.statusHistory.length - 1].status.status)" class="margem" type="btn medium" label="RECOMPRAR"></app-button>
+          <app-button *ngIf="checkAcompanharPedido(order.statusHistory[order.statusHistory.length - 1].status.status)" class="margem" type="btn medium" label="ACOMPANHAR PEDIDO"></app-button>
+          <app-button *ngIf="checkNotaFiscal(order.statusHistory[order.statusHistory.length - 1].status.status)" class="margem" type="btn medium black-outline" label="NOTA FISCAL"></app-button>
+          <app-button *ngIf="checkCancelar(order.statusHistory[order.statusHistory.length - 1].status.status)" class="margem" type="btn medium danger-outline" label="CANCELAR"></app-button>
+          
+        </div>
+      </div>
+    </div>
+  </app-card>
+
+</div>

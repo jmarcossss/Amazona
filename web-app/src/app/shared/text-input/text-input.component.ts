@@ -10,6 +10,7 @@ export class TextInputComponent {
   @Input() control?: AbstractControl | null = new FormControl();
   @Input() pattern: RegExp | string = '';
   @Input() mask?: string;
+  @Input() maxLength: string | null = null;
   @Input() type: string = 'text';
   @Input() label: string = '';
   @Input() hint: string = '';
@@ -43,7 +44,11 @@ export class TextInputComponent {
         let errorMsg = '';
         switch (errorName) {
           case 'required':
-            errorMsg = 'Campo obrigatório!';
+            if (typeof this.control.errors[errorName] === 'string') {
+              errorMsg = this.control.errors[errorName];
+            } else {
+              errorMsg = 'Campo obrigatório!';
+            }
             break;
           case 'minlength':
             errorMsg = `Mínimo de ${this.control.errors['minlength'].requiredLength} caracteres`;

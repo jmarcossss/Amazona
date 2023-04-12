@@ -1,0 +1,62 @@
+<div>
+  <div class="grid-container">
+    <div>
+      <app-text-input
+        class="name"
+        label="Nome*"
+        placeholder="Informe seu nome completo"
+        [control]="signUpPersonalDataForm.get('name')"
+      ></app-text-input>
+      <app-text-input
+        class="CPF"
+        label="CPF*"
+        placeholder="129.585.989-40"
+        [control]="signUpPersonalDataForm.get('CPF')"
+        [mask]="cpfMask"
+      ></app-text-input>
+      <app-text-input
+        class="phone"
+        label="Celular"
+        placeholder="(81) 99999-9999"
+        [control]="signUpPersonalDataForm.get('phone')"
+        [mask]="cellphoneMask"
+      ></app-text-input>
+    </div>
+
+    <div>
+      <app-text-input
+        class="username"
+        label="Nome de usuário*"
+        placeholder="Informe seu nome de usuário"
+        [control]="signUpPersonalDataForm.get('username')"
+      ></app-text-input>
+
+      <app-text-input
+        class="email"
+        label="Email*"
+        placeholder="example@gmail.com"
+        type="email"
+        [control]="signUpPersonalDataForm.get('email')"
+      ></app-text-input>
+
+      <app-text-input
+        class="password"
+        label="Senha*"
+        placeholder="Informe uma senha de 8 dígitos"
+        type="password"
+        hint="Use ao menos uma letra e um número."
+        [control]="signUpPersonalDataForm.get('password')"
+        [pattern]="passwordPattern"
+        maxLength="8"
+      ></app-text-input>
+    </div>
+  </div>
+
+  <app-button
+    class="next-button"
+    label="PRÓXIMO"
+    type="btn medium"
+    [disabled]="signUpPersonalDataForm.invalid"
+    (click)="onSubmit()"
+  ></app-button>
+</div>

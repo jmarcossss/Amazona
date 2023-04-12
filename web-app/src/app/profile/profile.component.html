@@ -1,17 +1,28 @@
-<mat-card>
-  <mat-card-content>Profile</mat-card-content>
-  <button mat-raised-button>Order History</button>
-  <app-text-input label="Test" placeholder="Digite test"></app-text-input>
-</mat-card>
-<app-button type="btn large" (click)="(funcTest)" label="ENTRAR"></app-button>
-<app-button type="btn medium" (click)="(funcTest2)" label="ENTRAR"></app-button>
-<app-button type="btn large danger" label="CANCELAR"></app-button>
-<app-button type="btn medium danger" label="CANCELAR"></app-button>
-<app-button type="btn large black" label="CANCELAR"></app-button>
-<app-button type="btn medium black" label="CANCELAR"></app-button>
-<app-button type="btn large orange-outline " label="NOTA FISCAL"></app-button>
-<app-button type="btn medium orange-outline" label="NOTA FISCAL"></app-button>
-<app-button type="btn large danger-outline" label="CANCELAR"></app-button>
-<app-button type="btn medium danger-outline" label="CANCELAR"></app-button>
-<app-button type="btn large black-outline" label="CANCELAR"></app-button>
-<app-button type="btn medium black-outline" label="CANCELAR"></app-button>
+<div class="container">
+  <div class="step-form-container">
+    <app-profile-header-step></app-profile-header-step>
+    <app-profile-form-container>
+      <app-profile-form-personal-data
+        *ngIf="profileForm == 1"
+      ></app-profile-form-personal-data>
+      <app-profile-form-address
+        *ngIf="profileForm == 2"
+      ></app-profile-form-address>
+      <app-profile-form-delete
+        *ngIf="profileForm == 3"
+      ></app-profile-form-delete>
+      <app-button
+        *ngIf="profileForm == 3"
+        label="DELETAR"
+        type="btn medium danger-outline"
+        (click)="onClickDelete()"
+      ></app-button>
+      <app-button
+        *ngIf="profileForm != 3"
+        label="SALVAR"
+        type="btn medium orange-outline"
+        (click)="onClickSave()"
+      ></app-button>
+    </app-profile-form-container>
+  </div>
+</div>

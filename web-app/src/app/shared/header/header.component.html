@@ -28,18 +28,50 @@
       fxLayout="row"
       fxLayoutGap="32px"
     >
-      <button mat-icon-button (click)="onClickNotification()">
-        <mat-icon>notifications</mat-icon>
+      <button
+        mat-icon-button
+        routerLink="/order/history"
+        routerLinkActive="active"
+      >
+        <mat-icon>list_alt</mat-icon>
       </button>
-      <button mat-icon-button routerLink="/profile" routerLinkActive="active">
-        <mat-icon>person</mat-icon>
-      </button>
+
       <button
         mat-icon-button
         routerLink="/shopping-cart/cart"
         routerLinkActive="active"
       >
-        <mat-icon>shopping_cart</mat-icon>
+        <mat-icon
+          [matBadge]="cartItems"
+          [matBadgeHidden]="!cartItems"
+          matBadgeColor="warn"
+          >shopping_cart</mat-icon
+        >
+      </button>
+
+      <button
+        mat-icon-button
+        (click)="onClickNotification()"
+        [matMenuTriggerFor]="menu"
+      >
+        <mat-icon>{{
+          showNotification ? "notifications_active" : "notifications_none"
+        }}</mat-icon>
+      </button>
+
+      <mat-menu
+        class="fullMenu"
+        #menu="matMenu"
+        yPosition="below"
+        (menuClosed)="showNotification = false"
+      >
+        <div class="menuDiv">
+          <app-notifications></app-notifications>
+        </div>
+      </mat-menu>
+
+      <button mat-icon-button routerLink="/profile" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
       </button>
     </div>
   </mat-toolbar-row>
@@ -55,13 +87,13 @@
     >
       <button mat-button>NOVIDADES</button>
       <button mat-button>TENDÊNCIAS</button>
-      <button mat-button>ROUPA</button>
-      <button mat-button>VESTIDOS</button>
-      <button mat-button>LOUNGERIE</button>
-      <button mat-button>PRAIA</button>
+      <button mat-button>ROUPAS</button>
+      <button mat-button>FERRAMENTAS</button>
+      <button mat-button>BRINQUEDOS</button>
+      <button mat-button>ELETRÔNICOS</button>
       <button mat-button>FESTAS</button>
       <button mat-button>ACESSÓRIOS</button>
-      <button mat-button>INFANTIL</button>
+      <button mat-button>MÓVEIS</button>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

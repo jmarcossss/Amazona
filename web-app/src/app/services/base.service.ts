@@ -1,11 +1,19 @@
 import { Observable, of } from 'rxjs';
+import { ErrorResponse } from '../shared/utils/response';
 
 export abstract class BaseService {
-  handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(`${operation} failed: ${error.message}`);
-
-      return of(result as T);
+  handleError(operation = 'operation') {
+    return (result: any): Observable<ErrorResponse> => {
+      console.error(`${operation} failed: ${result?.message}`);
+      try {
+        return of(new ErrorResponse(result?.error));
+      } catch (error) {
+        return of(
+          new ErrorResponse({
+            msg: 'Erro desconhecido',
+          })
+        );
+      }
     };
   }
 }

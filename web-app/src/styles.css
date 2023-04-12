@@ -10,7 +10,8 @@
   --color-error: #dc3545;
   --color-cards: #fcfcfc;
   --color-error-label: #ffd0d5;
-  --color-success: #d5e5ca;
+  --color-success: #78a55a;
+  --color-background-success: #d5e5ca;
 
   /* Font */
   --font-family-base: "Quicksand", sans-serif;
@@ -42,6 +43,22 @@
   font-family: var(--font-family-base);
 }
 
+a {
+  cursor: pointer;
+}
+
 button {
   border: none;
+}
+
+.success-snackbar {
+  color: var(--color-background) !important;
+  --mdc-snackbar-container-color: var(--color-success) !important;
+  --mat-mdc-snack-bar-button-color: var(--color-background) !important;
+}
+
+.error-snackbar {
+  color: var(--color-background) !important;
+  --mdc-snackbar-container-color: var(--color-error) !important;
+  --mat-mdc-snack-bar-button-color: var(--color-background) !important;
 }

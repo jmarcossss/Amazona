@@ -1,19 +1,21 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { HomeModule } from './home/home.module';
-import { AppRoutingModule } from './app-routing.module';
-import { SharedModule } from './shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { HomeModule } from './home/home.module';
 import { AdminModule } from './admin/admin.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { OrderModule } from './order/order.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AppComponent],
   imports: [
     BrowserModule,
@@ -27,6 +29,7 @@ import { OrderModule } from './order/order.module';
     SharedModule,
     OrderModule,
   ],
+  exports: [SharedModule],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
   bootstrap: [AppComponent],
 })

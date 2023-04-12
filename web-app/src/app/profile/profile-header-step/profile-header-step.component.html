@@ -1,0 +1,47 @@
+<div class="header">
+  <ng-container
+    [ngTemplateOutlet]="sectionItem"
+    [ngTemplateOutletContext]="{
+      sectionTitle: 'Dados pessoais',
+      profileForm: 1,
+      hasHr: true
+    }"
+  >
+  </ng-container>
+
+  <ng-container
+    [ngTemplateOutlet]="sectionItem"
+    [ngTemplateOutletContext]="{
+      sectionTitle: 'Endereço',
+      profileForm: 2,
+      hasHr: true
+    }"
+  ></ng-container>
+
+  <ng-container
+  [ngTemplateOutlet]="sectionItem"
+  [ngTemplateOutletContext]="{
+    sectionTitle: 'Deletar',
+    profileForm: 3,
+    hasHr: false
+  }"
+></ng-container>
+</div>
+
+<ng-template
+  #sectionItem
+  let-sectionTitle="sectionTitle"
+  let-profileForm="profileForm"
+  let-hasHr="hasHr">
+  <div
+    [ngClass]="{
+      active: true
+    }"
+    class="step">
+    <div class="section">
+      <div class="section-draw"></div>
+      <h3 class="section-title" (click)="onClickHeader(profileForm)" >{{ sectionTitle }} </h3>
+    </div>
+    <hr *ngIf="hasHr" />
+  </div>
+</ng-template>
