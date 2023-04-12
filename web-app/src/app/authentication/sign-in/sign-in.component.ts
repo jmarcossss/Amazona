@@ -5,26 +5,24 @@ import { SnackBarService } from '../../services/snack-bar.service';
 import { ApiMessageCodes } from '../../shared/utils/api-message-codes';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent {
   signInForm!: FormGroup;
 
-
   constructor(
     private signInService: SignInService,
     private snackBarService: SnackBarService,
-    private router: Router,
-    ) {}
+    private router: Router
+  ) {}
 
   ngOnInit() {
+    this.signInService.initState();
 
     this.signInForm = this.signInService.signInForm;
-
 
     this.signInService.signInStatus$.subscribe((status) => {
       status.maybeMap({
@@ -34,18 +32,22 @@ export class SignInComponent {
             [
               ApiMessageCodes.incorrect_credentials,
               ApiMessageCodes.incorrect_password,
-            ].includes(Array.isArray(error.msgCode) ? error.msgCode[0] : error.msgCode)
+            ].includes(
+              Array.isArray(error.msgCode) ? error.msgCode[0] : error.msgCode
+            )
           ) {
             this.handleValidateError();
           }
 
           this.snackBarService.showError({
-            message: ApiMessageCodes.codeToMessage(Array.isArray(error.msgCode) ? error.msgCode[0] : error.msgCode),
+            message: ApiMessageCodes.codeToMessage(
+              Array.isArray(error.msgCode) ? error.msgCode[0] : error.msgCode
+            ),
           });
         },
-         succeeded: (_) => {
+        succeeded: (_) => {
           this.router.navigate(['/']);
-         }
+        },
       });
     });
   }
@@ -64,16 +66,10 @@ export class SignInComponent {
       });
     }
 
-
     this.signInForm.markAllAsTouched();
   }
-
 
   onSubmit(): void {
     this.signInService.signIn();
   }
-
-  }
-
-
-
+}

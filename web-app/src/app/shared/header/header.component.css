@@ -84,20 +84,21 @@
   display: flex !important;
 }
 
-.fullMenu{
+.fullMenu {
   position: absolute;
   width: 526px !important;
   height: 526px;
   left: 978px;
   top: 144px;
-  }
+}
 
 .menuDiv {
   padding: 20px;
   width: flex;
   height: flex;
 }
-::ng-deep .mat-mdc-menu-panel {
+
+.fullMenu ::ng-deep .mat-mdc-menu-panel {
   max-width: fit-content !important;
-  left: 180px !important;
+  right: 180px !important;
 }

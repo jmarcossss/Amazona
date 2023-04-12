@@ -31,6 +31,10 @@ export class AuthenticationService {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
+  public clear(): void {
+    localStorage.clear();
+  }
+
   public getUser(): UserModel | undefined {
     let userModel;
     let storageUser = localStorage.getItem('user');

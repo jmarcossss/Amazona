@@ -3,6 +3,10 @@
   width: 1000px !important;
 }
 
-.container img {
+.img-container {
+  margin-bottom: 68px;
+}
+
+.img-container img {
   width: 200px;
 }

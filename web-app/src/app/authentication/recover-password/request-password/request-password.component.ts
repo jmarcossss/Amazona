@@ -8,22 +8,20 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-request-password',
   templateUrl: './request-password.component.html',
-  styleUrls: ['./request-password.component.css']
+  styleUrls: ['./request-password.component.css'],
 })
 export class RequestPasswordComponent implements OnInit {
-
   recoverPasswordRequestPasswordForm!: FormGroup;
 
-
-
-    constructor(
+  constructor(
     public recoverPasswordService: RecoverPasswordService,
     private snackBarService: SnackBarService,
     private router: Router
   ) {}
 
-  ngOnInit(){
-    this.recoverPasswordRequestPasswordForm = this.recoverPasswordService.recoverPasswordRequestPasswordForm;
+  ngOnInit() {
+    this.recoverPasswordRequestPasswordForm =
+      this.recoverPasswordService.recoverPasswordRequestPasswordForm;
 
     this.recoverPasswordService.recoverPasswordRequestPasswordValidateStatus$
       .pipe(distinctUntilChanged((a, b) => a.status === b.status))
@@ -36,9 +34,13 @@ export class RequestPasswordComponent implements OnInit {
               ),
             });
           },
-          succeeded:(_) => {
+          succeeded: (_) => {
+            this.snackBarService.showSuccess({
+              message: 'Nova senha cadastrada com sucesso!',
+            });
+
             this.router.navigate(['/']);
-          }
+          },
         });
       });
   }
@@ -46,5 +48,4 @@ export class RequestPasswordComponent implements OnInit {
   onSubmit(): void {
     this.recoverPasswordService.submitRequestPassword();
   }
-
 }
