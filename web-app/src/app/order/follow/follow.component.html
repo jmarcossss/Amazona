@@ -1,3 +1,48 @@
-<mat-card>
-  <mat-card-content>Follow</mat-card-content>
-</mat-card>
+<div class="container">
+  <h1>Acompanhamento do pedido</h1>
+  <app-card [style]="{ width: '999px', padding: '10px' }">
+    <p *ngIf="!orderStatus.statusCanceled && orderStatus.statusText !== 'Produto inexistente'">Estimativa para entrega em {{ 14 }} dias</p>
+    <p *ngIf="orderStatus.statusCanceled || orderStatus.statusText === 'Produto inexistente'">Produto inexistente/cancelado, não há estimativa para entrega</p>
+    <h2>{{ orderStatus.statusText }}</h2>
+    <p *ngIf="orderStatus.errorMessage" class="error-message">{{ orderStatus.errorMessage }}</p>
+    <div class="image-container">
+      
+      <div class="espaco">
+        <div class="step" [ngClass]="{'step-active': orderStatus.statusConfirmed || orderStatus.statusInTransit || orderStatus.statusDelivered}">
+          <div class="step-content">
+            <img src="../../../assets/images/Big Parcel.png" alt="icone1">
+          </div>
+        </div>
+        <div class="status" *ngIf="orderStatus.statusConfirmed || orderStatus.statusInTransit || orderStatus.statusDelivered">Confirmado</div>
+      </div>
+
+      <div class="ajustaHora">
+        <div *ngIf="!orderStatus.statusCanceled && orderStatus.statusText !== 'Produto inexistente'"><h3>7 dias</h3></div>
+        <h4>----------------------------></h4>
+      </div>
+
+      <div class="espaco">
+        <div class="step" [ngClass]="{'step-active': orderStatus.statusInTransit || orderStatus.statusDelivered}">
+          <div class="step-content">
+            <img src="../../../assets/images/Open Box.png" alt="icone2">
+          </div>
+        </div>
+        <div class="status" *ngIf="orderStatus.statusInTransit || orderStatus.statusDelivered">Em trânsito</div>
+      </div>
+
+      <div class="ajustaHora">
+        <div *ngIf="!orderStatus.statusCanceled && orderStatus.statusText !== 'Produto inexistente'"><h3>7 dias</h3></div>
+        <h4>----------------------------></h4>
+      </div>
+
+      <div class="espaco">
+        <div class="step stepHome" [ngClass]="{'step-active': orderStatus.statusDelivered}">
+          <div class="step-content">
+            <img src="../../../assets/images/Smart Home Checked.png" alt="icone3">
+          </div>
+        </div>
+        <div class="status" *ngIf="orderStatus.statusDelivered">Entregue</div>
+      </div>
+    </div>
+  </app-card>
+</div>
