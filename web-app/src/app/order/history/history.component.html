@@ -46,10 +46,12 @@
               <mat-datepicker #picker2 panelClass="my-custom-class"></mat-datepicker>
             </mat-form-field>
             <div class="margem result-text">Total de resultados: {{orders.length}} itens</div>
+            <div *ngIf="orders.length===0" class="margem result-text">Nenhum pedido encontrado</div>
+            
           </div>
           <div class="item2">
             <span>Selecione Status</span> <br>
-            <button mat-button [matMenuTriggerFor]="menu">Status</button>
+            <button mat-button [matMenuTriggerFor]="menu">status</button>
             <mat-menu #menu="matMenu">
               <button mat-menu-item (click)="setConfirmed()">Confirmado</button>
               <button mat-menu-item (click)="setInTransit()">Em trânsito</button>
@@ -69,7 +71,7 @@
     
   </app-card>
   
-  <app-card class="box" *ngFor="let order of orders">
+  <app-card class="box" *ngFor="let order of orders" [id]="order.id">
     <div *ngFor="let product of order.products">
       <div class="box-top">
         <div class="mini-box">
@@ -89,7 +91,7 @@
           <span class="white small-text">{{order.statusHistory[order.statusHistory.length - 1].status.status}}</span>
         </div>
         <div class="mini-box right">
-          <span class="white medium-text">Pedido Nº #123314</span> <br>
+          <span class="white medium-text">Pedido {{order.id.substr(0,4)}}</span> <br>
           <a class="white small-text">Ver detalhes do pedido</a>
         </div>
       </div>
