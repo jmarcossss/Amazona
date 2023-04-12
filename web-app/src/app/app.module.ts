@@ -5,11 +5,13 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-
 import { HomeModule } from './home/home.module';
 import { AdminModule } from './admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { OrderModule } from './order/order.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -24,7 +26,8 @@ import { SharedModule } from './shared/shared.module';
     HomeModule,
     AuthenticationModule,
     AdminModule,
-    SharedModule
+    SharedModule,
+    OrderModule,
   ],
   exports: [SharedModule],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
