@@ -87,7 +87,6 @@ export class HistoryService extends BaseService {
   }
   public async buscar(): Promise<OrderModel[]> {
     const userId = this.authenticationService.getUser()?.id;
-
     let uri: string = `${this.prefix}/${userId}?`;
     if (!!this.inputName) {
       uri += `productName=${encodeURIComponent(this.inputName.value)}&`;
